@@ -1,6 +1,5 @@
 package com.shushan.thomework101.help;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -8,16 +7,14 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 
 import com.shushan.thomework101.R;
@@ -150,21 +147,6 @@ public class DialogFactory {
         }
     }
 
-    /**
-     * 显示公共dialog
-     *
-     * @param context 上下文
-     * @param content 内容
-     * @param type    类型  1：底部左右两按钮   2;底部一按钮
-     * @return commonDialog
-     */
-//    public static void showCommonDialog(Activity context, String content, int type) {
-//        CommonDialog commonDialog = CommonDialog.newInstance();
-//        commonDialog.setListener((CommonDialog.CommonDialogListener) context);
-//        commonDialog.setContent(content);
-//        commonDialog.setStyle(type);
-//        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
-//    }
 
 
     public static ProgressDialog showProgressDialog(Context context, String msg) {

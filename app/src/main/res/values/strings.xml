@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">作业101</string>
+    <string name="app_name">作业101教师版</string>
     <!--&#160;   表示空格-->
-    <!--网络相关 -->
+    <!--app相关 -->
     <string name="text_check_internet">请检查网络连接</string>
     <string name="text_wait_try">请重试</string>
     <string name="loading">loading…</string>
+
+
+    <!--Activity相关 -->
+    <string name="main_bottom_home">辅导</string>
+    <string name="main_bottom_teacher">老师</string>
+    <string name="main_bottom_mime">我的</string>
+    <string name="main_exit_app">再点一次退出应用</string>
+
 </resources>

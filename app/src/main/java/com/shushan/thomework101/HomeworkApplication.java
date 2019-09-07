@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.shushan.thomework101.di.components.AppComponent;
+import com.shushan.thomework101.di.components.DaggerAppComponent;
+import com.shushan.thomework101.di.modules.AppModule;
 
 import javax.inject.Inject;
 
@@ -26,8 +28,8 @@ public class HomeworkApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this.getApplicationContext();
-//        mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
-//        mAppComponent.inject(this);//必须有
+        mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        mAppComponent.inject(this);//必须有
         //初始化内存泄漏检查工具
         //初始化融云
         //友盟init

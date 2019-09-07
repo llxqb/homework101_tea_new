@@ -6,13 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.google.android.material.tabs.TabLayout;
 import com.shushan.thomework101.entity.constants.ServerConstant;
 
 import java.io.ByteArrayOutputStream;

@@ -2,9 +2,9 @@ package com.shushan.thomework101.network;
 
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

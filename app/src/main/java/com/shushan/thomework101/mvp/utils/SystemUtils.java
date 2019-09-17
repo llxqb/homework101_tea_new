@@ -215,4 +215,26 @@ public class SystemUtils {
         return (activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
                 == WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
+
+
+    /**
+     * 获取屏幕的宽
+     */
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        //((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getMetrics(dm);
+
+        return dm.widthPixels;
+    }
+
+    /**
+     * 获取屏幕的高
+     */
+    public static int getScreenHeight(Context context) {
+        return context.getResources().getDisplayMetrics().heightPixels;
+    }
 }

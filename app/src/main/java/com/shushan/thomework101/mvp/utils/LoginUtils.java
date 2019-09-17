@@ -1,7 +1,5 @@
 package com.shushan.thomework101.mvp.utils;
 
-import com.google.gson.Gson;
-
 public class LoginUtils {
 
 //    /**

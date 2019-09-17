@@ -13,8 +13,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.shushan.thomework101.entity.constants.ServerConstant;
-
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -22,10 +20,10 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import static java.lang.Double.parseDouble;
 
@@ -36,6 +34,7 @@ public class ValueUtil {
 
     /**
      * MD5 加密
+     *
      * @param info 需要MD5加密的字符穿
      * @return String result MD5加密后返回的结果
      */
@@ -60,6 +59,7 @@ public class ValueUtil {
 
     /**
      * 将2进制字节数组转换为16进制字符串
+     *
      * @param bytes 字节数组
      * @return String hex 返回16进制内容的字符串，比较类似UDB的密钥
      */
@@ -103,13 +103,33 @@ public class ValueUtil {
     //是否是有效的手机号
     public static boolean isMobilePhone(String mobileNO) {
         if (TextUtils.isEmpty(mobileNO)) {
-            return true;
+            return false;
         } else {
             Pattern p = Pattern.compile("^\\d{11}$");
             Matcher m = p.matcher(mobileNO);
-            return !m.matches();
+            return m.matches();
         }
     }
+
+    /**
+     * 验证最新手机号 格式
+     * 1、手机号开头集合
+     * 166，
+     * 176，177，178
+     * 180，181，182，183，184，185，186，187，188，189
+     * 145，147
+     * 130，131，132，133，134，135，136，137，138，139
+     * 150，151，152，153，155，156，157，158，159
+     * 198，199
+     */
+    public static boolean isChinaPhoneLegal(String str)
+            throws PatternSyntaxException {
+        String regExp = "^((13[0-9])|(15[^4])|(166)|(17[0-8])|(18[0-9])|(19[8-9])|(147,145))\\d{8}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+
 
     //是否是有效的身份证
     public static boolean isValidityIdentityCard(String idCardStr) {
@@ -152,6 +172,17 @@ public class ValueUtil {
         Pattern p = Pattern.compile("^[\u4e00-\u9fa5A-Za-z0-9]{4,20}+$");
         return p.matcher(str).matches();
     }
+
+    /**
+     * 检查密码
+     * 密码必须是8-16数字和字符组成（不能是纯数字）
+     */
+    public static boolean pwdCheckSpecialString(String str) {
+        String regEx = "^[a-zA-Z][a-zA-Z0-9_]{7,15}$";
+        Pattern pattern = Pattern.compile(regEx);
+        return pattern.matcher(str).matches();
+    }
+
 
     public static boolean checkSpecialString(String str) {
         String regEx = "^[a-zA-Z][a-zA-Z0-9_]{3,19}$";
@@ -360,41 +391,19 @@ public class ValueUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
-
-
-    public static String getSign(TreeMap<String, Object> treeMap) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Object> stringStringEntry : treeMap.entrySet()) {
-            if (!TextUtils.isEmpty(stringStringEntry.getKey())) {
-                sb.append(stringStringEntry.getKey()).append("=").append(stringStringEntry.getValue()).append("&");
+    /**
+     * 产生一个随机的六位数
+     */
+    public static String randomSixNum() {
+        int flag = 100000;
+        for (int i = 0; i <= 100; i++) {
+            flag = new Random().nextInt(999999);
+            if (flag < 100000) {
+                flag += 100000;
             }
         }
-
-        String result = "";
-        if (sb.length() > 0) {
-            result = sb.substring(0, sb.length() - 1);
-        }
-        String md5Sign = encryptToMD5(result + ServerConstant.USER_KEY);
-        String time = String.valueOf(System.currentTimeMillis()/1000);
-        String finalResult = String.valueOf(Integer.valueOf(time))+ "," + md5Sign;
-        return Base64.encodeToString(finalResult.getBytes(), Base64.DEFAULT).trim();
+        return String.valueOf(flag);
     }
 
-    public static String getSign1(TreeMap<String, Object> treeMap, String APPSIGN) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Object> stringStringEntry : treeMap.entrySet()) {
-            if (!TextUtils.isEmpty(stringStringEntry.getKey())) {
-                sb.append(stringStringEntry.getKey()).append("=").append(stringStringEntry.getValue()).append("&");
-            }
-        }
 
-        String result = "";
-        if (sb.length() > 0) {
-            result = sb.substring(0, sb.length() - 1)+APPSIGN;
-        }
-        String md5Sign = encryptToMD5(result + ServerConstant.USER_KEY);
-        String time = String.valueOf(System.currentTimeMillis()/1000);
-        String finalResult = String.valueOf(Integer.valueOf(time))+ "," + md5Sign;
-        return Base64.encodeToString(finalResult.getBytes(), Base64.DEFAULT).trim();
-    }
 }

@@ -17,8 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-
-
 import com.shushan.thomework101.R;
 
 import java.lang.reflect.Field;

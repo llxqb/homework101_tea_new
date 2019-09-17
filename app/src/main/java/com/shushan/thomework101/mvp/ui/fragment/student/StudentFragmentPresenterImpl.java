@@ -1,7 +1,6 @@
-package com.shushan.thomework101.mvp.ui.fragment;
+package com.shushan.thomework101.mvp.ui.fragment.student;
 
 import android.content.Context;
-
 
 import com.shushan.thomework101.mvp.model.MainModel;
 
@@ -12,17 +11,17 @@ import javax.inject.Inject;
  * HomePresenterImpl
  */
 
-public class MimeFragmentPresenterImpl implements MimeFragmentControl.MimeFragmentPresenter {
+public class StudentFragmentPresenterImpl implements StudentFragmentControl.StudentFragmentPresenter {
 
-    private MimeFragmentControl.MimeView mMimeView;
+    private StudentFragmentControl.StudentView mStudentView;
     private final MainModel mMainModel;
     private final Context mContext;
 
     @Inject
-    public MimeFragmentPresenterImpl(Context context, MainModel model, MimeFragmentControl.MimeView MimeView) {
+    public StudentFragmentPresenterImpl(Context context, MainModel model, StudentFragmentControl.StudentView studentView) {
         mContext = context;
         mMainModel = model;
-        mMimeView = MimeView;
+        mStudentView = studentView;
     }
 
 
@@ -33,7 +32,7 @@ public class MimeFragmentPresenterImpl implements MimeFragmentControl.MimeFragme
 
     @Override
     public void onDestroy() {
-        mMimeView = null;
+        mStudentView = null;
     }
 
 

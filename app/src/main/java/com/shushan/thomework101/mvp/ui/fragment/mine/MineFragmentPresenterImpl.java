@@ -1,7 +1,6 @@
-package com.shushan.thomework101.mvp.ui.fragment;
+package com.shushan.thomework101.mvp.ui.fragment.mine;
 
 import android.content.Context;
-
 
 import com.shushan.thomework101.mvp.model.MainModel;
 
@@ -12,17 +11,17 @@ import javax.inject.Inject;
  * HomePresenterImpl
  */
 
-public class TeacherFragmentPresenterImpl implements TeacherFragmentControl.TeacherFragmentPresenter {
+public class MineFragmentPresenterImpl implements MineFragmentControl.MineFragmentPresenter {
 
-    private TeacherFragmentControl.TeacherView mTeacherView;
+    private MineFragmentControl.MineView mMineView;
     private final MainModel mMainModel;
     private final Context mContext;
 
     @Inject
-    public TeacherFragmentPresenterImpl(Context context, MainModel model, TeacherFragmentControl.TeacherView teacherView) {
+    public MineFragmentPresenterImpl(Context context, MainModel model, MineFragmentControl.MineView MineView) {
         mContext = context;
         mMainModel = model;
-        mTeacherView = teacherView;
+        mMineView = MineView;
     }
 
 
@@ -33,7 +32,7 @@ public class TeacherFragmentPresenterImpl implements TeacherFragmentControl.Teac
 
     @Override
     public void onDestroy() {
-        mTeacherView = null;
+        mMineView = null;
     }
 
 

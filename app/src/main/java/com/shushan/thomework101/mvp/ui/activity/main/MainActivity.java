@@ -2,7 +2,6 @@ package com.shushan.thomework101.mvp.ui.activity.main;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -15,9 +14,9 @@ import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
-import com.shushan.thomework101.mvp.ui.fragment.HomeFragment;
-import com.shushan.thomework101.mvp.ui.fragment.MimeFragment;
-import com.shushan.thomework101.mvp.ui.fragment.TeacherFragment;
+import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragment;
+import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragment;
+import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragment;
 import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.views.MyNoScrollViewPager;
 
@@ -58,11 +57,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         }
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
-        TeacherFragment teacherFragment = TeacherFragment.newInstance();
-        MimeFragment mimeFragment = MimeFragment.newInstance();
+        StudentFragment studentFragment = StudentFragment.newInstance();
+        MineFragment mineFragment = MineFragment.newInstance();
         fragments.add(homeFragment);
-        fragments.add(teacherFragment);
-        fragments.add(mimeFragment);
+        fragments.add(studentFragment);
+        fragments.add(mineFragment);
         MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), fragments);
         mMainViewpager.setOffscreenPageLimit(fragments.size());
         mMainViewpager.setAdapter(adapter);
@@ -88,7 +87,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 menuItem.setIcon(R.mipmap.main_home_click);
                 mMainViewpager.setCurrentItem(SWITCH_HOME_PAGE, false);
                 break;
-            case R.id.action_message:
+            case R.id.action_student:
                 menuItem.setIcon(R.mipmap.main_mine_click);
                 mMainViewpager.setCurrentItem(SWITCH_MESSAGE_PAGE, false);
                 break;
@@ -102,7 +101,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private void resetToDefaultIcon() {
         MenuItem home = mMainBottomNavigation.getMenu().findItem(R.id.action_home);
-        MenuItem mine = mMainBottomNavigation.getMenu().findItem(R.id.action_message);
+        MenuItem mine = mMainBottomNavigation.getMenu().findItem(R.id.action_student);
         MenuItem more = mMainBottomNavigation.getMenu().findItem(R.id.action_mine);
         home.setIcon(R.mipmap.main_home);
         mine.setIcon(R.mipmap.main_mine);

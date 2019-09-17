@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.fragment;
+package com.shushan.thomework101.mvp.ui.fragment.home;
 
 
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
@@ -8,13 +8,13 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
  * Created by li.liu on 2019/05/28.
  */
 
-public class TeacherFragmentControl {
-    public interface TeacherView extends LoadDataView {
-//        void getInfoSuccess(TeacherFragmentResponse response);
+public class HomeFragmentControl {
+    public interface HomeView extends LoadDataView {
+//        void getInfoSuccess(HomeFragmentResponse response);
 
     }
 
-    public interface TeacherFragmentPresenter extends Presenter<TeacherView> {
+    public interface homeFragmentPresenter extends Presenter<HomeView> {
         /**
          * 请求homeFragment list 数据
          */

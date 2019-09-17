@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.fragment;
+package com.shushan.thomework101.mvp.ui.fragment.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,29 +11,29 @@ import android.view.ViewGroup;
 
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
-import com.shushan.thomework101.di.components.DaggerTeacherFragmentComponent;
+import com.shushan.thomework101.di.components.DaggerHomeFragmentComponent;
+import com.shushan.thomework101.di.modules.HomeFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
-import com.shushan.thomework101.di.modules.TeacherFragmentModule;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.utils.StatusBarUtil;
 
 import java.util.Objects;
 
 /**
- * TeacherFragment
- * 老师
+ * MessageFragment
+ * 消息
  */
 
-public class TeacherFragment extends BaseFragment implements TeacherFragmentControl.TeacherView {
+public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView {
 
-    public static TeacherFragment newInstance() {
-        return new TeacherFragment();
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_teacher, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         initializeInjector();
         StatusBarUtil.setTransparentForImageView(getActivity(), null);
         initView();
@@ -53,9 +53,9 @@ public class TeacherFragment extends BaseFragment implements TeacherFragmentCont
 
 
     private void initializeInjector() {
-        DaggerTeacherFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
+        DaggerHomeFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
-                .teacherFragmentModule(new TeacherFragmentModule(this))
+                .homeFragmentModule(new HomeFragmentModule(this))
                 .build().inject(this);
     }
 

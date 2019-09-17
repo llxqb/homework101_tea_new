@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.fragment;
+package com.shushan.thomework101.mvp.ui.fragment.mine;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,12 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
-import com.shushan.thomework101.di.components.DaggerMimeFragmentComponent;
+import com.shushan.thomework101.di.components.DaggerMineFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
-import com.shushan.thomework101.di.modules.MimeFragmentModule;
+import com.shushan.thomework101.di.modules.MineFragmentModule;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.utils.StatusBarUtil;
 
@@ -24,10 +23,10 @@ import java.util.Objects;
  * 我的
  */
 
-public class MimeFragment extends BaseFragment implements MimeFragmentControl.MimeView {
+public class MineFragment extends BaseFragment implements MineFragmentControl.MineView {
 
-    public static MimeFragment newInstance() {
-        return new MimeFragment();
+    public static MineFragment newInstance() {
+        return new MineFragment();
     }
 
     @Nullable
@@ -53,9 +52,9 @@ public class MimeFragment extends BaseFragment implements MimeFragmentControl.Mi
 
 
     private void initializeInjector() {
-        DaggerMimeFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
+        DaggerMineFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
-                .mimeFragmentModule(new MimeFragmentModule(this))
+                .mineFragmentModule(new MineFragmentModule(this))
                 .build().inject(this);
     }
 

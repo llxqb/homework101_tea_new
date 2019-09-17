@@ -4,7 +4,7 @@ package com.shushan.thomework101.di.modules;
 
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
-import com.shushan.thomework101.mvp.ui.fragment.HomeFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentControl;
 
 import dagger.Module;
 import dagger.Provides;

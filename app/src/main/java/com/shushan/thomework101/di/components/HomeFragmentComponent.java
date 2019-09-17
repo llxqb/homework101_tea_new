@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.HomeFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.ui.fragment.HomeFragment;
+import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragment;
 
 import dagger.Component;
 

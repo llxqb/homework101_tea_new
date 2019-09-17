@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.fragment;
+package com.shushan.thomework101.mvp.ui.fragment.home;
 
 import android.content.Context;
 

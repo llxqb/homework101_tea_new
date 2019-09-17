@@ -8,10 +8,10 @@
         android:title="@string/main_bottom_home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_message"
+        android:id="@+id/action_student"
         android:enabled="true"
         android:icon="@mipmap/main_mine"
-        android:title="@string/main_bottom_teacher"
+        android:title="@string/main_bottom_student"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_mine"

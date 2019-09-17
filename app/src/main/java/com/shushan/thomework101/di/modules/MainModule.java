@@ -10,12 +10,12 @@ import com.shushan.thomework101.mvp.model.MainModel;
 import com.shushan.thomework101.mvp.model.ModelTransform;
 import com.shushan.thomework101.mvp.ui.activity.main.MainControl;
 import com.shushan.thomework101.mvp.ui.activity.main.MainPresenterImpl;
-import com.shushan.thomework101.mvp.ui.fragment.HomeFragmentControl;
-import com.shushan.thomework101.mvp.ui.fragment.HomeFragmentPresenterImpl;
-import com.shushan.thomework101.mvp.ui.fragment.MimeFragmentControl;
-import com.shushan.thomework101.mvp.ui.fragment.MimeFragmentPresenterImpl;
-import com.shushan.thomework101.mvp.ui.fragment.TeacherFragmentControl;
-import com.shushan.thomework101.mvp.ui.fragment.TeacherFragmentPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragmentPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
 import com.shushan.thomework101.network.networkapi.MainApi;
 
@@ -80,14 +80,14 @@ public class MainModule {
 
     @Provides
     @PerActivity
-    TeacherFragmentControl.TeacherFragmentPresenter providePresenterTeacherFragment(TeacherFragmentPresenterImpl teacherFragmentPresenter) {
-        return teacherFragmentPresenter;
+    StudentFragmentControl.StudentFragmentPresenter providePresenterStudentFragment(StudentFragmentPresenterImpl studentFragmentPresenter) {
+        return studentFragmentPresenter;
     }
 
     @Provides
     @PerActivity
-    MimeFragmentControl.MimeFragmentPresenter providePresenterMimeFragment(MimeFragmentPresenterImpl mimeFragmentPresenter) {
-        return mimeFragmentPresenter;
+    MineFragmentControl.MineFragmentPresenter providePresenterMineFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
+        return mineFragmentPresenter;
     }
 
 

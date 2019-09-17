@@ -4,7 +4,7 @@ package com.shushan.thomework101.di.modules;
 
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
-import com.shushan.thomework101.mvp.ui.fragment.MimeFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentControl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,13 +13,13 @@ import dagger.Provides;
  * Created by li.liu on 16/3/20.
  */
 @Module
-public class MimeFragmentModule {
+public class MineFragmentModule {
 
-    private MimeFragmentControl.MimeView mMimeFragmentView;
+    private MineFragmentControl.MineView mMineFragmentView;
 
-    public MimeFragmentModule(LoadDataView view) {
-        if (view instanceof MimeFragmentControl.MimeView) {
-            mMimeFragmentView = (MimeFragmentControl.MimeView) view;
+    public MineFragmentModule(LoadDataView view) {
+        if (view instanceof MineFragmentControl.MineView) {
+            mMineFragmentView = (MineFragmentControl.MineView) view;
         }
     }
 
@@ -30,8 +30,8 @@ public class MimeFragmentModule {
      */
     @Provides
     @PerActivity
-    MimeFragmentControl.MimeView mimeFragmentView() {
-        return this.mMimeFragmentView;
+    MineFragmentControl.MineView mineFragmentView() {
+        return this.mMineFragmentView;
     }
 
 

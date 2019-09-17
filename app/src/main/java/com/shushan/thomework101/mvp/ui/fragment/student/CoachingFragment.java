@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.fragment.mine;
+package com.shushan.thomework101.mvp.ui.fragment.student;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,24 +10,23 @@ import android.view.ViewGroup;
 
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
-import com.shushan.thomework101.di.components.DaggerMineFragmentComponent;
+import com.shushan.thomework101.di.components.DaggerCoachingFragmentComponent;
+import com.shushan.thomework101.di.modules.CoachingFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
-import com.shushan.thomework101.di.modules.MineFragmentModule;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
 import java.util.Objects;
 
 /**
- * MimeFragment
- * 我的
+ * 学生页面 -- 辅导fragment
  */
 
-public class MineFragment extends BaseFragment implements MineFragmentControl.MineView {
+public class CoachingFragment extends BaseFragment implements CoachingFragmentControl.CoachingFragmentView {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mime, container, false);
+        View view = inflater.inflate(R.layout.fragment_coaching, container, false);
         initializeInjector();
         initView();
         initData();
@@ -46,9 +45,9 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
 
     private void initializeInjector() {
-        DaggerMineFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
+        DaggerCoachingFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
-                .mineFragmentModule(new MineFragmentModule(this))
+                .coachingFragmentModule(new CoachingFragmentModule(this))
                 .build().inject(this);
     }
 

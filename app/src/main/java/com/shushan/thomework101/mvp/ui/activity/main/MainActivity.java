@@ -56,9 +56,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 //            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
         }
         List<Fragment> fragments = new ArrayList<>();
-        HomeFragment homeFragment = HomeFragment.newInstance();
-        StudentFragment studentFragment = StudentFragment.newInstance();
-        MineFragment mineFragment = MineFragment.newInstance();
+        HomeFragment homeFragment = new HomeFragment();
+        StudentFragment studentFragment = new StudentFragment();
+        MineFragment mineFragment = new  MineFragment();
         fragments.add(homeFragment);
         fragments.add(studentFragment);
         fragments.add(mineFragment);

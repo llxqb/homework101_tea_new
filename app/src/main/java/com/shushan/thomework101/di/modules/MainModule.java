@@ -14,6 +14,12 @@ import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentControl;
 import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentPresenterImpl;
 import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.student.CoachingFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.student.CoachingFragmentPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.student.FeedbackFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.student.FeedbackFragmentPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.student.MineStudentFragmentControl;
+import com.shushan.thomework101.mvp.ui.fragment.student.MineStudentFragmentPresenterImpl;
 import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragmentControl;
 import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragmentPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
@@ -71,23 +77,46 @@ public class MainModule {
     }
 
 
-    //add
+    //首页
     @Provides
     @PerActivity
-   HomeFragmentControl.homeFragmentPresenter providePresenterHomeFragment(HomeFragmentPresenterImpl homeFragmentPresenter) {
+    HomeFragmentControl.homeFragmentPresenter providePresenterHomeFragment(HomeFragmentPresenterImpl homeFragmentPresenter) {
         return homeFragmentPresenter;
     }
 
+    //学生
     @Provides
     @PerActivity
     StudentFragmentControl.StudentFragmentPresenter providePresenterStudentFragment(StudentFragmentPresenterImpl studentFragmentPresenter) {
         return studentFragmentPresenter;
     }
 
+    //我的
     @Provides
     @PerActivity
     MineFragmentControl.MineFragmentPresenter providePresenterMineFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
         return mineFragmentPresenter;
+    }
+
+    //学生---辅导
+    @Provides
+    @PerActivity
+    CoachingFragmentControl.CoachingFragmentPresenter providePresenterCoachingFragment(CoachingFragmentPresenterImpl coachingFragmentPresenter) {
+        return coachingFragmentPresenter;
+    }
+
+    //学生---我的学生列表
+    @Provides
+    @PerActivity
+    MineStudentFragmentControl.MineStudentFragmentPresenter providePresenterMineStudentFragment(MineStudentFragmentPresenterImpl mineStudentFragmentPresenter) {
+        return mineStudentFragmentPresenter;
+    }
+
+    //学生---今日反馈
+    @Provides
+    @PerActivity
+    FeedbackFragmentControl.FeedbackFragmentPresenter providePresenterFeedbackFragment(FeedbackFragmentPresenterImpl feedbackFragmentPresenter) {
+        return feedbackFragmentPresenter;
     }
 
 

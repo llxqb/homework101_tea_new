@@ -9,6 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="老师"
+        android:text="辅导"
         />
 </LinearLayout>

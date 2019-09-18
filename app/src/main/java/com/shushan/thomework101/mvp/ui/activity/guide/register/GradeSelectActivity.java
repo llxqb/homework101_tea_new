@@ -1,16 +1,16 @@
-package com.shushan.thomework101.mvp.ui.activity.register;
+package com.shushan.thomework101.mvp.ui.activity.guide.register;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 
 /**
- * 辅导科目选择
+ * 年级选择
  */
-public class SubjectSelectActivity extends BaseActivity {
+public class GradeSelectActivity extends BaseActivity {
 
     @Override
     protected void initContentView() {
-        setContentView(R.layout.activity_subject_select);
+        setContentView(R.layout.activity_grade_select);
     }
 
     @Override
@@ -22,6 +22,4 @@ public class SubjectSelectActivity extends BaseActivity {
     public void initData() {
 
     }
-
-
 }

@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.ui.activity.teacherCenter.EditPersonalInfoActivity">
+    tools:context=".mvp.ui.activity.mine.teacherCenter.EditPersonalInfoActivity">
 
 </android.support.constraint.ConstraintLayout>

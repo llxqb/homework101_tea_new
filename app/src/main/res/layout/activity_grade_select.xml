@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.ui.activity.register.GradeSelectActivity">
+    tools:context=".mvp.ui.activity.guide.register.GradeSelectActivity">
 
 </android.support.constraint.ConstraintLayout>

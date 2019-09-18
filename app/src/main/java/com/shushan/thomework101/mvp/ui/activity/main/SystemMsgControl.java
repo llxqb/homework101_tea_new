@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.other;
+package com.shushan.thomework101.mvp.ui.activity.main;
 
 
 import com.shushan.thomework101.mvp.presenter.LoadDataView;

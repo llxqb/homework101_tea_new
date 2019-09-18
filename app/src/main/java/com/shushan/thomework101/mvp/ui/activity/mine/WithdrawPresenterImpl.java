@@ -2,7 +2,7 @@ package com.shushan.thomework101.mvp.ui.activity.mine;
 
 import android.content.Context;
 
-import com.shushan.thomework101.mvp.model.UserModel;
+import com.shushan.thomework101.mvp.model.MineModel;
 
 import javax.inject.Inject;
 
@@ -14,13 +14,13 @@ import javax.inject.Inject;
 public class WithdrawPresenterImpl implements WithdrawControl.PresenterWithdraw {
 
     private WithdrawControl.WithdrawView mWithdrawView;
-    private final UserModel mUserModel;
+    private final MineModel mMineModel;
     private final Context mContext;
 
     @Inject
-    public WithdrawPresenterImpl(Context context, UserModel model, WithdrawControl.WithdrawView WithdrawView) {
+    public WithdrawPresenterImpl(Context context, MineModel model, WithdrawControl.WithdrawView WithdrawView) {
         mContext = context;
-        mUserModel = model;
+        mMineModel = model;
         mWithdrawView = WithdrawView;
     }
 

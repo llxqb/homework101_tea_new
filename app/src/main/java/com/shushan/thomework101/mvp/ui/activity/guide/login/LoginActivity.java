@@ -1,9 +1,10 @@
-package com.shushan.thomework101.mvp.ui.activity.login;
+package com.shushan.thomework101.mvp.ui.activity.guide.login;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLoginComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.LoginModule;
+import com.shushan.thomework101.mvp.ui.activity.login.LoginControl;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 
 /**

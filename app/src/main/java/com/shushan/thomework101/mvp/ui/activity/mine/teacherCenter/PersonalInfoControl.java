@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.teacherCenter;
+package com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter;
 
 
 import com.shushan.thomework101.mvp.presenter.LoadDataView;

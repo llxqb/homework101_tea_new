@@ -6,10 +6,10 @@ import retrofit2.http.POST;
 
 /**
  * Created by li.liu on 2019/05/28.
- * LoginApi
+ * GuideApi
  */
 
-public interface UserApi {
+public interface GuideApi {
     /**
      * Google登录
      */

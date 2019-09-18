@@ -2,8 +2,7 @@ package com.shushan.thomework101.mvp.ui.activity.login;
 
 import android.content.Context;
 
-
-import com.shushan.thomework101.mvp.model.LoginModel;
+import com.shushan.thomework101.network.networkapi.GuideApi;
 
 import javax.inject.Inject;
 
@@ -12,16 +11,16 @@ import javax.inject.Inject;
  * Created by li.liu on 2019/09/17.
  */
 
-public class LoginPresenterImpl implements LoginControl.PresenterLogin {
+public class LoginPresenterImpl implements com.shushan.thomework101.mvp.ui.activity.login.LoginControl.PresenterLogin {
 
-    private LoginControl.LoginView mLoginView;
-    private final LoginModel mLoginModel;
+    private com.shushan.thomework101.mvp.ui.activity.login.LoginControl.LoginView mLoginView;
+    private final GuideApi mGuideApi;
     private final Context mContext;
 
     @Inject
-    public LoginPresenterImpl(Context context, LoginModel model, LoginControl.LoginView LoginView) {
+    public LoginPresenterImpl(Context context, GuideApi model, com.shushan.thomework101.mvp.ui.activity.login.LoginControl.LoginView LoginView) {
         mContext = context;
-        mLoginModel = model;
+        mGuideApi = model;
         mLoginView = LoginView;
     }
 
@@ -32,7 +31,7 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
 //    @Override
 //    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
 //        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mLoginModel.onRequestVerifyCode(verifyCodeRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+//        Disposable disposable = mGuideApi.onRequestVerifyCode(verifyCodeRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
 //                .subscribe(this::requestVerifyCodeSuccess, throwable -> mLoginView.showErrMessage(throwable),
 //                        () -> mLoginView.dismissLoading());
 //        mLoginView.addSubscription(disposable);

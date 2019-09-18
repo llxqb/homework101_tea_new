@@ -1,8 +1,8 @@
-package com.shushan.thomework101.mvp.ui.activity.teacherCenter;
+package com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter;
 
 import android.content.Context;
 
-import com.shushan.thomework101.mvp.model.UserModel;
+import com.shushan.thomework101.mvp.model.MineModel;
 
 import javax.inject.Inject;
 
@@ -14,13 +14,13 @@ import javax.inject.Inject;
 public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterPersonalInfo {
 
     private PersonalInfoControl.PersonalInfoView mPersonalInfoView;
-    private final UserModel mUserModel;
+    private final MineModel mMineModel;
     private final Context mContext;
 
     @Inject
-    public PersonalInfoPresenterImpl(Context context, UserModel model, PersonalInfoControl.PersonalInfoView PersonalInfoView) {
+    public PersonalInfoPresenterImpl(Context context, MineModel model, PersonalInfoControl.PersonalInfoView PersonalInfoView) {
         mContext = context;
-        mUserModel = model;
+        mMineModel = model;
         mPersonalInfoView = PersonalInfoView;
     }
 
@@ -31,7 +31,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 //    @Override
 //    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
 //        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mUserModel.onRequestVerifyCode(verifyCodeRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+//        Disposable disposable = mMineModel.onRequestVerifyCode(verifyCodeRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
 //                .subscribe(this::requestVerifyCodeSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
 //                        () -> mPersonalInfoView.dismissLoading());
 //        mPersonalInfoView.addSubscription(disposable);

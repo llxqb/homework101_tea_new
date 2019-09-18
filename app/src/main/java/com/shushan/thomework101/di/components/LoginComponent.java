@@ -3,11 +3,10 @@ package com.shushan.thomework101.di.components;
 
 import android.support.v7.app.AppCompatActivity;
 
-
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.LoginModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.ui.activity.login.LoginActivity;
+import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
 
 import dagger.Component;
 

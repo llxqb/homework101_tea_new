@@ -1,8 +1,8 @@
-package com.shushan.thomework101.mvp.ui.activity.other;
+package com.shushan.thomework101.mvp.ui.activity.main;
 
 import android.content.Context;
 
-import com.shushan.thomework101.mvp.model.OtherModel;
+import com.shushan.thomework101.mvp.model.MineModel;
 
 import javax.inject.Inject;
 
@@ -14,13 +14,13 @@ import javax.inject.Inject;
 public class SystemMsgPresenterImpl implements SystemMsgControl.PresenterSystemMsg {
 
     private SystemMsgControl.SystemMsgView mSystemMsgView;
-    private final OtherModel mOtherModel;
+    private final MineModel mMineModel;
     private final Context mContext;
 
     @Inject
-    public SystemMsgPresenterImpl(Context context, OtherModel model, SystemMsgControl.SystemMsgView SystemMsgView) {
+    public SystemMsgPresenterImpl(Context context, MineModel model, SystemMsgControl.SystemMsgView SystemMsgView) {
         mContext = context;
-        mOtherModel = model;
+        mMineModel = model;
         mSystemMsgView = SystemMsgView;
     }
 
@@ -31,7 +31,7 @@ public class SystemMsgPresenterImpl implements SystemMsgControl.PresenterSystemM
 //    @Override
 //    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
 //        mSystemMsgView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mOtherModel.onRequestVerifyCode(verifyCodeRequest).compose(mSystemMsgView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+//        Disposable disposable = mMineModel.onRequestVerifyCode(verifyCodeRequest).compose(mSystemMsgView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
 //                .subscribe(this::requestVerifyCodeSuccess, throwable -> mSystemMsgView.showErrMessage(throwable),
 //                        () -> mSystemMsgView.dismissLoading());
 //        mSystemMsgView.addSubscription(disposable);

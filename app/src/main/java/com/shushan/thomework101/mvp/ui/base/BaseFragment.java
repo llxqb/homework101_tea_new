@@ -18,7 +18,7 @@ import com.shushan.thomework101.entity.user.BuProcessor;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.help.ImageLoaderHelper;
 import com.shushan.thomework101.mvp.utils.SharePreferenceUtil;
-import com.shushan.thomework101.mvp.utils.ToastUtil;
+import com.shushan.thomework101.mvp.utils.ToastUtils;
 
 import java.net.ConnectException;
 import java.util.Objects;
@@ -94,7 +94,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showToast(String message) {
-        ToastUtil.showToast(getContext(), message);
+        ToastUtils.showShort(getContext(), message);
     }
 
     public void showLoading(String msg) {

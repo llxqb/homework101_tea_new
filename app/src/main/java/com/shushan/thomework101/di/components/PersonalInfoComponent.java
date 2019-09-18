@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.PersonalInfoModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.ui.activity.teacherCenter.CoachingTimeActivity;
-import com.shushan.thomework101.mvp.ui.activity.teacherCenter.EditPersonalInfoActivity;
-import com.shushan.thomework101.mvp.ui.activity.teacherCenter.UploadCardActivity;
-import com.shushan.thomework101.mvp.ui.activity.teacherCenter.UploadVideoActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter.CoachingTimeActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter.EditPersonalInfoActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter.UploadCardActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter.UploadVideoActivity;
 
 import dagger.Component;
 

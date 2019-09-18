@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.other.CustomerServiceActivity"></activity>
+        <activity android:name=".mvp.ui.activity.mine.CustomerServiceActivity"></activity>
         <activity android:name=".mvp.ui.activity.mine.StudentReplacementDetailActivity" />
         <activity android:name=".mvp.ui.activity.mine.MineFeedbackActivity" />
         <activity android:name=".mvp.ui.activity.mine.ExpectedIncomeActivity" />
@@ -31,16 +31,16 @@
         <activity android:name=".mvp.ui.activity.mine.WalletActivity" />
         <activity android:name=".mvp.ui.activity.mine.LeaveActivity" />
         <activity android:name=".mvp.ui.activity.mine.SettingActivity" />
-        <activity android:name=".mvp.ui.activity.teacherCenter.EditPersonalInfoActivity" />
+        <activity android:name=".mvp.ui.activity.mine.teacherCenter.EditPersonalInfoActivity" />
         <activity android:name=".mvp.ui.activity.student.SubmitFeedbackContentActivity" />
         <activity android:name=".mvp.ui.activity.student.StudentDetailActivity" />
-        <activity android:name=".mvp.ui.activity.other.SystemMsgActivity" />
-        <activity android:name=".mvp.ui.activity.teacherCenter.CoachingTimeActivity" />
-        <activity android:name=".mvp.ui.activity.teacherCenter.UploadVideoActivity" />
-        <activity android:name=".mvp.ui.activity.teacherCenter.UploadCardActivity" />
-        <activity android:name=".mvp.ui.activity.register.GradeSelectActivity" />
-        <activity android:name=".mvp.ui.activity.register.SubjectSelectActivity" />
-        <activity android:name=".mvp.ui.activity.login.LoginActivity" />
+        <activity android:name=".mvp.ui.activity.main.SystemMsgActivity" />
+        <activity android:name=".mvp.ui.activity.mine.teacherCenter.CoachingTimeActivity" />
+        <activity android:name=".mvp.ui.activity.mine.teacherCenter.UploadVideoActivity" />
+        <activity android:name=".mvp.ui.activity.mine.teacherCenter.UploadCardActivity" />
+        <activity android:name=".mvp.ui.activity.guide.register.GradeSelectActivity" />
+        <activity android:name=".mvp.ui.activity.guide.register.SubjectSelectActivity" />
+        <activity android:name=".mvp.ui.activity.guide.login.LoginActivity" />
         <activity android:name=".mvp.ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

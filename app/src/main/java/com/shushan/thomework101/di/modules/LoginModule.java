@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.model.LoginModel;
+import com.shushan.thomework101.mvp.model.GuideModel;
 import com.shushan.thomework101.mvp.model.ModelTransform;
 import com.shushan.thomework101.mvp.ui.activity.login.LoginControl;
 import com.shushan.thomework101.mvp.ui.activity.login.LoginPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
-import com.shushan.thomework101.network.networkapi.LoginApi;
+import com.shushan.thomework101.network.networkapi.GuideApi;
 
 import dagger.Module;
 import dagger.Provides;
@@ -52,15 +52,15 @@ public class LoginModule {
 
     @Provides
     @PerActivity
-    LoginModel provideLoginModel(Gson gson, ModelTransform modelTransform) {
-        return new LoginModel(new RetrofitUtil.Builder()
+    GuideModel provideGuideModel(Gson gson, ModelTransform modelTransform) {
+        return new GuideModel(new RetrofitUtil.Builder()
                 .context(activity)
                 .baseUrl(BuildConfig.WORK_TEA_BASE_URL)
                 .isHttps(!BuildConfig.DEBUG)
 //                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
                 .isToJson(false)
                 .builder()
-                .create(LoginApi.class), gson, modelTransform);
+                .create(GuideApi.class), gson, modelTransform);
     }
 
 

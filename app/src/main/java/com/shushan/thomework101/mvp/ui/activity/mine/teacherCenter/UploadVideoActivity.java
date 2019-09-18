@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.teacherCenter;
+package com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerPersonalInfoComponent;
@@ -7,13 +7,14 @@ import com.shushan.thomework101.di.modules.PersonalInfoModule;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 
 /**
- * 编辑个人信息
+ * 上传试讲视频
  */
-public class EditPersonalInfoActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView {
+public class UploadVideoActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView {
+
 
     @Override
     protected void initContentView() {
-        setContentView(R.layout.activity_edit_personal_info);
+        setContentView(R.layout.activity_upload_video);
         initInjectData();
     }
 

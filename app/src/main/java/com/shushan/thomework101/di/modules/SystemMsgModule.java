@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.di.scopes.PerActivity;
+import com.shushan.thomework101.mvp.model.MineModel;
 import com.shushan.thomework101.mvp.model.ModelTransform;
-import com.shushan.thomework101.mvp.model.OtherModel;
-import com.shushan.thomework101.mvp.ui.activity.other.SystemMsgControl;
-import com.shushan.thomework101.mvp.ui.activity.other.SystemMsgPresenterImpl;
+import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgControl;
+import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
-import com.shushan.thomework101.network.networkapi.OtherApi;
+import com.shushan.thomework101.network.networkapi.MineApi;
 
 import dagger.Module;
 import dagger.Provides;
@@ -52,15 +52,15 @@ public class SystemMsgModule {
 
     @Provides
     @PerActivity
-    OtherModel provideOtherModel(Gson gson, ModelTransform modelTransform) {
-        return new OtherModel(new RetrofitUtil.Builder()
+    MineModel provideMineModel(Gson gson, ModelTransform modelTransform) {
+        return new MineModel(new RetrofitUtil.Builder()
                 .context(activity)
                 .baseUrl(BuildConfig.WORK_TEA_BASE_URL)
                 .isHttps(!BuildConfig.DEBUG)
 //                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
                 .isToJson(false)
                 .builder()
-                .create(OtherApi.class), gson, modelTransform);
+                .create(MineApi.class), gson, modelTransform);
     }
 
 

@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.bumptech.glide.load.HttpException;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
@@ -24,7 +23,7 @@ import com.shushan.thomework101.help.ImageLoaderHelper;
 import com.shushan.thomework101.mvp.utils.SharePreferenceUtil;
 import com.shushan.thomework101.mvp.utils.StatusBarUtil;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
-import com.shushan.thomework101.mvp.utils.ToastUtil;
+import com.shushan.thomework101.mvp.utils.ToastUtils;
 
 import java.net.ConnectException;
 
@@ -125,7 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showToast(String message) {
-        ToastUtil.showToast(getContext(), message);
+        ToastUtils.showShort(getContext(), message);
     }
 
     public void showLoading() {

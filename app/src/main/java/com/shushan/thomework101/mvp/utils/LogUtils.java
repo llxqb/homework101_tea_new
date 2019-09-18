@@ -2,7 +2,7 @@ package com.shushan.thomework101.mvp.utils;
 
 import android.util.Log;
 
-import com.shushan.homework101.BuildConfig;
+import com.shushan.thomework101.BuildConfig;
 
 
 /**

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 科目-->
+    <string-array name="subject">
+        <item>语文</item>
+        <item>数学</item>
+        <item>英语</item>
+        <item>物理</item>
+        <item>化学</item>
+        <item>生物</item>
+        <item>政治</item>
+        <item>历史</item>
+        <item>地理</item>
+    </string-array>
+
+    <string-array name="primary_school">
+        <item>一年级</item>
+        <item>二年级</item>
+        <item>三年级</item>
+        <item>四年级</item>
+        <item>五年级</item>
+        <item>六年级</item>
+    </string-array>
+
+    <string-array name="junior_high_school">
+        <item>初一</item>
+        <item>初二</item>
+        <item>初三</item>
+    </string-array>
+
+
+    <string-array name="function_name">
+        <item>我的辅导反馈</item>
+        <item>我的辅导记录</item>
+        <item>我的消费记录</item>
+        <item>我的优惠券</item>
+        <item>邀请好友</item>
+        <item>客服中心</item>
+    </string-array>
+
+</resources>

@@ -6,4 +6,86 @@
     android:layout_height="match_parent"
     tools:context=".mvp.ui.activity.guide.register.GradeSelectActivity">
 
+    <ImageView
+        android:id="@+id/common_left_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_back_img_bg"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/vector_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_50"
+        android:text="请选择年级"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_28"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/common_left_iv" />
+
+
+    <TextView
+        android:id="@+id/primary_school_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="小学"
+        android:drawableStart="@drawable/bg_rectangle_red"
+        android:textColor="@color/black"
+        android:drawablePadding="@dimen/dp_4"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_tv" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/primary_school_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/primary_school_tv" />
+
+
+    <TextView
+        android:id="@+id/junior_high_school_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="初中"
+        android:textColor="@color/black"
+        android:drawablePadding="@dimen/dp_4"
+        android:drawableStart="@drawable/bg_rectangle_red"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/primary_school_recycler_view" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/junior_high_school_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/junior_high_school_tv" />
+
+    <ImageView
+        android:id="@+id/go_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

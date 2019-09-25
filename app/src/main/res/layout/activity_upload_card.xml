@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.ui.activity.mine.teacherCenter.UploadCardActivity">
+    tools:context=".mvp.ui.activity.personalInfo.UploadCardActivity">
 
     <include layout="@layout/common_toolbar" />
 

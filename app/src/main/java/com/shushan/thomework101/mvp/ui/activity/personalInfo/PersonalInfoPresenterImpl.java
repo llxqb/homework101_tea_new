@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.mine.teacherCenter;
+package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 
 import android.content.Context;
 

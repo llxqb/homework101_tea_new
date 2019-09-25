@@ -23,32 +23,72 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.mine.CustomerServiceActivity" />
-        <activity android:name=".mvp.ui.activity.mine.StudentReplacementDetailActivity" />
-        <activity android:name=".mvp.ui.activity.mine.MineFeedbackActivity" />
-        <activity android:name=".mvp.ui.activity.mine.ExpectedIncomeActivity" />
-        <activity android:name=".mvp.ui.activity.mine.WithdrawActivity" />
-        <activity android:name=".mvp.ui.activity.mine.WalletActivity" />
-        <activity android:name=".mvp.ui.activity.mine.LeaveActivity" />
-        <activity android:name=".mvp.ui.activity.mine.SettingActivity" />
-        <activity android:name=".mvp.ui.activity.mine.teacherCenter.EditPersonalInfoActivity" />
-        <activity android:name=".mvp.ui.activity.student.SubmitFeedbackContentActivity" />
-        <activity android:name=".mvp.ui.activity.student.StudentDetailActivity" />
-        <activity android:name=".mvp.ui.activity.main.SystemMsgActivity" />
-        <activity android:name=".mvp.ui.activity.mine.teacherCenter.CoachingTimeActivity" />
-        <activity android:name=".mvp.ui.activity.mine.teacherCenter.UploadVideoActivity" />
-        <activity android:name=".mvp.ui.activity.mine.teacherCenter.UploadCardActivity" />
-        <activity android:name=".mvp.ui.activity.guide.register.GradeSelectActivity" />
-        <activity android:name=".mvp.ui.activity.guide.register.SubjectSelectActivity">
+        <activity
+            android:name=".mvp.ui.activity.main.SetCounselingTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.CustomerServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.StudentReplacementDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.MineFeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.ExpectedIncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.WithdrawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.WalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.LeaveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personalInfo.EditPersonalInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.student.SubmitFeedbackContentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.student.StudentDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.main.SystemMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personalInfo.CoachingTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personalInfo.UploadVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personalInfo.UploadCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.guide.register.GradeSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.guide.register.SubjectSelectActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.guide.login.LoginActivity" />
-        <activity android:name=".mvp.ui.activity.main.MainActivity"></activity>
-
+        <activity
+            android:name=".mvp.ui.activity.guide.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.main.MainActivity"
+            android:screenOrientation="portrait" />
         <!-- 融云 -->
         <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
         <!-- 否则使用拍照功能时，会崩溃 -->
@@ -60,8 +100,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
-        </provider>
-        <!-- 会话界面 -->
+        </provider> <!-- 会话界面 -->
         <activity
             android:name=".mvp.ui.activity.student.rongCloud.ConversationActivity"
             android:screenOrientation="portrait"
@@ -87,9 +126,7 @@
                 <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
             </intent-filter>
-        </receiver>
-
-        <!--友盟   渠道包 -->
+        </receiver> <!-- 友盟   渠道包 -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />

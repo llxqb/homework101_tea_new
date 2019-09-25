@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.ui.activity.personalInfo.UploadVideoActivity">
+    tools:context=".mvp.ui.activity.main.SetCounselingTimeActivity">
+
+    <include layout="@layout/common_toolbar"/>
+
 
 </android.support.constraint.ConstraintLayout>

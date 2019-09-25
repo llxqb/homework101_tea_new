@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/upload_card_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mvp.ui.activity.mine.teacherCenter.UploadCardActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <TextView
+        android:id="@+id/card_front_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份证正面"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/common_toolbar_layout" />
+
+    <ImageView
+        android:id="@+id/card_front_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_front_tv" />
 
 </android.support.constraint.ConstraintLayout>

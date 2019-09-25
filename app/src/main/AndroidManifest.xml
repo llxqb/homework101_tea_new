@@ -23,7 +23,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.student.rongCloud.ConversationActivity"></activity>
         <activity android:name=".mvp.ui.activity.mine.CustomerServiceActivity" />
         <activity android:name=".mvp.ui.activity.mine.StudentReplacementDetailActivity" />
         <activity android:name=".mvp.ui.activity.mine.MineFeedbackActivity" />
@@ -49,6 +48,54 @@
         </activity>
         <activity android:name=".mvp.ui.activity.guide.login.LoginActivity" />
         <activity android:name=".mvp.ui.activity.main.MainActivity"></activity>
+
+        <!-- 融云 -->
+        <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
+        <!-- 否则使用拍照功能时，会崩溃 -->
+        <provider
+            android:name=".help.MyProvider"
+            android:authorities="com.shushan.thomework101.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+        <!-- 会话界面 -->
+        <activity
+            android:name=".mvp.ui.activity.student.rongCloud.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.shushan.thomework101"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".help.NotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>
+
+        <!--友盟   渠道包 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5bd2a5f3f1f556da43000361" />
     </application>
 
 </manifest>

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView {
 
@@ -43,6 +47,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initView() {
+        connectRongCloud();
     }
 
     @Override
@@ -139,6 +144,51 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         }
     }
 
+
+    /**
+     * 连接融云
+     * 舍弃 RongCloudHelper类
+     */
+    private void connectRongCloud() {
+        String rToken = "doc7+tNUcJTTrUB7DOQ08I5qW7VD/FIB/Wuhywai/EI3xtPF3/gpkEBBXMDK5e3/lh+WhPJz20BPzLAhtFdlhg==";
+        //连接融云
+        if (!TextUtils.isEmpty(rToken)) {
+//            Log.d("ddd", "rToken:" + rToken);
+//            RongCloudHelper.connect(rToken); 不能这样使用静态方法
+            RongIM.connect(rToken, new RongIMClient.ConnectCallback() {
+                /**
+                 * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    Log.e("ddd", "--onTokenIncorrect");
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.e("ddd", "--onSuccess" + userid);
+//                    //保存融云userid
+//                    mSharePreferenceUtil.setData("rUserId", userid);
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.e("ddd", "--onError" + errorCode);
+                }
+            });
+        }
+        //同步与服务器信息 new CustomerUserInfoProvider(rongId, mBuProcessor.getLoginUser())
+//        RongIM.setUserInfoProvider(this, true);
+
+    }
 
     private void initInjectData() {
         DaggerMainComponent.builder().appComponent(getAppComponent())

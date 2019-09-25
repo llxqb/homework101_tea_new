@@ -37,7 +37,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void initView() {
-
     }
 
     @Override

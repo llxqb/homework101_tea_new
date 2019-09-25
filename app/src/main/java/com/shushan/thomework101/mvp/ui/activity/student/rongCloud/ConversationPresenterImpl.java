@@ -13,7 +13,6 @@ import javax.inject.Inject;
  */
 
 public class ConversationPresenterImpl implements ConversationControl.PresenterConversation {
-
     private ConversationControl.ConversationView mConversationView;
     private final StudentModel mStudentModel;
     private final Context mContext;

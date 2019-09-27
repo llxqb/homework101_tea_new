@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="false">
+    <item android:drawable="@drawable/item_bg_layer" android:state_pressed="false">
         <shape>
-            <!-- 边框-->
-            <stroke android:width="@dimen/dp_1" android:color="@color/line_color" />
             <!-- 填充-->
             <solid android:color="@color/white" />
             <corners android:radius="@dimen/dp_5" />
         </shape>
     </item>
-    <item android:state_pressed="true">
+    <item android:drawable="@drawable/ripple_rectangle" android:state_pressed="true">
         <shape>
-            <stroke android:width="@dimen/dp_1" android:color="@color/ripple_color_bg" />
             <solid android:color="@color/ripple_color_bg" />
             <corners android:radius="@dimen/dp_5" />
         </shape>

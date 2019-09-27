@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.ConversationModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.ui.activity.student.rongCloud.ConversationActivity;
+import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationActivity;
 
 import dagger.Component;
 

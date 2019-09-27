@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.student.rongCloud;
+package com.shushan.thomework101.mvp.ui.activity.rongCloud;
 
 
 import com.shushan.thomework101.mvp.presenter.LoadDataView;

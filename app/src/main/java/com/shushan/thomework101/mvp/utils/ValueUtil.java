@@ -20,6 +20,8 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -403,6 +405,45 @@ public class ValueUtil {
             }
         }
         return String.valueOf(flag);
+    }
+
+    /**
+     * list 去重
+     * String
+     *
+     * @param list
+     */
+    public static void removeDuplicate(List<String> list) {
+        List<String> result = new ArrayList<String>(list.size());
+        for (String str : list) {
+            if (!result.contains(str)) {
+                result.add(str);
+            }
+        }
+        list.clear();
+        list.addAll(result);
+    }
+
+    /**
+     * list 去重
+     * int
+     *
+     * @param list
+     */
+    public static List<Integer> removeDuplicateInt(List<Integer> list) {
+        if (!list.isEmpty()) {
+            List<Integer> result = new ArrayList<Integer>(list.size());
+            for (Integer integer : list) {
+                if (!result.contains(integer)) {
+                    result.add(integer);
+                }
+            }
+            list.clear();
+            list.addAll(result);
+            return list;
+        } else {
+            return list;
+        }
     }
 
 

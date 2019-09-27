@@ -42,14 +42,13 @@ public class BuProcessor {
     }
 
 
-
     /**
      * 验证是否第一次完善资料
-     * 用cover字段判断
+     * 选择年级和选择科目
      */
     public boolean isFinishFirstWrite() {
         mUser = (User) mSharePreferenceUtil.readObjData("user");
-        return mUser != null && !TextUtils.isEmpty(mUser.cover);
+        return mUser != null && !TextUtils.isEmpty(mUser.subject) && !TextUtils.isEmpty(mUser.grades);
     }
 
 

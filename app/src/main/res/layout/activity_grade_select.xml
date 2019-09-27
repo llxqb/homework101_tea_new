@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.ui.activity.guide.register.GradeSelectActivity">
+    tools:context=".mvp.ui.activity.guide.GradeSelectActivity">
 
     <ImageView
         android:id="@+id/common_left_iv"
@@ -20,38 +20,49 @@
         android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_50"
-        android:text="请选择年级"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_33"
+        android:text="请选择您辅导的年级"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_28"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/common_left_iv" />
 
+    <TextView
+        android:id="@+id/select_grade_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="*最多可以选择三个年级"
+        android:textColor="#9495A0"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
     <TextView
         android:id="@+id/primary_school_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="小学"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_30"
         android:drawableStart="@drawable/bg_rectangle_red"
-        android:textColor="@color/black"
         android:drawablePadding="@dimen/dp_4"
+        android:text="小学"
+        android:textColor="@color/black"
         android:textSize="@dimen/sp_15"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_tv" />
+        app:layout_constraintTop_toBottomOf="@id/select_grade_hint" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/primary_school_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintTop_toBottomOf="@id/primary_school_tv" />
 
 
@@ -59,12 +70,12 @@
         android:id="@+id/junior_high_school_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_30"
+        android:drawableStart="@drawable/bg_rectangle_red"
+        android:drawablePadding="@dimen/dp_4"
         android:text="初中"
         android:textColor="@color/black"
-        android:drawablePadding="@dimen/dp_4"
-        android:drawableStart="@drawable/bg_rectangle_red"
         android:textSize="@dimen/sp_15"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,18 +85,35 @@
         android:id="@+id/junior_high_school_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintTop_toBottomOf="@id/junior_high_school_tv" />
 
-    <ImageView
-        android:id="@+id/go_iv"
+    <TextView
+        android:id="@+id/sure_tv"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_62"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@mipmap/button"
+        android:gravity="center"
+        android:text="确定"
+        android:paddingBottom="@dimen/dp_5"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_30"
-        android:layout_marginBottom="@dimen/dp_30"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="*辅导年级确定后，将不能修改"
+        android:textColor="#9495A0"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBottom_toTopOf="@id/sure_tv"
+        android:layout_marginBottom="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

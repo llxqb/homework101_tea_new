@@ -18,7 +18,7 @@ import com.shushan.thomework101.di.components.DaggerCoachingFragmentComponent;
 import com.shushan.thomework101.di.modules.CoachingFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.entity.response.CoachingResponse;
-import com.shushan.thomework101.mvp.ui.activity.student.rongCloud.ConversationActivity;
+import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationActivity;
 import com.shushan.thomework101.mvp.ui.adapter.CoachingAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 

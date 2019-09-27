@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 实心 圆角 red_color_btn -->
-    <solid android:color="@color/ripple_color_bg"/>
+    <solid android:color="#F1F2F3"/>
     <corners android:radius="@dimen/dp_30"/>
 
 </shape>

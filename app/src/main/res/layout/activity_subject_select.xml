@@ -4,28 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.ui.activity.guide.register.SubjectSelectActivity">
-
-    <include layout="@layout/common_toolbar" />
-
+    tools:context=".mvp.ui.activity.guide.SubjectSelectActivity">
 
     <TextView
         android:id="@+id/subject_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:text="请选择您的科目"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_20"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_50"
+        android:text="请选择您辅导的科目"
+        android:textColor="@color/color_30"
+        android:textSize="@dimen/sp_24"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/common_toolbar_layout" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintTop_toBottomOf="@id/subject_title" />
+
+
+    <ImageView
+        android:id="@+id/go_iv"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:src="@mipmap/landing_nextstep_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

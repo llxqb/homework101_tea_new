@@ -1,5 +1,6 @@
 package com.shushan.thomework101.mvp.ui.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,11 +24,11 @@ public class SelectTextAdapter extends BaseQuickAdapter<SelectTextResponse, Base
         helper.addOnClickListener(R.id.item_grade_layout);
         helper.setText(R.id.grade_tv, item.name);
         if (item.check) {
-            helper.setBackgroundRes(R.id.grade_tv, R.drawable.bg_red_round_solid_30);
+            helper.setBackgroundRes(R.id.grade_tv, R.drawable.gradient_red_bg_30);
             helper.setTextColor(R.id.grade_tv, mContext.getResources().getColor(R.color.white));
         } else {
-            helper.setBackgroundRes(R.id.grade_tv, R.drawable.bg_ripple_round_stroke_30);
-            helper.setTextColor(R.id.grade_tv, mContext.getResources().getColor(R.color.color666));
+            helper.setBackgroundRes(R.id.grade_tv, R.drawable.bg_ripple_round_solid_30);
+            helper.setTextColor(R.id.grade_tv, Color.parseColor("#9C9DA8"));
         }
     }
 }

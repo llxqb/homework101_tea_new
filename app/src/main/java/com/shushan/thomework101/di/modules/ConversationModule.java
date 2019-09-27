@@ -7,8 +7,8 @@ import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.model.ModelTransform;
 import com.shushan.thomework101.mvp.model.StudentModel;
-import com.shushan.thomework101.mvp.ui.activity.student.rongCloud.ConversationControl;
-import com.shushan.thomework101.mvp.ui.activity.student.rongCloud.ConversationPresenterImpl;
+import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationControl;
+import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
 import com.shushan.thomework101.network.networkapi.StudentApi;
 

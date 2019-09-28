@@ -6,15 +6,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerPersonalInfoComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.PersonalInfoModule;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.AvatarPopupWindow;
 import com.shushan.thomework101.mvp.utils.LogUtils;
@@ -43,14 +44,19 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
         InvokeListener {
 
     @BindView(R.id.upload_card_layout)
-    ConstraintLayout mUploadCardLayout;
+    LinearLayout mUploadCardLayout;
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
-    @BindView(R.id.card_front_tv)
-    TextView mCardFrontTv;
-    @BindView(R.id.card_front_iv)
-    ImageView mCardFrontIv;
-
+    @BindView(R.id.common_right_iv)
+    ImageView mCommonRightIv;
+    @BindView(R.id.id_card_front_iv)
+    ImageView mIdCardFrontIv;
+    @BindView(R.id.id_card_back_iv)
+    ImageView mIdCardBackIv;
+    @BindView(R.id.teacher_certification_iv)
+    ImageView mTeacherCertificationIv;
+    @BindView(R.id.teacher_title_certificate_iv)
+    ImageView mTeacherTitleCertificateIv;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private Uri uri;
@@ -58,6 +64,10 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
     private CropOptions cropOptions;
     //成功取得照片
     Bitmap bitmap;
+    /**
+     * 照片类型
+     */
+    private int photoType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +83,8 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
 
     @Override
     public void initView() {
+        mCommonRightIv.setVisibility(View.VISIBLE);
+        mCommonRightIv.setImageResource(R.mipmap.tutor_service);
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
@@ -81,19 +93,35 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
 
     @Override
     public void initData() {
-
     }
 
 
-    @OnClick({R.id.common_left_iv, R.id.card_front_iv})
+    @OnClick({R.id.common_left_iv, R.id.common_right_iv, R.id.id_card_front_iv, R.id.id_card_back_iv, R.id.teacher_certification_iv, R.id.teacher_title_certificate_iv, R.id.sure_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_left_iv:
                 finish();
                 break;
-            case R.id.card_front_iv:
-                //上传身份证正面
+            case R.id.common_right_iv:
+                //联系客服
+                break;
+            case R.id.id_card_front_iv://上传身份证正面
+                photoType = Constant.IDCARDF_RONT;
                 new AvatarPopupWindow(this, this).initPopWindow(mUploadCardLayout);
+                break;
+            case R.id.id_card_back_iv://上传身份证背面
+                photoType = Constant.IDCARDF_BACK;
+                new AvatarPopupWindow(this, this).initPopWindow(mUploadCardLayout);
+                break;
+            case R.id.teacher_certification_iv://上传教师资格证
+                photoType = Constant.TEACHER_CERTIFICATION;
+                new AvatarPopupWindow(this, this).initPopWindow(mUploadCardLayout);
+                break;
+            case R.id.teacher_title_certificate_iv://上传教师职称（可选）
+                photoType = Constant.TEACHER_TITLE_CERTIFICATE;
+                new AvatarPopupWindow(this, this).initPopWindow(mUploadCardLayout);
+                break;
+            case R.id.sure_tv:
                 break;
         }
     }
@@ -126,9 +154,17 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
     @Override
     public void takeSuccess(TResult result) {
         bitmap = BitmapFactory.decodeFile(result.getImage().getCompressPath());
-        String path = PicUtils.convertIconToString(bitmap);
+        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
         LogUtils.d("path:" + result.getImage().getCompressPath());
-        mImageLoaderHelper.displayImage(this, bitmap, mCardFrontIv);
+        if (photoType == Constant.IDCARDF_RONT) {
+            mImageLoaderHelper.displayCircularImage(this, bitmap, mIdCardFrontIv,0);
+        } else if (photoType == Constant.IDCARDF_BACK) {
+            mImageLoaderHelper.displayCircularImage(this, bitmap, mIdCardBackIv,0);
+        } else if (photoType == Constant.TEACHER_CERTIFICATION) {
+            mImageLoaderHelper.displayCircularImage(this, bitmap, mTeacherCertificationIv,0);
+        } else if (photoType == Constant.TEACHER_TITLE_CERTIFICATE) {
+            mImageLoaderHelper.displayImage(this, "https://hiphotos.baidu.com/image/pic/item/d62a6059252dd42a2d5c75d70f3b5bb5c9eab870.jpg", mTeacherTitleCertificateIv);
+        }
         //上传图片
 //        uploadImage(path);
     }

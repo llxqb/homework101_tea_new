@@ -28,5 +28,8 @@ public class User implements Serializable {
      */
     public String subject;
 
-
+    /**
+     * 认证流程状态
+     */
+    public int registerState;
 }

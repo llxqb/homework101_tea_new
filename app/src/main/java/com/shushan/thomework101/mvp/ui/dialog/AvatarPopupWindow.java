@@ -1,7 +1,6 @@
 package com.shushan.thomework101.mvp.ui.dialog;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ public class AvatarPopupWindow {
         mPopupWindowListener = popupWindowListener;
     }
 
-    public void initPopWindow(ConstraintLayout personalInfoLayout) {
+    public void initPopWindow(View view) {
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popup_show_avatar, null);
         //处理popWindow 显示内容
         handlePopListView(contentView);
@@ -34,7 +33,7 @@ public class AvatarPopupWindow {
                 .enableBackgroundDark(true)
                 .size(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
                 .create();
-        mCustomPopWindow.showAtLocation(personalInfoLayout, Gravity.BOTTOM,0, 0);
+        mCustomPopWindow.showAtLocation(view, Gravity.BOTTOM,0, 0);
     }
 
     private void handlePopListView(View contentView) {

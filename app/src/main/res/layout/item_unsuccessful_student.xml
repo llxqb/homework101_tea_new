@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_unsuccessful_student_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_18"
+    android:layout_marginEnd="@dimen/dp_18"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:background="@drawable/selector_ripple_bg"
+    android:paddingTop="@dimen/dp_13"
+    android:paddingBottom="@dimen/dp_13">
+
+    <ImageView
+        android:id="@+id/student_avatar_iv"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_15"
+        android:src="@mipmap/my_default_head"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/student_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:text="苏慢慢"
+        android:textColor="@color/color_30"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/register_time_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:text="注册时间"
+        android:textColor="@color/color_30"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+        app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+
+    <TextView
+        android:id="@+id/student_grade_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:text="三年级"
+        android:textColor="#FF8B00"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toEndOf="@id/student_name_tv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/register_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_6"
+        android:text=" 2019-09-20"
+        android:textColor="#9495A0"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toEndOf="@id/register_time_hint"
+        app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+
+    <TextView
+        android:id="@+id/state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_18"
+        android:background="@drawable/bg_gray_round_solid_30"
+        android:paddingStart="@dimen/dp_17"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_17"
+        android:paddingBottom="@dimen/dp_5"
+        android:text="未付费"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

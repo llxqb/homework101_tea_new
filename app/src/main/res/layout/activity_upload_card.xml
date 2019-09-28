@@ -1,30 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/upload_card_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upload_card_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".mvp.ui.activity.personalInfo.UploadCardActivity">
 
     <include layout="@layout/common_toolbar" />
 
-    <TextView
-        android:id="@+id/card_front_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身份证正面"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/common_toolbar_layout" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/card_front_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_front_tv" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/upload_card_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_22"
+                android:layout_marginEnd="@dimen/dp_22"
+                android:text="*身份证和教师资格我们只做内部审核用，会严格遵循"
+                android:textColor="@color/first_text_color"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/id_card_front_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_27"
+                android:text="身份证正面"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upload_card_hint_tv" />
+
+
+            <ImageView
+                android:id="@+id/id_card_front_iv"
+                android:layout_width="@dimen/dp_290"
+                android:layout_height="@dimen/dp_180"
+                android:layout_marginTop="@dimen/dp_15"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/identity_card_facade"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_front_title_tv" />
+
+            <TextView
+                android:id="@+id/id_card_front_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_13"
+                android:text="（请上传身份证正面照片）"
+                android:textColor="@color/color_9b"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_front_iv" />
+
+
+            <TextView
+                android:id="@+id/id_card_back_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_27"
+                android:text="身份证反面"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_front_hint_tv" />
+
+
+            <ImageView
+                android:id="@+id/id_card_back_iv"
+                android:layout_width="@dimen/dp_290"
+                android:layout_height="@dimen/dp_180"
+                android:layout_marginTop="@dimen/dp_15"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/identity_card_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_back_title_tv" />
+
+            <TextView
+                android:id="@+id/id_card_back_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_13"
+                android:text="（请上传身份证反面照片）"
+                android:textColor="@color/color_9b"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_back_iv" />
+
+            <TextView
+                android:id="@+id/teacher_certification_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_27"
+                android:text="教师资格证"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_back_hint_tv" />
+
+
+            <ImageView
+                android:id="@+id/teacher_certification_iv"
+                android:layout_width="@dimen/dp_290"
+                android:layout_height="@dimen/dp_180"
+                android:layout_marginTop="@dimen/dp_15"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/teacher_certification"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teacher_certification_title_tv" />
+
+            <TextView
+                android:id="@+id/teacher_certification_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_13"
+                android:text="（请上传教师资格证照片）"
+                android:textColor="@color/color_9b"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teacher_certification_iv" />
+
+
+            <TextView
+                android:id="@+id/teacher_title_certificate_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_27"
+                android:text="教师职称证书（可选）"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teacher_certification_hint_tv" />
+
+
+            <ImageView
+                android:id="@+id/teacher_title_certificate_iv"
+                android:layout_width="@dimen/dp_290"
+                android:layout_height="@dimen/dp_180"
+                android:layout_marginTop="@dimen/dp_15"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/grade_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teacher_title_certificate_title_tv" />
+
+            <TextView
+                android:id="@+id/teacher_title_certificate_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_13"
+                android:text="（请上传教师职称证书照片）"
+                android:textColor="@color/color_9b"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teacher_title_certificate_iv" />
+
+
+            <TextView
+                android:id="@+id/sure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_36"
+                android:layout_marginBottom="@dimen/dp_30"
+                android:background="@mipmap/button"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teacher_title_certificate_hint_tv" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

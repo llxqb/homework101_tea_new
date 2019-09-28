@@ -144,4 +144,8 @@ dependencies {
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
     //PushSDK
     implementation 'com.umeng.umsdk:push:5.0.2'
+    //视频加载库
+    implementation 'cn.jzvd:jiaozivideoplayer:7.0.4'
+    //压缩视频
+//    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
 }

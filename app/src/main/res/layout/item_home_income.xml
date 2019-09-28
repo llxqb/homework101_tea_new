@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_home_income_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_102"
+        android:layout_height="@dimen/dp_78"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/selector_home_incom_bg">
+
+        <TextView
+            android:id="@+id/income_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="今日提成"
+            android:textColor="#9495A0"
+            android:textSize="@dimen/sp_13" />
+
+
+        <TextView
+            android:id="@+id/money_icon_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/income_title"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="￥"
+            android:textColor="#4C5467"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/income_title"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/money_icon_tv"
+            android:text="0"
+            android:textColor="#4C5467"
+            android:textSize="@dimen/sp_25" />
+
+        <ImageView
+            android:id="@+id/income_bg_icon_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/home_profit_royalty" />
+    </RelativeLayout>
+
+</LinearLayout>

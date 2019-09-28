@@ -5,9 +5,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.shushan.thomework101.mvp.utils.TranTools;
+import com.shushan.thomework101.mvp.views.GlideRoundTransform;
 
 import javax.inject.Inject;
 
@@ -43,30 +43,47 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
 
+    /**
+     * 设置圆角图片
+     */
     @Override
     public void displayCircularImage(Context context, Object path, ImageView imageView, int loadPic) {
-        RequestOptions options = RequestOptions
-                .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, 8)))//设置圆角大小
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(loadPic)
-                .skipMemoryCache(true)
-                .placeholder(loadPic)
-                .dontAnimate();
+        RequestOptions options;
+        //只是绘制圆角  false表示圆角
+        GlideRoundTransform transformation = new GlideRoundTransform(context, TranTools.dip2px(context, 8));
+        transformation.setExceptCorner(false, false, false, false);
+        if (loadPic == 0) {
+            options = new RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .transform(transformation)
+                    .skipMemoryCache(true)
+                    .dontAnimate();
+        } else {
+            options = new RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .transform(transformation)
+                    .error(loadPic)
+                    .skipMemoryCache(true)
+                    .placeholder(loadPic)
+                    .dontAnimate();
+        }
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
     @Override
     public void displayRoundedCornerImage(Context context, Object path, ImageView imageView, Integer size, int loadPic) {
-        RequestOptions options = RequestOptions
-                .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, size)))//设置圆角大小
-                .skipMemoryCache(true)
+        //只是绘制圆角  false表示圆角
+        GlideRoundTransform transformation = new GlideRoundTransform(context, TranTools.dip2px(context, size));
+        transformation.setExceptCorner(false, false, false, false);
+        RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .transform(transformation)
                 .error(loadPic)
+                .skipMemoryCache(true)
                 .placeholder(loadPic)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
-
 
     /**
      * 设置自适应图片

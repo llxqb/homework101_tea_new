@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 实心 圆角 red_color_btn -->
     <solid android:color="#EBF1FF"/>
-    <corners android:radius="@dimen/dp_5"/>
+    <corners android:radius="@dimen/dp_4"/>
 
 </shape>

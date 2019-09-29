@@ -3,7 +3,6 @@ package com.shushan.thomework101.mvp.ui.fragment.student;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,12 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.StudentFragmentModule;
+import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -35,8 +38,10 @@ import butterknife.Unbinder;
 
 public class StudentFragment extends BaseFragment implements StudentFragmentControl.StudentView {
 
-    @BindView(R.id.tabLayout)
-    TabLayout mTabLayout;
+    @BindView(R.id.xTabLayout)
+    XTabLayout mXTabLayout;
+    @BindView(R.id.customer_service_iv)
+    ImageView mCustomerServiceIv;
     @BindView(R.id.viewpager)
     ViewPager mViewpager;
     Unbinder unbinder;
@@ -56,18 +61,24 @@ public class StudentFragment extends BaseFragment implements StudentFragmentCont
 
     @Override
     public void initView() {
-        mViewpager.setOffscreenPageLimit(2);
+        mViewpager.setOffscreenPageLimit(3);
         mViewpager.setAdapter(new MyPageAdapter(getChildFragmentManager()));
-        mTabLayout.setupWithViewPager(mViewpager);
+        mXTabLayout.setupWithViewPager(mViewpager);
     }
 
     @Override
     public void initData() {
     }
 
+    @OnClick(R.id.customer_service_iv)
+    public void onViewClicked() {
+        startActivitys(CustomerServiceActivity.class);
+    }
+
 
     private class MyPageAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments = new ArrayList<Fragment>();
+
         MyPageAdapter(FragmentManager fm) {
             super(fm);
             CoachingFragment coachingFragment = new CoachingFragment();

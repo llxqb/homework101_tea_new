@@ -2,7 +2,7 @@ package com.shushan.thomework101.mvp.ui.activity.student;
 
 import android.content.Context;
 
-import com.shushan.thomework101.mvp.model.MineModel;
+import com.shushan.thomework101.mvp.model.StudentModel;
 
 import javax.inject.Inject;
 
@@ -14,13 +14,13 @@ import javax.inject.Inject;
 public class FeedbackPresenterImpl implements FeedbackControl.PresenterFeedback {
 
     private FeedbackControl.FeedbackView mFeedbackView;
-    private final MineModel mMineModel;
+    private final StudentModel mStudentModel;
     private final Context mContext;
 
     @Inject
-    public FeedbackPresenterImpl(Context context, MineModel model, FeedbackControl.FeedbackView FeedbackView) {
+    public FeedbackPresenterImpl(Context context, StudentModel model, FeedbackControl.FeedbackView FeedbackView) {
         mContext = context;
-        mMineModel = model;
+        mStudentModel = model;
         mFeedbackView = FeedbackView;
     }
 
@@ -31,7 +31,7 @@ public class FeedbackPresenterImpl implements FeedbackControl.PresenterFeedback 
 //    @Override
 //    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
 //        mFeedbackView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mMineModel.onRequestVerifyCode(verifyCodeRequest).compose(mFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+//        Disposable disposable = mStudentModel.onRequestVerifyCode(verifyCodeRequest).compose(mFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
 //                .subscribe(this::requestVerifyCodeSuccess, throwable -> mFeedbackView.showErrMessage(throwable),
 //                        () -> mFeedbackView.dismissLoading());
 //        mFeedbackView.addSubscription(disposable);

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvp.ui.activity.personalInfo.SetCounsellingTimeActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <TextView
+        android:id="@+id/time_requirements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_25"
+        android:text="辅导时间要求一个星期至少有6天，每天不得少于4小时。周一至周五的时间设置范围在16时-24时。请按规范设置，否则拒绝通过审核。"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/common_toolbar_layout" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_28"
+        app:layout_constraintTop_toBottomOf="@id/time_requirements" />
+
+    <RelativeLayout
+        android:id="@+id/working_day_date_rl"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/gradient_date_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view">
+
+        <TextView
+            android:id="@+id/working_day_start_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="16:00"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_13" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@mipmap/select_time_icon" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/working_day_date_hint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_18"
+        android:text="至"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintStart_toEndOf="@id/working_day_date_rl"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+
+    <RelativeLayout
+        android:id="@+id/working_day_time_rl"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/gradient_date_bg"
+        app:layout_constraintStart_toEndOf="@id/working_day_date_hint_tv"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view">
+
+        <TextView
+            android:id="@+id/working_day_end_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="23:59"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_13" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@mipmap/select_time_icon" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/saturday_rl"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_38"
+        android:layout_marginStart="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_53"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/working_day_date_rl">
+
+        <TextView
+            android:layout_width="@dimen/dp_86"
+            android:layout_height="@dimen/dp_34"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_red2_round_stroke_30"
+            android:gravity="center"
+            android:text="星期六"
+            android:textColor="#9C9DA8"
+            android:textSize="@dimen/sp_16" />
+
+
+        <ImageView
+            android:id="@+id/saturday_check_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/choose_red" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sunday_rl"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_38"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_53"
+        app:layout_constraintStart_toEndOf="@id/saturday_rl"
+        app:layout_constraintTop_toBottomOf="@id/working_day_date_rl">
+
+        <TextView
+            android:layout_width="@dimen/dp_86"
+            android:layout_height="@dimen/dp_34"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_red2_round_stroke_30"
+            android:gravity="center"
+            android:text="星期六"
+            android:textColor="#9C9DA8"
+            android:textSize="@dimen/sp_16" />
+
+
+        <ImageView
+            android:id="@+id/sunday_check_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:src="@mipmap/choose_red" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/off_day_date_rl"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@drawable/gradient_date_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saturday_rl">
+
+        <TextView
+            android:id="@+id/off_day_start_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="00:00"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_13" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@mipmap/select_time_icon" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/off_day_date_hint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_34"
+        android:text="至"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintStart_toEndOf="@id/off_day_date_rl"
+        app:layout_constraintTop_toBottomOf="@id/saturday_rl" />
+
+    <RelativeLayout
+        android:id="@+id/off_day_time_rl"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@drawable/gradient_date_bg"
+        app:layout_constraintStart_toEndOf="@id/off_day_date_hint_tv"
+        app:layout_constraintTop_toBottomOf="@id/saturday_rl">
+
+        <TextView
+            android:id="@+id/off_day_end_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="23:59"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_13" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@mipmap/select_time_icon" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/sure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@mipmap/button"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dp_5"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

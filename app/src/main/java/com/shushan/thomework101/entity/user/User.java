@@ -32,4 +32,10 @@ public class User implements Serializable {
      * 认证流程状态
      */
     public int registerState;
+    /**
+     * 我的标签
+     */
+    public String label1;
+    public String label2;
+
 }

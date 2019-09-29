@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_mine_student_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple_write_bg"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_18"
+        android:paddingEnd="@dimen/dp_18"
+        android:paddingBottom="@dimen/dp_18">
+
+        <ImageView
+            android:id="@+id/student_avatar_iv"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+            android:src="@mipmap/my_default_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/student_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_1"
+            android:text="冯宝宝"
+            android:textColor="@color/color_30"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textbook_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:background="@drawable/bg_yellow_round_solid_5"
+            android:padding="@dimen/dp_4"
+            android:text="三年级 人教版"
+            android:textColor="#FFAB00"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintStart_toEndOf="@id/student_name_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/counselling_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="月辅导"
+            android:textColor="#9495A0"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/studengt_remarks_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:maxLines="2"
+            android:text="备注：基础知识薄弱，需要巩固练习······"
+            android:textColor="@color/color_6d"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        style="@style/line_height_05"
+        android:layout_marginStart="@dimen/dp_60" />
+
+</LinearLayout>

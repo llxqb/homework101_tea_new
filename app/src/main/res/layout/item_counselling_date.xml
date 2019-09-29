@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_counselling_date"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_14"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_38">
+
+        <TextView
+            android:id="@+id/date_name"
+            android:layout_width="@dimen/dp_86"
+            android:layout_height="@dimen/dp_34"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_red2_round_stroke_30"
+            android:gravity="center"
+            android:text="星期一"
+            android:textColor="#9C9DA8"
+            android:textSize="@dimen/sp_16" />
+
+
+        <ImageView
+            android:id="@+id/day_check_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/choose_red" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerPersonalInfoComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.PersonalInfoModule;
+import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.PicUtils;
 import com.shushan.thomework101.mvp.views.NoFullScreenJzvdStd;
@@ -30,7 +31,6 @@ import okhttp3.RequestBody;
  * 上传试讲视频
  */
 public class UploadVideoActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView {
-
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -63,7 +63,8 @@ public class UploadVideoActivity extends BaseActivity implements PersonalInfoCon
 
     @Override
     public void initView() {
-
+        mCommonRightIv.setVisibility(View.VISIBLE);
+        mCommonRightIv.setImageResource(R.mipmap.tutor_service);
     }
 
     @Override
@@ -79,6 +80,7 @@ public class UploadVideoActivity extends BaseActivity implements PersonalInfoCon
                 finish();
                 break;
             case R.id.common_right_iv:
+                startActivitys(CustomerServiceActivity.class);
                 break;
             case R.id.upload_video_layout:
                 //打开视频

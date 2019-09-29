@@ -24,6 +24,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity android:name=".mvp.ui.activity.personalInfo.EditTextInfoActivity"></activity>
+        <activity android:name=".mvp.ui.activity.personalInfo.SetCounsellingTimeActivity" />
         <activity
             android:name=".mvp.ui.activity.main.SetCounselingTimeActivity"
             android:screenOrientation="portrait" />
@@ -77,23 +79,20 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.guide.SubjectSelectActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.guide.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- 融云 -->
+        </activity> <!-- 融云 -->
         <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
         <!-- 否则使用拍照功能时，会崩溃 -->
         <provider

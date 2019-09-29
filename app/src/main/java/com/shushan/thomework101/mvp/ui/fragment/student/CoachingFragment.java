@@ -32,6 +32,7 @@ import butterknife.Unbinder;
 
 /**
  * 学生页面 -- 辅导fragment
+ * 融云列表
  */
 
 public class CoachingFragment extends BaseFragment implements CoachingFragmentControl.CoachingFragmentView {
@@ -56,7 +57,6 @@ public class CoachingFragment extends BaseFragment implements CoachingFragmentCo
 
     @Override
     public void initView() {
-//        mRecyclerView
         mCoachingAdapter = new  CoachingAdapter(coachingResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mCoachingAdapter);

@@ -7,8 +7,8 @@ import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.model.ModelTransform;
 import com.shushan.thomework101.mvp.model.StudentModel;
-import com.shushan.thomework101.mvp.ui.activity.student.FeedbackControl;
-import com.shushan.thomework101.mvp.ui.activity.student.FeedbackPresenterImpl;
+import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailControl;
+import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
 import com.shushan.thomework101.network.networkapi.StudentApi;
 
@@ -19,16 +19,16 @@ import dagger.Provides;
  * Created by li.liu on 16/3/20.
  */
 @Module
-public class FeedbackModule {
+public class StudentDetailModule {
     private final AppCompatActivity activity;
-    private FeedbackControl.FeedbackView view;
+    private StudentDetailControl.StudentDetailView view;
 
-    public FeedbackModule(AppCompatActivity activity, FeedbackControl.FeedbackView view) {
+    public StudentDetailModule(AppCompatActivity activity, StudentDetailControl.StudentDetailView view) {
         this.activity = activity;
         this.view = view;
     }
 
-    public FeedbackModule(AppCompatActivity activity) {
+    public StudentDetailModule(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -40,19 +40,19 @@ public class FeedbackModule {
 
     @Provides
     @PerActivity
-    FeedbackControl.FeedbackView view() {
+    StudentDetailControl.StudentDetailView view() {
         return this.view;
     }
 
     @Provides
     @PerActivity
-    FeedbackControl.PresenterFeedback providePresenterFeedback(FeedbackPresenterImpl FeedbackPresenter) {
-        return FeedbackPresenter;
+    StudentDetailControl.PresenterStudentDetail providePresenterStudentDetail(StudentDetailPresenterImpl studentDetailPresenter) {
+        return studentDetailPresenter;
     }
 
     @Provides
     @PerActivity
-    StudentModel provideFeedbackModel(Gson gson, ModelTransform modelTransform) {
+    StudentModel provideStudentDetailModel(Gson gson, ModelTransform modelTransform) {
         return new StudentModel(new RetrofitUtil.Builder()
                 .context(activity)
                 .baseUrl(BuildConfig.WORK_TEA_BASE_URL)

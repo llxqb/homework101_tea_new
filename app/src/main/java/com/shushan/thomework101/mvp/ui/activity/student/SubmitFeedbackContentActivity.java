@@ -1,15 +1,37 @@
 package com.shushan.thomework101.mvp.ui.activity.student;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerFeedbackComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.FeedbackModule;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * 提交反馈内容
  */
 public class SubmitFeedbackContentActivity extends BaseActivity implements FeedbackControl.FeedbackView {
+
+    @BindView(R.id.common_title_tv)
+    TextView mCommonTitleTv;
+    @BindView(R.id.feedback_date_tv)
+    TextView mFeedbackDateTv;
+    @BindView(R.id.advantage_ev)
+    EditText mAdvantageEv;
+    @BindView(R.id.text_quantity_tv)
+    TextView mTextQuantityTv;
+    @BindView(R.id.disadvantage_ev)
+    EditText mDisadvantageEv;
+    @BindView(R.id.disadvantage_text_quantity_tv)
+    TextView mDisadvantageTextQuantityTv;
 
     @Override
     protected void initContentView() {
@@ -19,18 +41,101 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
 
     @Override
     public void initView() {
+        mCommonTitleTv.setText("陈盼盼"+"-辅导反馈");
 
     }
 
     @Override
     public void initData() {
+        mAdvantageEv.addTextChangedListener(advantage_text_OnChange);
+        mDisadvantageEv.addTextChangedListener(disadvantage_text_OnChange);
+    }
+
+
+
+    @OnClick({R.id.common_left_iv, R.id.sure_tv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.common_left_iv:
+                finish();
+                break;
+            case R.id.sure_tv:
+                //提交
+                onSubmitFeedback();
+                break;
+        }
+    }
+
+
+    /**
+     * 提交反馈内容
+     */
+    private void onSubmitFeedback(){
 
     }
 
+
+    public TextWatcher advantage_text_OnChange = new TextWatcher() {
+        private int selectionStart;
+        private int selectionEnd;
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            selectionStart = mAdvantageEv.getSelectionStart();
+            selectionEnd = mAdvantageEv.getSelectionEnd();
+            String worldTextNum = s.length() + "/100";
+            if (s.length() > 100) {
+                showToast("仅限100字以内");
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionStart;
+                mAdvantageEv.setSelection(tempSelection);
+            } else {
+                mTextQuantityTv.setText(worldTextNum);
+            }
+        }
+    };
+    public TextWatcher disadvantage_text_OnChange = new TextWatcher() {
+        private int selectionStart;
+        private int selectionEnd;
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            selectionStart = mDisadvantageEv.getSelectionStart();
+            selectionEnd = mDisadvantageEv.getSelectionEnd();
+            String worldTextNum = s.length() + "/100";
+            if (s.length() > 100) {
+                showToast("仅限100字以内");
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionStart;
+                mDisadvantageEv.setSelection(tempSelection);
+            } else {
+                mDisadvantageTextQuantityTv.setText(worldTextNum);
+            }
+        }
+    };
 
     private void initInjectData() {
         DaggerFeedbackComponent.builder().appComponent(getAppComponent())
                 .feedbackModule(new FeedbackModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
+
+
 }

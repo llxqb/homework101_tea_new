@@ -38,4 +38,12 @@
         <item>客服中心</item>
     </string-array>
 
+    <string-array name="working_day_name">
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+    </string-array>
+
 </resources>

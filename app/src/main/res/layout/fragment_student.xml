@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
+    <com.androidkun.xtablayout.XTabLayout
+        android:id="@+id/xTabLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/red_color_btn"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        app:tabTextColor="@color/color666" />
+        app:xTabIndicatorColor="@color/red_color_btn"
+        app:xTabIndicatorHeight="@dimen/dp_4"
+        app:xTabIndicatorWidth="@dimen/dp_20"
+        app:xTabMode="scrollable"
+        app:xTabSelectedTextColor="@color/color_30"
+        app:xTabSelectedTextSize="@dimen/sp_19"
+        app:xTabTextColor="#9495A0"
+        app:xTabTextSelectedBold="true"
+        app:xTabTextSize="@dimen/sp_15" />
+
+
+    <ImageView
+        android:id="@+id/customer_service_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:background="@drawable/selector_back_img_bg"
+        android:padding="@dimen/dp_10"
+        android:src="@mipmap/tutor_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/xTabLayout" />
 </android.support.constraint.ConstraintLayout>

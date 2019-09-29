@@ -25,6 +25,8 @@ import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.entity.response.HomeIncomeResponse;
 import com.shushan.thomework101.entity.response.UnSuccessfulStudentResponse;
 import com.shushan.thomework101.entity.user.User;
+import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgActivity;
+import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadCardActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadVideoActivity;
 import com.shushan.thomework101.mvp.ui.adapter.HomeIncomeAdapter;
@@ -209,10 +211,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_iv:
-                showToast("系统消息");
+                startActivitys(SystemMsgActivity.class);
                 break;
             case R.id.customer_service_iv:
-                showToast("客服");
+                startActivitys(EditPersonalInfoActivity.class);
                 break;
             case R.id.verify_state_tv: //上传身份证、教师资格证
                 startActivitys(UploadCardActivity.class);

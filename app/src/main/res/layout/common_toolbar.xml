@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/common_toolbar_layout"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="@dimen/dp_50">
+    android:layout_height="@dimen/dp_50"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/common_left_iv"
@@ -21,9 +21,9 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/app_name"
-        android:textStyle="bold"
         android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_16" />
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/common_right_iv"
@@ -43,5 +43,8 @@
         android:layout_centerVertical="true"
         android:background="@drawable/selector_back_img_bg"
         android:padding="@dimen/dp_10"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold"
         android:visibility="invisible" />
 </RelativeLayout>

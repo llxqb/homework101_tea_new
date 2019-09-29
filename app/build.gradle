@@ -137,6 +137,8 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+    //时间日期选择控件
+    implementation 'com.contrarywind:Android-PickerView:4.1.8'
     //友盟
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'
@@ -148,4 +150,6 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.4'
     //压缩视频
 //    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
+    //自定义TabLayout
+    implementation 'com.androidkun:XTabLayout:1.1.4'
 }

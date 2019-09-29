@@ -1,5 +1,6 @@
 package com.shushan.thomework101.help;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -16,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
+import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
 
 import java.util.Calendar;
 
@@ -169,5 +170,36 @@ public class DialogFactory {
         return loadingDialog;
     }
 
+    /**
+     * activity中 显示公共dialog
+     * @param context context
+     * @param title   标题
+     * @param subtitle  副标题
+     * @param leftBtnText   左边按钮文字
+     * @param rightBtnText  右边按钮文字
+     */
+    public static void showCommonDialog(Activity context, String title, String subtitle, String leftBtnText, String rightBtnText) {
+        CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setListener((CommonDialog.CommonDialogListener) context);
+        commonDialog.setValue(title, subtitle, leftBtnText, rightBtnText);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+    }
+
+
+    /**
+     * fragment中 显示公共dialog
+     * @param context  上下文
+     * @param fragment    fragment
+     * @param title       标题
+     * @param subtitle     副标题
+     * @param leftBtnText  左边按钮文字
+     * @param rightBtnText  右边按钮文字
+     */
+    public static void showCommonDialog(Context context, Fragment fragment, String title, String subtitle, String leftBtnText, String rightBtnText) {
+        CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setListener((CommonDialog.CommonDialogListener) fragment);
+        commonDialog.setValue(title, subtitle, leftBtnText, rightBtnText);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+    }
 
 }

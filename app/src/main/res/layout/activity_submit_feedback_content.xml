@@ -1,9 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".mvp.ui.activity.student.SubmitFeedbackContentActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/common_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_30">
+
+            <TextView
+                android:id="@+id/feedback_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_24"
+                android:drawableStart="@mipmap/tutor_feedback_time"
+                android:drawablePadding="@dimen/dp_6"
+                android:text="2018-08-08"
+                android:textColor="#FF8B00"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/advantage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_20"
+                android:drawableStart="@mipmap/tutor_feedback_advantage"
+                android:drawablePadding="@dimen/dp_6"
+                android:text="优点"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/feedback_date_tv" />
+
+
+            <RelativeLayout
+                android:id="@+id/advantage_rl"
+                android:layout_width="@dimen/dp_325"
+                android:layout_height="@dimen/dp_150"
+                android:layout_marginTop="@dimen/dp_18"
+                android:background="@drawable/edit_round_stroke_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/advantage">
+
+                <EditText
+                    android:id="@+id/advantage_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="start|top"
+                    android:hint="请填写优点内容"
+                    android:padding="@dimen/dp_8"
+                    android:textColor="@color/color_9b"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/text_quantity_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:text="0/100"
+                    android:textColor="@color/color_80"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/disadvantage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_25"
+                android:drawableStart="@mipmap/tutor_feedback_shortcoming"
+                android:drawablePadding="@dimen/dp_6"
+                android:text="缺点"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/advantage_rl" />
+
+
+            <RelativeLayout
+                android:id="@+id/disadvantage_rl"
+                android:layout_width="@dimen/dp_325"
+                android:layout_height="@dimen/dp_150"
+                android:layout_marginTop="@dimen/dp_18"
+                android:background="@drawable/edit_round_stroke_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/disadvantage">
+
+                <EditText
+                    android:id="@+id/disadvantage_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="start|top"
+                    android:hint="请填写缺点内容"
+                    android:padding="@dimen/dp_8"
+                    android:textColor="@color/color_9b"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/disadvantage_text_quantity_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:text="0/100"
+                    android:textColor="@color/color_80"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/sure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_50"
+                android:background="@mipmap/button"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/disadvantage_rl" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_feedback_today_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple_write_bg"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_18"
+        android:paddingEnd="@dimen/dp_18"
+        android:paddingBottom="@dimen/dp_18">
+
+        <ImageView
+            android:id="@+id/student_avatar_iv"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+            android:src="@mipmap/my_default_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/student_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_1"
+            android:text="冯宝宝"
+            android:textColor="@color/color_30"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textbook_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="三年级 人教版"
+            android:textColor="@color/color_6d"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+
+        <TextView
+            android:id="@+id/look_counselling_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_33"
+            android:background="@drawable/selector_left_bg"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="查看辅导内容"
+            android:textColor="@color/select_left_color"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintStart_toEndOf="@id/textbook_version_tv"
+            app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+        <TextView
+            android:id="@+id/edit_counselling_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:background="@drawable/selector_right_bg"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="填写反馈"
+            android:textColor="#FF5353"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintStart_toEndOf="@id/look_counselling_content_tv"
+            app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        style="@style/line_height_05"
+        android:layout_marginStart="@dimen/dp_60" />
+
+</LinearLayout>

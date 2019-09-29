@@ -8,7 +8,7 @@
     <color name="black">#000000</color>
     <color name="app_color">#FF3B4A</color>
     <color name="app_color_80">#80EB544D</color>
-    <color name="line_color">#D8D8D8</color>
+    <color name="line_color">#E9E9F0</color>
     <color name="app_bg_color">#F7F7FB</color>
     <color name="app_bg_color_50">#50F7F7FB</color>
     <color name="color333">#333333</color>
@@ -62,6 +62,10 @@
     <color name="color_30">#303030</color>
     <color name="color_6d">#6d6d6d</color>
     <color name="shadow">#50E0E1EC</color><!-- 阴影-->
+    <color name="student_title_check_color">#FF5353</color><!-- 我的学生 title 选中 颜色-->
+    <color name="student_title_un_check_color">#9495A0</color><!--  我的学生 title 默认 颜色-->
+    <color name="select_left_color">#B6BECA</color><!--  我的学生 title 默认 颜色-->
+    <!--<color name="select_right_bg">#B6BECA</color>&lt;!&ndash;  我的学生 title 默认 颜色&ndash;&gt;-->
 
 
 </resources>

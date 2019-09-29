@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false" android:drawable="@drawable/gradient_red2_bg_30"/>
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/ripple_color_bg" />
+            <corners android:radius="@dimen/dp_30" />
+        </shape>
+    </item>
+
+
+</selector>

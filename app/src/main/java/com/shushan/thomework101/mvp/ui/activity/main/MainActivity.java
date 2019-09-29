@@ -28,6 +28,8 @@ import com.shushan.thomework101.mvp.views.MyNoScrollViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -42,6 +44,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_MESSAGE_PAGE = 1;
     public static final int SWITCH_MINE_PAGE = 2;
     User mUser;
+    @Inject
+    MainControl.PresenterMain mPresenter;
+
 
     @Override
     protected void initContentView() {
@@ -96,15 +101,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 //在这里替换图标
-                menuItem.setIcon(R.mipmap.main_home_click);
+                menuItem.setIcon(R.mipmap.home);
                 mMainViewpager.setCurrentItem(SWITCH_HOME_PAGE, false);
                 break;
             case R.id.action_student:
-                menuItem.setIcon(R.mipmap.main_mine_click);
+                menuItem.setIcon(R.mipmap.student);
                 mMainViewpager.setCurrentItem(SWITCH_MESSAGE_PAGE, false);
                 break;
             case R.id.action_mine:
-                menuItem.setIcon(R.mipmap.main_more_click);
+                menuItem.setIcon(R.mipmap.my);
                 mMainViewpager.setCurrentItem(SWITCH_MINE_PAGE, false);
                 break;
         }
@@ -115,9 +120,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         MenuItem home = mMainBottomNavigation.getMenu().findItem(R.id.action_home);
         MenuItem mine = mMainBottomNavigation.getMenu().findItem(R.id.action_student);
         MenuItem more = mMainBottomNavigation.getMenu().findItem(R.id.action_mine);
-        home.setIcon(R.mipmap.main_home);
-        mine.setIcon(R.mipmap.main_mine);
-        more.setIcon(R.mipmap.main_more);
+        home.setIcon(R.mipmap.home_gray);
+        mine.setIcon(R.mipmap.student_gray);
+        more.setIcon(R.mipmap.my_gray);
     }
 
 

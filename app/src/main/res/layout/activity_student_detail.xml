@@ -4,6 +4,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/student_details_background"
     tools:context=".mvp.ui.activity.student.StudentDetailActivity">
 
+    <include layout="@layout/common_toolbar" />
+
+
+    <ImageView
+        android:id="@+id/student_avatar_iv"
+        android:layout_width="@dimen/dp_62"
+        android:layout_height="@dimen/dp_62"
+        android:layout_marginStart="@dimen/dp_31"
+        android:layout_marginTop="@dimen/dp_30"
+        android:src="@mipmap/my_default_head"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/common_toolbar_layout" />
+
+
+    <TextView
+        android:id="@+id/student_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_33"
+        android:text="陈盼盼"
+        android:textColor="@color/color_30"
+        android:textSize="@dimen/sp_19"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+        app:layout_constraintTop_toBottomOf="@id/common_toolbar_layout" />
+
+
+    <TextView
+        android:id="@+id/counselling_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="月辅导"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+        app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+    <TextView
+        android:id="@+id/end_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_11"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="到期时间：2020-09-09"
+        android:textColor="@color/color_6d"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintStart_toEndOf="@id/counselling_type_tv"
+        app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+
+    <RelativeLayout
+        android:id="@+id/textbook_version_layout"
+        android:layout_width="@dimen/dp_335"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_23"
+        android:background="@drawable/bg_white_round_solid_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_avatar_iv">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_17"
+            android:text="教材版本"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/textbook_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_21"
+            android:drawableEnd="@mipmap/my_arrow_gray"
+            android:drawablePadding="@dimen/dp_6"
+            android:text="人教版" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/remark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_29"
+        android:text="备注"
+        android:textColor="@color/color_30"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textbook_version_layout" />
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_335"
+        android:layout_height="@dimen/dp_180"
+        android:layout_marginTop="@dimen/dp_14"
+        android:background="@drawable/bg_edit_round_solid_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/remark">
+
+        <TextView
+            android:id="@+id/text_quantity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:text="0/100"
+            android:textColor="@color/color_6d"
+            android:textSize="@dimen/sp_12" />
+
+        <EditText
+            android:id="@+id/remark_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_8"
+            android:background="@null"
+            android:textColor="#83848D"
+            android:textSize="@dimen/sp_14"
+            android:gravity="start|top" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/sure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@mipmap/button"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dp_5"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

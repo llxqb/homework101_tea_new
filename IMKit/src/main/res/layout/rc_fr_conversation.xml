@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rc_normal_bg">
+
+    <include
+        android:id="@id/rc_layout_msg_list"
+        layout="@layout/rc_fr_messagelist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rc_extension" />
+
+    <io.rong.imkit.RongExtension
+        android:id="@+id/rc_extension"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:RCStyle="SCE" />
+
+    <RelativeLayout
+        android:id="@+id/start_counselling_layout_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@+id/rc_extension"
+        android:background="#cfd8dc"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/start_counselling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_red_round_solid_5"
+            android:padding="10dp"
+            android:text="开始辅导"
+            android:textColor="#ffffff"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/start_counselling_message_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="14dp"
+            android:layout_toStartOf="@id/start_counselling"
+            android:gravity="start"
+            android:maxLines="2"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:text="请点击开始辅导按钮!\n开始辅导后，学习顾问李老师将会全程监控哦~"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>

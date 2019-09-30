@@ -6,4 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".mvp.ui.activity.mine.SettingActivity">
 
+    <include layout="@layout/common_toolbar"/>
+
+
 </android.support.constraint.ConstraintLayout>

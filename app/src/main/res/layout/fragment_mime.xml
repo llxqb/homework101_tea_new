@@ -1,14 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:background="@color/white">
+    android:background="@drawable/bg_app_gradient">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/home_authentication_process_background"
-        />
+        android:focusableInTouchMode="true">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/setting_icon_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:background="@drawable/selector_back_img_bg"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/my_install"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/avatar_iv"
+            android:layout_width="@dimen/dp_58"
+            android:layout_height="@dimen/dp_58"
+            android:layout_marginStart="@dimen/dp_22"
+            android:layout_marginTop="@dimen/dp_30"
+            android:src="@mipmap/my_default_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_32"
+            android:text="陈老师"
+            android:textColor="@color/color_30"
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintStart_toEndOf="@id/avatar_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/counselling_grade_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_7"
+            android:text="辅导年级：三年级、四年级、五年级"
+            android:textColor="#9495A0"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintStart_toEndOf="@id/avatar_iv"
+            app:layout_constraintTop_toBottomOf="@id/username_tv" />
+
+        <TextView
+            android:id="@+id/teacher_state_tv"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_25"
+            android:background="@drawable/gradient_teacher_state_bg"
+            android:gravity="center"
+            android:text="请假"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/username_tv" />
+
+        <TextView
+            android:id="@+id/counselling_time_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_22"
+            android:layout_marginTop="@dimen/dp_20"
+            android:drawableStart="@mipmap/tutor_feedback_time"
+            android:drawablePadding="@dimen/dp_6"
+            android:text="辅导时间："
+            android:textColor="#FF8800"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatar_iv" />
+
+        <TextView
+            android:id="@+id/working_day_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="周一 周二 周四 周五 14:00-20:00"
+            android:textColor="@color/color_6d"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintStart_toEndOf="@id/counselling_time_hint"
+            app:layout_constraintTop_toBottomOf="@id/avatar_iv" />
+
+        <TextView
+            android:id="@+id/off_day_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_6"
+            android:text="周六 周日  15:00-21:00"
+            android:textColor="@color/color_6d"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintStart_toEndOf="@id/counselling_time_hint"
+            app:layout_constraintTop_toBottomOf="@id/working_day_tv" />
+
+
+        <TextView
+            android:id="@+id/wallet_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_25"
+            android:drawableEnd="@mipmap/my_arrow_black"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp_25"
+            android:paddingEnd="@dimen/dp_22"
+            android:text="我的钱包"
+            android:textColor="@color/color_30"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/off_day_tv" />
+
+        <!--android:background="@drawable/selector_ripple_bg"-->
+        <RelativeLayout
+            android:id="@+id/earned_income_layout"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_78"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_22"
+            android:layout_marginTop="@dimen/dp_18"
+            android:background="@drawable/item_bg_layer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wallet_tv">
+
+            <TextView
+                android:id="@+id/earned_income_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="已到手金额"
+                android:textColor="#9495A0"
+                android:textSize="@dimen/sp_13" />
+
+
+            <TextView
+                android:id="@+id/earned_money_icon_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/earned_income_title"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="￥"
+                android:textColor="#4C5467"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/earned_money_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/earned_income_title"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_toEndOf="@id/earned_money_icon_tv"
+                android:text="0"
+                android:textColor="#4C5467"
+                android:textSize="@dimen/sp_25"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/earned_income_bg_icon_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/home_profit_today" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/estimated_income_layout"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_78"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_11"
+            android:layout_marginTop="@dimen/dp_18"
+            android:background="@drawable/item_bg_layer"
+            app:layout_constraintStart_toEndOf="@id/earned_income_layout"
+            app:layout_constraintTop_toBottomOf="@id/wallet_tv">
+
+            <TextView
+                android:id="@+id/estimated_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="本月预计收益"
+                android:textColor="#9495A0"
+                android:textSize="@dimen/sp_13" />
+
+
+            <TextView
+                android:id="@+id/money_icon_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/estimated_title"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="￥"
+                android:textColor="#4C5467"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/estimated_money_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/estimated_title"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_toEndOf="@id/money_icon_tv"
+                android:text="0"
+                android:textColor="#4C5467"
+                android:textSize="@dimen/sp_25"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/estimated_bg_icon_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/home_profit_today" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mine_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintTop_toBottomOf="@id/estimated_income_layout" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

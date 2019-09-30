@@ -21,7 +21,7 @@ public class TodayFeedBackAdapter extends BaseQuickAdapter<TodayFeedBackResponse
     @Override
     protected void convert(BaseViewHolder helper, TodayFeedBackResponse item) {
         helper.addOnClickListener(R.id.student_avatar_iv).addOnClickListener(R.id.look_counselling_content_tv).addOnClickListener(R.id.edit_counselling_content_tv).addOnClickListener(R.id.item_mine_student_layout);
-        //查看辅导内容    填写反馈
+        //查看辅导内容    填写辅导反馈
         //查看辅导内容    已反馈（不能再次修改）
 //        helper.setText(R.id.date_name, item.name);
 //        if (item.check) {

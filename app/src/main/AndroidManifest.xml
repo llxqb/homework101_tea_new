@@ -24,7 +24,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.personalInfo.EditTextInfoActivity"></activity>
+        <activity android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"></activity>
+        <activity android:name=".mvp.ui.activity.mine.ExpectedTotalIncomeActivity" />
+        <activity android:name=".mvp.ui.activity.bank.MineBankCardActivity" />
+        <activity android:name=".mvp.ui.activity.bank.BindCardActivity" />
+        <activity android:name=".mvp.ui.activity.bank.AddBankCardActivity" />
+        <activity android:name=".mvp.ui.activity.personalInfo.EditTextInfoActivity" />
         <activity android:name=".mvp.ui.activity.personalInfo.SetCounsellingTimeActivity" />
         <activity
             android:name=".mvp.ui.activity.main.SetCounselingTimeActivity"
@@ -39,13 +44,13 @@
             android:name=".mvp.ui.activity.mine.MineFeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mvp.ui.activity.mine.ExpectedIncomeActivity"
+            android:name=".mvp.ui.activity.mine.ExpectedCommissionIncomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mvp.ui.activity.mine.WithdrawActivity"
+            android:name=".mvp.ui.activity.bank.WithdrawActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mvp.ui.activity.mine.WalletActivity"
+            android:name=".mvp.ui.activity.bank.WalletActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.mine.LeaveActivity"

@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * 选择框util
  */
-public class selectDialogUtil {
+public class SelectDialogUtil {
 
     private Context mContext;
     private SelectPickerListener mSelectPickerListener;
 
-    public selectDialogUtil(Context context, SelectPickerListener selectPickerListener) {
+    public SelectDialogUtil(Context context, SelectPickerListener selectPickerListener) {
         mContext = context;
         mSelectPickerListener = selectPickerListener;
     }
@@ -57,6 +57,7 @@ public class selectDialogUtil {
             }
 //            mSelectDateTv.setText(DateUtil.dateTranString(date, "yyyy年MM月dd日"));
         })
+                .setType(new boolean[]{true, true, true, true, true, false})// 默认全部显示
                 .setTitleText("选择日期")//标题文字
                 .setTitleColor(mContext.getResources().getColor(R.color.color999))//标题文字颜色
                 .setSubmitColor(mContext.getResources().getColor(R.color.color_blue_btn))//确定按钮文字颜色

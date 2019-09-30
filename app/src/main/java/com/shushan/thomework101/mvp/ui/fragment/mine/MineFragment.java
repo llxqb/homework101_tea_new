@@ -20,7 +20,12 @@ import com.shushan.thomework101.di.components.DaggerMineFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.MineFragmentModule;
 import com.shushan.thomework101.entity.response.MineFunctionResponse;
+import com.shushan.thomework101.mvp.ui.activity.bank.WalletActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.LeaveActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.MineFeedbackActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.SettingActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.StudentReplacementDetailActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineFunctionAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
@@ -84,7 +89,21 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mMineRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                showToast("111"+position);
+                switch (position){
+                    case 0://辅导反馈
+                        startActivitys(MineFeedbackActivity.class);
+                        break;
+                    case 1://我的学生变动
+                        startActivitys(StudentReplacementDetailActivity.class);
+                        break;
+                    case 2://客服中心
+                        startActivitys(CustomerServiceActivity.class);
+                        break;
+                    case 3://规章制度
+                        break;
+                    case 4://操作介绍
+                        break;
+                }
             }
         });
     }
@@ -100,13 +119,17 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
     }
 
-    @OnClick({R.id.setting_icon_iv, R.id.wallet_tv, R.id.earned_income_layout, R.id.estimated_income_layout})
+    @OnClick({R.id.setting_icon_iv,R.id.teacher_state_tv, R.id.wallet_tv, R.id.earned_income_layout, R.id.estimated_income_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_icon_iv:
                 startActivitys(SettingActivity.class);
                 break;
+            case R.id.teacher_state_tv://去请假
+                startActivitys(LeaveActivity.class);
+                break;
             case R.id.wallet_tv:
+                startActivitys(WalletActivity.class);
                 break;
             case R.id.earned_income_layout:
                 break;

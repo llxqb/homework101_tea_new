@@ -66,6 +66,10 @@
     <color name="student_title_un_check_color">#9495A0</color><!--  我的学生 title 默认 颜色-->
     <color name="select_left_color">#B6BECA</color><!--  我的学生 title 默认 颜色-->
     <!--<color name="select_right_bg">#B6BECA</color>&lt;!&ndash;  我的学生 title 默认 颜色&ndash;&gt;-->
+    <color name="not_withdraw_bg">#B4B4B4</color><!--  提现背景  灰色-->
+    <color name="add_income_bg">#FF5353</color><!--  收入详细 数字增加背景 -->
+    <color name="student_change_in_bg">#FFAB00</color><!--  学生转入背景 -->
+    <color name="student_change_out_bg">#8160FF</color><!--  学生转出背景 -->
 
 
 </resources>

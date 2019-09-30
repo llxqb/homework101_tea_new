@@ -9,6 +9,8 @@ import com.shushan.thomework101.mvp.model.MineModel;
 import com.shushan.thomework101.mvp.model.ModelTransform;
 import com.shushan.thomework101.mvp.ui.activity.mine.StudentReplaceDetailControl;
 import com.shushan.thomework101.mvp.ui.activity.mine.StudentReplaceDetailPresenterImpl;
+import com.shushan.thomework101.mvp.ui.fragment.studentChange.StudentChangeRecordControl;
+import com.shushan.thomework101.mvp.ui.fragment.studentChange.StudentChangeRecordFragmentPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
 import com.shushan.thomework101.network.networkapi.MineApi;
 
@@ -63,7 +65,12 @@ public class StudentReplaceDetailModule {
                 .create(MineApi.class), gson, modelTransform);
     }
 
-
+    //与fragment对应起来
+    @Provides
+    @PerActivity
+    StudentChangeRecordControl.StudentChangeRecordFragmentPresenter providePresenterStudentChangeRecordFragment(StudentChangeRecordFragmentPresenterImpl studentChangeRecordFragmentPresenter) {
+        return studentChangeRecordFragmentPresenter;
+    }
 
 
 }

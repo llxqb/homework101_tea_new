@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.WithdrawModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.ui.activity.mine.WithdrawActivity;
+import com.shushan.thomework101.mvp.ui.activity.bank.WalletActivity;
+import com.shushan.thomework101.mvp.ui.activity.bank.WithdrawActivity;
 
 import dagger.Component;
 
@@ -18,7 +19,8 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {WithdrawModule.class, ActivityModule.class})
 public interface WithdrawComponent extends ActivityComponent {
-    void inject(WithdrawActivity activity);
+    void inject(WalletActivity activity);//我的钱包
+    void inject(WithdrawActivity activity);//提现
 
     AppCompatActivity activity();
 

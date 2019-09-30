@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.mine;
+package com.shushan.thomework101.mvp.ui.activity.bank;
 
 
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
@@ -6,6 +6,7 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 /**
  * Created by li.liu on 2019/09/17.
+ * 我的钱包/提现 Activity
  */
 
 public class WithdrawControl {

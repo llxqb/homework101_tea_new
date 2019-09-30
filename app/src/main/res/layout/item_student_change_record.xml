@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_student_change_record_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_79"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_18">
+
+        <ImageView
+            android:id="@+id/student_avatar_iv"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+            android:src="@mipmap/my_default_head"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/student_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_18"
+            android:text="冯宝宝"
+            android:textColor="@color/color_30"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/student_grade_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/bg_yellow_round_solid_5"
+            android:padding="@dimen/dp_4"
+            android:text="三年级"
+            android:textColor="#FFAB00"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintStart_toEndOf="@id/student_name_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/change_reason_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="原因：老师讲解不细致"
+            app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
+
+
+        <TextView
+            android:id="@+id/student_state_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:text="转入"
+            android:textColor="@color/student_change_in_bg"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/change_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_2"
+            android:text="2019-09-09"
+            android:textColor="#9495A0"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintEnd_toStartOf="@id/student_state_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/counselling_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_7"
+            android:text="月辅导"
+            android:textColor="#9495A0"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintEnd_toStartOf="@id/change_date_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View style="@style/line_height_05" />
+</LinearLayout>

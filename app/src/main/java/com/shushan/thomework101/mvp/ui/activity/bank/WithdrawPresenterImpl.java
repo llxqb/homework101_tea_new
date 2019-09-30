@@ -1,4 +1,4 @@
-package com.shushan.thomework101.mvp.ui.activity.mine;
+package com.shushan.thomework101.mvp.ui.activity.bank;
 
 import android.content.Context;
 

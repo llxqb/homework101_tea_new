@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.ExpectedIncomeModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
-import com.shushan.thomework101.mvp.ui.activity.mine.ExpectedIncomeActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.ExpectedCommissionIncomeActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.ExpectedTotalIncomeActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.RevenueIncomeActivity;
 
 import dagger.Component;
 
@@ -18,7 +20,10 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {ExpectedIncomeModule.class, ActivityModule.class})
 public interface ExpectedIncomeComponent extends ActivityComponent {
-    void inject(ExpectedIncomeActivity activity);
+    void inject(ExpectedTotalIncomeActivity activity);
+
+    void inject(ExpectedCommissionIncomeActivity activity);
+    void inject(RevenueIncomeActivity activity);
 
     AppCompatActivity activity();
 

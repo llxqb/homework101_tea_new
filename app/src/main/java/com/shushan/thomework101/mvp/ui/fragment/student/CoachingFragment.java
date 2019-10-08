@@ -34,7 +34,7 @@ import butterknife.Unbinder;
 
 /**
  * 学生页面 -- 辅导fragment
- * 融云列表
+ * 融云会话列表  没用到
  */
 
 public class CoachingFragment extends BaseFragment implements CoachingFragmentControl.CoachingFragmentView {

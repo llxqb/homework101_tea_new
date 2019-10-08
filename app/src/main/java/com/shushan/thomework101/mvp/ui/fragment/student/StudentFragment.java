@@ -20,6 +20,7 @@ import com.shushan.thomework101.di.components.DaggerStudentFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.StudentFragmentModule;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
+import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationListFragment;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -81,10 +82,10 @@ public class StudentFragment extends BaseFragment implements StudentFragmentCont
 
         MyPageAdapter(FragmentManager fm) {
             super(fm);
-            CoachingFragment coachingFragment = new CoachingFragment();
+            ConversationListFragment conversationListFragment = new ConversationListFragment();
             MineStudentFragment mineTeacherFragment = new MineStudentFragment();
             FeedbackFragment feedbackFragment = new FeedbackFragment();
-            fragments.add(coachingFragment);
+            fragments.add(conversationListFragment);
             fragments.add(mineTeacherFragment);
             fragments.add(feedbackFragment);
         }

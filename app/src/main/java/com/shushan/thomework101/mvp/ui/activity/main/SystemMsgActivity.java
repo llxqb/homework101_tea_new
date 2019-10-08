@@ -2,7 +2,10 @@ package com.shushan.thomework101.mvp.ui.activity.main;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shushan.thomework101.R;
@@ -35,6 +38,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     RecyclerView mRecyclerView;
     SystemMsgAdapter mSystemMsgAdapter;
     List<SystemMsgResponse> systemMsgResponseList = new ArrayList<>();
+    private View mEmptyView;
 
     @Override
     protected void initContentView() {
@@ -44,6 +48,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
 
     @Override
     public void initView() {
+        initEmptyView();
         mCommonTitleTv.setText("系统消息");
         mCommonRightTv.setText("清空");
         mCommonRightTv.setVisibility(View.VISIBLE);
@@ -54,11 +59,21 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
 
     @Override
     public void initData() {
-        for (int i = 0; i < 10; i++) {
-            SystemMsgResponse systemMsgResponse = new SystemMsgResponse();
-            systemMsgResponseList.add(systemMsgResponse);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            SystemMsgResponse systemMsgResponse = new SystemMsgResponse();
+//            systemMsgResponseList.add(systemMsgResponse);
+//        }
+        mSystemMsgAdapter.setEmptyView(mEmptyView);
     }
+
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(this).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyIv.setImageResource(R.mipmap.empty_message);
+        emptyTv.setText(getResources().getString(R.string.empty_message));
+    }
+
 
     @OnClick({R.id.common_left_iv, R.id.common_right_tv})
     public void onViewClicked(View view) {

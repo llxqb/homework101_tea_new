@@ -2,6 +2,10 @@ package com.shushan.thomework101.mvp.ui.activity.mine;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shushan.thomework101.R;
@@ -31,6 +35,8 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
     RecyclerView mRecyclerView;
     ExpectedIncomeAdapter mExpectedIncomeAdapter;
     List<ExpectedIncomeResponse> expectedIncomeResponseList = new ArrayList<>();
+    private View mEmptyView;
+
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_total_income);
@@ -39,6 +45,7 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
 
     @Override
     public void initView() {
+        initEmptyView();
         mCommonTitleTv.setText("预计收益");
         mExpectedIncomeAdapter = new  ExpectedIncomeAdapter(expectedIncomeResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -47,11 +54,21 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
 
     @Override
     public void initData() {
-        for (int i=0;i<10;i++){
-            ExpectedIncomeResponse expectedIncomeResponse = new ExpectedIncomeResponse();
-            expectedIncomeResponseList.add(expectedIncomeResponse);
-        }
+//        for (int i=0;i<10;i++){
+//            ExpectedIncomeResponse expectedIncomeResponse = new ExpectedIncomeResponse();
+//            expectedIncomeResponseList.add(expectedIncomeResponse);
+//        }
+        mExpectedIncomeAdapter.setEmptyView(mEmptyView);
     }
+
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(this).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyIv.setImageResource(R.mipmap.empty_money);
+        emptyTv.setText(getResources().getString(R.string.empty_money));
+    }
+
 
 
     @OnClick(R.id.common_left_iv)

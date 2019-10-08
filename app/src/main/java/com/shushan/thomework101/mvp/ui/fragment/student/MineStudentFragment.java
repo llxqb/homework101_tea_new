@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,6 +64,7 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
      * 2：未付费
      */
     private int paidType;
+    private View mEmptyView;
 
     @Nullable
     @Override
@@ -78,6 +80,7 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
 
     @Override
     public void initView() {
+        initEmptyView();
         mMineStudentAdapter = new MineStudentAdapter(mineStudentResponseList);
         mMineStudentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMineStudentRecyclerView.setAdapter(mMineStudentAdapter);
@@ -95,12 +98,21 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         });
     }
 
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mMineStudentRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyIv.setImageResource(R.mipmap.empty_student);
+        emptyTv.setText(getResources().getString(R.string.empty_student));
+    }
+
     @Override
     public void initData() {
-        for (int i = 0; i < 10; i++) {
-            MineStudentResponse mineStudentResponse = new MineStudentResponse();
-            mineStudentResponseList.add(mineStudentResponse);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            MineStudentResponse mineStudentResponse = new MineStudentResponse();
+//            mineStudentResponseList.add(mineStudentResponse);
+//        }
+        mMineStudentAdapter.setEmptyView(mEmptyView);
     }
 
     @OnClick({R.id.all_tv, R.id.paid_layout, R.id.unpaid_layout})

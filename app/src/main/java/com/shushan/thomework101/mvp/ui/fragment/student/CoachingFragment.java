@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -43,6 +45,8 @@ public class CoachingFragment extends BaseFragment implements CoachingFragmentCo
 
     CoachingAdapter mCoachingAdapter;
     List<CoachingResponse> coachingResponseList = new ArrayList<>();
+    private View mEmptyView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +61,7 @@ public class CoachingFragment extends BaseFragment implements CoachingFragmentCo
 
     @Override
     public void initView() {
+        initEmptyView();
         mCoachingAdapter = new  CoachingAdapter(coachingResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mCoachingAdapter);
@@ -70,12 +75,20 @@ public class CoachingFragment extends BaseFragment implements CoachingFragmentCo
 
     @Override
     public void initData() {
-        for (int i = 0; i < 10; i++) {
-            CoachingResponse coachingResponse = new CoachingResponse();
-            coachingResponseList.add(coachingResponse);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            CoachingResponse coachingResponse = new CoachingResponse();
+//            coachingResponseList.add(coachingResponse);
+//        }
+        mCoachingAdapter.setEmptyView(mEmptyView);
     }
 
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyIv.setImageResource(R.mipmap.empty_coaching);
+        emptyTv.setText(getResources().getString(R.string.empty_coaching));
+    }
 
     private void initializeInjector() {
         DaggerCoachingFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())

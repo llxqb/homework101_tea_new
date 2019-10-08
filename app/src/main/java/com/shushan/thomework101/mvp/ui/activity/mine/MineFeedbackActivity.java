@@ -2,7 +2,9 @@ package com.shushan.thomework101.mvp.ui.activity.mine;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,6 +52,7 @@ public class MineFeedbackActivity extends BaseActivity implements MineFeedbackCo
     List<TodayFeedBackResponse> todayFeedBackResponseList = new ArrayList<>();
 
     List<String> subjectList = new ArrayList<>();
+    private View mEmptyView;
 
     @Override
     protected void initContentView() {
@@ -59,6 +62,7 @@ public class MineFeedbackActivity extends BaseActivity implements MineFeedbackCo
 
     @Override
     public void initView() {
+        initEmptyView();
         mCommonTitleTv.setText("辅导反馈");
         mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList);
         mFeedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -89,12 +93,21 @@ public class MineFeedbackActivity extends BaseActivity implements MineFeedbackCo
         String[] subject = getResources().getStringArray(R.array.subject);
         subjectList.add("全部");
         subjectList.addAll(Arrays.asList(subject));
-        for (int i = 0; i < 10; i++) {
-            TodayFeedBackResponse todayFeedBackResponse = new TodayFeedBackResponse();
-            todayFeedBackResponseList.add(todayFeedBackResponse);
-        }
-
+//        for (int i = 0; i < 10; i++) {
+//            TodayFeedBackResponse todayFeedBackResponse = new TodayFeedBackResponse();
+//            todayFeedBackResponseList.add(todayFeedBackResponse);
+//        }
+        mTodayFeedBackAdapter.setEmptyView(mEmptyView);
     }
+
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(this).inflate(R.layout.empty_layout, (ViewGroup) mFeedbackRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyIv.setImageResource(R.mipmap.empty_feedback);
+        emptyTv.setText(getResources().getString(R.string.empty_mine_feedback));
+    }
+
 
     @OnClick({R.id.common_left_iv, R.id.select_date_ll, R.id.select_subject_ll})
     public void onViewClicked(View view) {

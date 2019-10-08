@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
@@ -38,6 +40,8 @@ public class StudentChangeInRecordFragment extends BaseFragment implements Stude
     Unbinder unbinder;
     StudentChangeRecordAdapter mStudentChangeRecordAdapter;
     List<StudentChangeRecordResponse> studentChangeRecordResponseList = new ArrayList<>();
+    private View mEmptyView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class StudentChangeInRecordFragment extends BaseFragment implements Stude
 
     @Override
     public void initView() {
+        initEmptyView();
         mStudentChangeRecordAdapter = new StudentChangeRecordAdapter(studentChangeRecordResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mStudentChangeRecordAdapter);
@@ -59,10 +64,19 @@ public class StudentChangeInRecordFragment extends BaseFragment implements Stude
 
     @Override
     public void initData() {
-        for (int i = 0; i < 10; i++) {
-            StudentChangeRecordResponse studentChangeRecordResponse = new StudentChangeRecordResponse();
-            studentChangeRecordResponseList.add(studentChangeRecordResponse);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            StudentChangeRecordResponse studentChangeRecordResponse = new StudentChangeRecordResponse();
+//            studentChangeRecordResponseList.add(studentChangeRecordResponse);
+//        }
+        mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+    }
+
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyIv.setImageResource(R.mipmap.empty_student);
+        emptyTv.setText(getResources().getString(R.string.empty_student_change_in_record));
     }
 
 

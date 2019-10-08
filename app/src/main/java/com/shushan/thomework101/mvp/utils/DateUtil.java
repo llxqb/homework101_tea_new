@@ -62,7 +62,7 @@ public class DateUtil {
      * 日期转换为字符串
      */
     public static String dateTranString(Date date, String pattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern,Locale.CHINA);
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.CHINA);
         return sdf.format(date);
     }
 
@@ -95,7 +95,7 @@ public class DateUtil {
     }
 
     // 将字符串转为时间戳
-    public static String getTime(String user_time,String pattern) {
+    public static String getTime(String user_time, String pattern) {
         String re_time = null;
         SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.CHINA);
         Date d;
@@ -104,7 +104,7 @@ public class DateUtil {
             long l = d.getTime();
             String str = String.valueOf(l);
             re_time = str.substring(0, 9);
-        }catch (ParseException ignored) {
+        } catch (ParseException ignored) {
         }
         return re_time;
     }
@@ -156,4 +156,61 @@ public class DateUtil {
         return System.currentTimeMillis() / 1000;
     }
 
+
+    /**
+     * 判断2个时间大小
+     * yyyy-MM-dd HH:mm 格式（自己可以修改成想要的时间格式）
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public static boolean timeCompare(String startTime, String endTime, String pattern) {
+        int i = 0;
+        //注意：传过来的时间格式必须要和这里填入的时间格式相同
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.CHINA);
+        try {
+            Date date1 = dateFormat.parse(startTime);//开始时间
+            Date date2 = dateFormat.parse(endTime);//结束时间
+            LogUtils.e("startTime:" + date1.getTime() + "  endTime:" + date2.getTime());
+            // 1 结束时间小于开始时间 2 开始时间与结束时间相同 3 结束时间大于开始时间
+            if (date2.getTime() < date1.getTime()) {
+                //结束时间小于开始时间
+//                i = 1;
+                return false;
+            } else if (date2.getTime() == date1.getTime()) {
+                //开始时间与结束时间相同
+//                i = 2;
+            } else if (date2.getTime() > date1.getTime()) {
+                //结束时间大于开始时间
+//                i = 3;
+            }
+        } catch (Exception e) {
+
+        }
+        return true;
+    }
+
+    /**
+     * 设置时间段在16:00到24点
+     */
+    public static boolean setTime16To24(String time,String startTime, String endTime, String pattern) {
+        int i = 0;
+        //注意：传过来的时间格式必须要和这里填入的时间格式相同
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.CHINA);
+        try {
+            Date date = dateFormat.parse(time);//选择的时间
+            Date date1 = dateFormat.parse(startTime);//开始时间
+            Date date2 = dateFormat.parse(endTime);//结束时间
+
+            LogUtils.e("startTime:" + date1.getTime() + "  endTime:" + date2.getTime());
+            // 1 结束时间小于开始时间 2 开始时间与结束时间相同 3 结束时间大于开始时间
+            if(date.getTime()>=date1.getTime() && date.getTime()<=date2.getTime()){
+                return true;
+            }
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
 }

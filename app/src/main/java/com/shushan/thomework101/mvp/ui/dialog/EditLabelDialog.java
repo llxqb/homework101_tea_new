@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.help.DialogFactory;
@@ -27,10 +28,14 @@ import butterknife.Unbinder;
  */
 public class EditLabelDialog extends BaseDialogFragment {
     public static final String TAG = EditLabelDialog.class.getSimpleName();
+    @BindView(R.id.name_hint_tv)
+    TextView mNameHintTv;
     @BindView(R.id.name_et)
     EditText mNameEt;
     Unbinder unbinder;
     private EditLabelDialogListener dialogBtnListener;
+    private String mTitle;
+    private String mHintText;
     private String name;
 
     public static EditLabelDialog newInstance() {
@@ -39,6 +44,11 @@ public class EditLabelDialog extends BaseDialogFragment {
 
     public void setListener(EditLabelDialogListener dialogBtnListener) {
         this.dialogBtnListener = dialogBtnListener;
+    }
+
+    public void setTitle(String title, String hintText) {
+        this.mTitle = title;
+        this.mHintText = hintText;
     }
 
     public void setName(String name) {
@@ -57,7 +67,10 @@ public class EditLabelDialog extends BaseDialogFragment {
     private void initView() {
         if (!TextUtils.isEmpty(name)) {
             mNameEt.setText(name);
+        } else {
+            mNameEt.setHint(mHintText);
         }
+        mNameHintTv.setText(mTitle);
     }
 
 

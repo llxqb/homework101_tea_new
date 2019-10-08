@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.response.CustomerResponse;
 import com.shushan.thomework101.mvp.ui.adapter.CustomerAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -40,7 +41,7 @@ public class CustomerServiceActivity extends BaseActivity {
     List<CustomerResponse> customerResponseList = new ArrayList<>();
     private int[] icon = {R.mipmap.qq, R.mipmap.wechat, R.mipmap.telephone};
     private String[] name = {"客服QQ", "客服微信", "客服热线"};
-    private String[] contactNumber = {"5037334", "zuoye1001", "15675858101"};
+    private String[] contactNumber = {Constant.CS_QQ, Constant.CS_WECHAT, Constant.CS_PHONE};
 
     @Override
     protected void initContentView() {

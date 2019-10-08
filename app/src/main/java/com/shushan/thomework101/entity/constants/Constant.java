@@ -29,5 +29,17 @@ public class Constant {
     public static final int LOADING_BANNER = R.mipmap.load_banner;
     public static final int LOADING_VIDEO = R.mipmap.load_video;
 
+    /**
+     * 联系方式
+     */
+    public static final String CS_QQ="5037334";
+    public static final String CS_WECHAT="zuoye1001";
+    public static final String CS_PHONE="15675858101";
+
+    /**
+     * CommonDialog 样式
+     */
+    public static final int COMMON_DIALOG_STYLE_1= 1;
+    public static final int COMMON_DIALOG_STYLE_2= 2;
 
 }

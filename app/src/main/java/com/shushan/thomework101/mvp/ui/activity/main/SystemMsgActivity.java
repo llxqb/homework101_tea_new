@@ -9,6 +9,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerSystemMsgComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.SystemMsgModule;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.response.SystemMsgResponse;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.adapter.SystemMsgAdapter;
@@ -66,7 +67,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
                 finish();
                 break;
             case R.id.common_right_tv:
-                DialogFactory.showCommonDialog(this, "你确定清空消息？", "", "取消", "确定");
+                DialogFactory.showCommonDialog(this, "你确定清空消息？", "", "取消", "确定", Constant.COMMON_DIALOG_STYLE_1);
                 break;
         }
     }

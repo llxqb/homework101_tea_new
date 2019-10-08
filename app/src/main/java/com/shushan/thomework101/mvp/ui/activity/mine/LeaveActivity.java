@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 请假
+ * desc：请假
  */
 public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveView {
 

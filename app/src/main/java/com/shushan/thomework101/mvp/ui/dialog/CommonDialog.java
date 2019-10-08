@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.help.DialogFactory;
 
 import java.util.Objects;
@@ -39,10 +40,13 @@ public class CommonDialog extends BaseDialogFragment {
     Button mStyle1LeftBtn;
     @BindView(R.id.style1_right_btn)
     Button mStyle1RightBtn;
+    @BindView(R.id.sure_tv)
+    TextView mSureTv;
     @BindView(R.id.dialog_style1_ll)
     LinearLayout mDialogStyle1Ll;
     Unbinder unbinder;
     private CommonDialogListener dialogBtnListener;
+    private int mStyle;
     /**
      * 标题
      */
@@ -63,6 +67,10 @@ public class CommonDialog extends BaseDialogFragment {
         mSubtitle = subtitle;
         mLeftBtnText = leftBtnText;
         mRightBtnText = rightBtnText;
+    }
+
+    public void setStyle(int style) {
+        this.mStyle = style;
     }
 
     public void setListener(CommonDialogListener dialogBtnListener) {
@@ -91,9 +99,17 @@ public class CommonDialog extends BaseDialogFragment {
         if (!TextUtils.isEmpty(mRightBtnText)) {
             mStyle1RightBtn.setText(mRightBtnText);
         }
+        if (mStyle == Constant.COMMON_DIALOG_STYLE_1) {
+            mDialogStyle1Ll.setVisibility(View.VISIBLE);
+            mSureTv.setVisibility(View.GONE);
+        } else if (mStyle == Constant.COMMON_DIALOG_STYLE_2) {
+            mDialogStyle1Ll.setVisibility(View.GONE);
+            mSureTv.setVisibility(View.VISIBLE);
+        }
+
     }
 
-    @OnClick({R.id.iv_close, R.id.style1_left_btn, R.id.style1_right_btn})
+    @OnClick({R.id.iv_close, R.id.style1_left_btn, R.id.style1_right_btn, R.id.sure_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
@@ -106,6 +122,9 @@ public class CommonDialog extends BaseDialogFragment {
                 if (dialogBtnListener != null) {
                     dialogBtnListener.commonDialogBtnOkListener();
                 }
+                closeCommonDialog();
+                break;
+            case R.id.sure_tv:
                 closeCommonDialog();
                 break;
         }

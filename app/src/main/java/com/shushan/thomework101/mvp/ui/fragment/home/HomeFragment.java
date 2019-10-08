@@ -1,5 +1,10 @@
 package com.shushan.thomework101.mvp.ui.fragment.home;
 
+import android.content.ActivityNotFoundException;
+import android.content.ClipboardManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,16 +27,20 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerHomeFragmentComponent;
 import com.shushan.thomework101.di.modules.HomeFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.response.HomeIncomeResponse;
 import com.shushan.thomework101.entity.response.UnSuccessfulStudentResponse;
 import com.shushan.thomework101.entity.user.User;
+import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
+import com.shushan.thomework101.mvp.ui.activity.personalInfo.SetCounsellingTimeActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadCardActivity;
-import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadVideoActivity;
 import com.shushan.thomework101.mvp.ui.adapter.HomeIncomeAdapter;
 import com.shushan.thomework101.mvp.ui.adapter.HomeUnsuccessfulStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
+import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +56,7 @@ import butterknife.Unbinder;
  * 消息
  */
 
-public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView {
+public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener {
 
     //认证流程 未认证
     @BindView(R.id.not_certified_layout)
@@ -151,12 +160,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 showToast("" + position);
             }
         });
+
+        mUser.registerState = 1;
     }
 
     @Override
     public void initData() {
         //判断是否认证 认证流程状态
-        mUser.registerState = 1;
         initRegisterState();
         if (mUser.registerState == 1) {
             mUploadInformationRl.setVisibility(View.VISIBLE);
@@ -195,6 +205,51 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
 
+    @OnClick({R.id.system_msg_iv, R.id.customer_service_iv, R.id.verify_state_tv, R.id.go_complete_tv, R.id.pre_job_training_state_tv, R.id.complete_material_tv, R.id.set_coaching_time_tv, R.id.registration_complete_tv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.system_msg_iv:
+                startActivitys(SystemMsgActivity.class);
+                break;
+            case R.id.customer_service_iv:
+                startActivitys(CustomerServiceActivity.class);
+                break;
+            case R.id.verify_state_tv: //上传身份证、教师资格证
+                startActivitys(UploadCardActivity.class);
+                break;
+            case R.id.go_complete_tv://上传试讲视频
+//                startActivitys(UploadVideoActivity.class);
+                mUser.registerState = 3;
+                initData();
+                break;
+            case R.id.pre_job_training_state_tv:
+                //岗前培训
+                //TODO 如果未培训打开微信
+                toWechat(Constant.CS_WECHAT);
+                break;
+            case R.id.complete_material_tv:
+                //完善个人资料
+                startActivitys(EditPersonalInfoActivity.class);
+                break;
+            case R.id.set_coaching_time_tv:
+                //设置辅导时间
+                startActivitys(SetCounsellingTimeActivity.class);
+                break;
+            case R.id.registration_complete_tv:
+                //已完成
+                showToast("完成");
+                break;
+        }
+    }
+
+    /**
+     * 显示正在审核中dialog
+     */
+    private void showUnderReviewDialog(){
+        DialogFactory.showCommonFragmentDialog(getActivity(),this,"正在在等待审核，请审核通过后再操作","","","",Constant.COMMON_DIALOG_STYLE_2);
+    }
+
+
     /**
      * 未注册完成：初始化注册状态
      */
@@ -207,33 +262,41 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mRegistrationCompleteRl.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.system_msg_iv, R.id.customer_service_iv, R.id.verify_state_tv, R.id.go_complete_tv, R.id.pre_job_training_state_tv, R.id.complete_material_tv, R.id.set_coaching_time_tv, R.id.registration_complete_tv})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.system_msg_iv:
-                startActivitys(SystemMsgActivity.class);
-                break;
-            case R.id.customer_service_iv:
-                startActivitys(EditPersonalInfoActivity.class);
-                break;
-            case R.id.verify_state_tv: //上传身份证、教师资格证
-                startActivitys(UploadCardActivity.class);
-                break;
-            case R.id.go_complete_tv://上传试讲视频
-                startActivitys(UploadVideoActivity.class);
-                break;
-            case R.id.pre_job_training_state_tv:
 
-                break;
-            case R.id.complete_material_tv:
-                break;
-            case R.id.set_coaching_time_tv:
-                break;
-            case R.id.registration_complete_tv:
-                showToast("完成");
-                break;
+    /**
+     * 注册完成：显示已认证状态
+     */
+    private void showVerifiedState() {
+        mVerifiedLayout.setVisibility(View.VISIBLE);
+        mNotCertifiedLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+
+    }
+
+    /**
+     * 跳转到微信
+     */
+    private void toWechat(String wxNum) {
+        try {
+            ClipboardManager cm = (ClipboardManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CLIPBOARD_SERVICE);
+            // 将文本内容放到系统剪贴板里。
+            cm.setText(wxNum);
+            showToast("账号已复制");
+            //跳转到微信
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setComponent(cmp);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            showToast("检查到您手机没有安装微信，请安装后使用该功能");
         }
     }
+
 
     private void initializeInjector() {
         DaggerHomeFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
@@ -248,4 +311,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

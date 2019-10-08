@@ -1,7 +1,6 @@
 package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,8 +26,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     TextView mCommonTitleTv;
     @BindView(R.id.common_right_iv)
     ImageView mCommonRightIv;
-    @BindView(R.id.username_et)
-    EditText mUsernameEt;
+    @BindView(R.id.username_tv)
+    TextView mUsernameTv;
     @BindView(R.id.subject_tv)
     TextView mSubjectTv;
     @BindView(R.id.grade_tv)
@@ -54,6 +53,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     @BindView(R.id.teaching_philosophy_content_tv)
     TextView mTeachingPhilosophyContentTv;
     /**
+     * 0：设置姓名
      * 1：标签1
      * 2：标签2
      */
@@ -80,7 +80,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     }
 
 
-    @OnClick({R.id.common_left_iv, R.id.common_right_iv, R.id.counselling_date1_tv, R.id.counselling_date2_tv, R.id.label1_tv, R.id.label2_tv,
+    @OnClick({R.id.common_left_iv, R.id.common_right_iv, R.id.username_tv, R.id.label1_tv, R.id.label2_tv,
             R.id.upload_photo_btn_layout, R.id.teaching_experience_tv_edit_tv, R.id.teaching_style_tv_edit_tv, R.id.teaching_philosophy_tv_edit_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -90,45 +90,47 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             case R.id.common_right_iv:
                 startActivitys(CustomerServiceActivity.class);
                 break;
-            case R.id.counselling_date1_tv:
-                startActivitys(SetCounsellingTimeActivity.class);
-                break;
-            case R.id.counselling_date2_tv:
-                startActivitys(SetCounsellingTimeActivity.class);
+            case R.id.username_tv:
+                //我的姓名
+                labelType = 0;
+                editLabelDialog("我的姓名", "请输入你的姓名", mUsernameTv.getText().toString());
                 break;
             case R.id.label1_tv:
                 //我的标签 1
                 labelType = 1;
-                editLabelDialog(mLabel1Tv.getText().toString());
+                editLabelDialog("我的标签", "请输入你的标签", mLabel1Tv.getText().toString());
                 break;
             case R.id.label2_tv:
                 labelType = 2;
-                editLabelDialog(mLabel2Tv.getText().toString());
+                editLabelDialog("我的标签", "请输入你的标签", mLabel2Tv.getText().toString());
                 break;
             case R.id.upload_photo_btn_layout:
                 break;
-            case R.id.teaching_experience_tv_edit_tv:
-                startActivitys(EditTextInfoActivity.class);
+            case R.id.teaching_experience_tv_edit_tv://教学经历
+                EditTextInfoActivity.start(this,"教学经历");
                 break;
             case R.id.teaching_style_tv_edit_tv:
-                startActivitys(EditTextInfoActivity.class);
+                EditTextInfoActivity.start(this,"教学风格");
                 break;
             case R.id.teaching_philosophy_tv_edit_tv:
-                startActivitys(EditTextInfoActivity.class);
+                EditTextInfoActivity.start(this,"教育理念");
                 break;
         }
     }
 
-    private void editLabelDialog(String label) {
+    private void editLabelDialog(String title, String hintText, String label) {
         EditLabelDialog editLabelDialog = EditLabelDialog.newInstance();
         editLabelDialog.setListener(this);
+        editLabelDialog.setTitle(title, hintText);
         editLabelDialog.setName(label);
         DialogFactory.showDialogFragment(getSupportFragmentManager(), editLabelDialog, EditLabelDialog.TAG);
     }
 
     @Override
     public void editLabelBtnOkListener(String labelValue) {
-        if (labelType == 1) {
+        if (labelType == 0) {
+            mUsernameTv.setText(labelValue);
+        } else if (labelType == 1) {
             mLabel1Tv.setText(labelValue);
         } else {
             mLabel2Tv.setText(labelValue);

@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 提现
+ * desc:提现
  */
 public class WithdrawActivity extends BaseActivity implements WithdrawControl.WithdrawView {
 

@@ -23,6 +23,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jzvd.JzvdStd;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -70,6 +71,12 @@ public class UploadVideoActivity extends BaseActivity implements PersonalInfoCon
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JzvdStd.goOnPlayOnPause();
     }
 
 

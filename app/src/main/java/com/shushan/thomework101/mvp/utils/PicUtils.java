@@ -23,6 +23,7 @@ import com.bumptech.glide.request.target.Target;
 import com.shushan.thomework101.entity.constants.Constant;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
@@ -81,7 +82,7 @@ public class PicUtils {
             @Override
             public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
                 try {
-                    messageDigest.update((context.getPackageName() + "RotateTransform").getBytes("utf-8"));
+                    messageDigest.update((context.getPackageName() + "RotateTransform").getBytes(StandardCharsets.UTF_8));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

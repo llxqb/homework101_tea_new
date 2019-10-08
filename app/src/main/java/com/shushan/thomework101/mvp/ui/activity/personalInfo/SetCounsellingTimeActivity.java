@@ -126,6 +126,14 @@ public class SetCounsellingTimeActivity extends BaseActivity {
                 break;
             case R.id.sure_tv:
                 if (valid()) {
+                    String mWorkingDayStartTimeTvValue = mWorkingDayStartTimeTv.getText().toString();
+                    String mWorkingDayEndTimeTvValue = mWorkingDayEndTimeTv.getText().toString();
+                    if (!DateUtil.setTime16To24(mWorkingDayStartTimeTvValue, "16:00", "23:59", "HH:mm")) {
+                        showToast("周一到周五开始时间设置不正确");
+                    }
+                    if (!DateUtil.setTime16To24(mWorkingDayEndTimeTvValue, "16:00", "23:59", "HH:mm")) {
+                        showToast("周一到周五结束时间设置不正确");
+                    }
                     //保存更改
                 } else {
                     showToast("一周至少选择六天辅导");

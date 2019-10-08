@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
@@ -116,11 +117,11 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
 
     private void showClearCacheDialog() {
         String cacheValue = mCacheTv.getText().toString();
-        DialogFactory.showCommonDialog(this, "你确定要清理缓存?", cacheValue, "取消", "确定");
+        DialogFactory.showCommonDialog(this, "你确定要清理缓存?", cacheValue, "取消", "确定", Constant.COMMON_DIALOG_STYLE_1);
     }
 
     private void showExitLoginDialog() {
-        DialogFactory.showCommonDialog(this, "你确定要退出吗？", "", "取消", "确定");
+        DialogFactory.showCommonDialog(this, "你确定要退出吗？", "", "取消", "确定", Constant.COMMON_DIALOG_STYLE_1);
     }
 
     @Override

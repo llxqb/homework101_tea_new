@@ -48,7 +48,7 @@ public class BuProcessor {
      */
     public boolean isFinishFirstWrite() {
         mUser = (User) mSharePreferenceUtil.readObjData("user");
-        return mUser != null && !TextUtils.isEmpty(mUser.subject) && !TextUtils.isEmpty(mUser.grades);
+        return mUser != null && mUser.subject != 0 && !TextUtils.isEmpty(mUser.grades);
     }
 
 

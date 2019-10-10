@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"></activity>
+        <activity android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"/>
         <activity android:name=".mvp.ui.activity.mine.ExpectedTotalIncomeActivity" />
         <activity android:name=".mvp.ui.activity.bank.MineBankCardActivity" />
         <activity android:name=".mvp.ui.activity.bank.BindCardActivity" />

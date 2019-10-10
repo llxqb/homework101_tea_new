@@ -7,8 +7,8 @@ import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.model.GuideModel;
 import com.shushan.thomework101.mvp.model.ModelTransform;
-import com.shushan.thomework101.mvp.ui.activity.login.LoginControl;
-import com.shushan.thomework101.mvp.ui.activity.login.LoginPresenterImpl;
+import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginControl;
+import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
 import com.shushan.thomework101.network.networkapi.GuideApi;
 

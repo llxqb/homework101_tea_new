@@ -11,19 +11,8 @@ import retrofit2.http.POST;
 
 public interface MineApi {
     /**
-     * Google登录
+     * 更新用户个人信息
      */
-    @POST("menggoda/login")
-    Observable<String> loginRequest(@Body String request);
-
-    /**
-     * 我的
-     */
-    @POST("menggoda/user")
-    Observable<String> onRequestPersonalInfo(@Body String token);
-    /**
-     * facebook登录
-     */
-    @POST("menggoda/login/facebook")
-    Observable<String> onRequestLoginFacebook(@Body String token);
+    @POST("teacher/user/set_grade_subject")
+    Observable<String> onRequestUploadPersonalInfo(@Body String request);
 }

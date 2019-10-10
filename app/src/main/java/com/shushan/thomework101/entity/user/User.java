@@ -10,23 +10,21 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    public User() {
-    }
-
     public String token;
     /**
      * 姓名
      */
     public String name;
     /**
+     * 辅导科目
+     * 单选
+     */
+    public int subject;
+    /**
      * 年级（1-9 ）  最多选择三个年级
      * 集合
      */
     public String grades;
-    /**
-     * 辅导科目
-     */
-    public String subject;
 
     /**
      * 认证流程状态

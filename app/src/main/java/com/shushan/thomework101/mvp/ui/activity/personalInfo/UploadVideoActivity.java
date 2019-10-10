@@ -134,6 +134,10 @@ public class UploadVideoActivity extends BaseActivity implements PersonalInfoCon
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void getUploadPersonalInfoSuccess() {
+
+    }
 
     private void initInjectData() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())

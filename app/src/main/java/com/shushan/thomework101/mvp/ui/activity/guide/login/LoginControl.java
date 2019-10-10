@@ -1,6 +1,10 @@
-package com.shushan.thomework101.mvp.ui.activity.login;
+package com.shushan.thomework101.mvp.ui.activity.guide.login;
 
 
+import com.shushan.thomework101.entity.request.LoginRequest;
+import com.shushan.thomework101.entity.request.VerifyCodeRequest;
+import com.shushan.thomework101.entity.response.LoginResponse;
+import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,21 +14,22 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class LoginControl {
     public interface LoginView extends LoadDataView {
-//        void getLoginSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+        void getVerifyCodeSuccess(VerifyCodeResponse verifyCodeResponse);
+
+        void getLoginSuccess(LoginResponse loginResponse);
     }
 
     public interface PresenterLogin extends Presenter<LoginView> {
 
-//        /**
-//         * 登录
-//         */
-//        void onRequestLogin(RegisterRequest loginRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+        /**
+         * 获取验证码
+         */
+        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+
+        /**
+         * 登录
+         */
+        void onRequestLogin(LoginRequest loginRequest);
     }
 
 }

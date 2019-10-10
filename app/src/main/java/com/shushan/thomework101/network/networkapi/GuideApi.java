@@ -11,19 +11,14 @@ import retrofit2.http.POST;
 
 public interface GuideApi {
     /**
-     * Google登录
+     * 获取验证码
      */
-    @POST("menggoda/login")
-    Observable<String> loginRequest(@Body String request);
+    @POST("admin/code/get")
+    Observable<String> onRequestVerifyCode(@Body String token);
 
     /**
-     * 我的
+     * 登录
      */
-    @POST("menggoda/user")
-    Observable<String> onRequestPersonalInfo(@Body String token);
-    /**
-     * facebook登录
-     */
-    @POST("menggoda/login/facebook")
-    Observable<String> onRequestLoginFacebook(@Body String token);
+    @POST("teacher/user/login")
+    Observable<String> onRequestLogin(@Body String request);
 }

@@ -169,6 +169,12 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
 //        uploadImage(path);
     }
 
+
+    @Override
+    public void getUploadPersonalInfoSuccess() {
+
+    }
+
     @Override
     public void takeFail(TResult result, String msg) {
     }
@@ -213,6 +219,7 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
                 .personalInfoModule(new PersonalInfoModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 
 }

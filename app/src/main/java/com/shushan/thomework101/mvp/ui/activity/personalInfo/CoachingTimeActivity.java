@@ -27,6 +27,11 @@ public class CoachingTimeActivity extends BaseActivity implements PersonalInfoCo
 
     }
 
+    @Override
+    public void getUploadPersonalInfoSuccess() {
+
+    }
+
     private void initInjectData() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
                 .personalInfoModule(new PersonalInfoModule(this, this))

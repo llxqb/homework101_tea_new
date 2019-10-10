@@ -107,13 +107,13 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             case R.id.upload_photo_btn_layout:
                 break;
             case R.id.teaching_experience_tv_edit_tv://教学经历
-                EditTextInfoActivity.start(this,"教学经历");
+                EditTextInfoActivity.start(this, "教学经历");
                 break;
             case R.id.teaching_style_tv_edit_tv:
-                EditTextInfoActivity.start(this,"教学风格");
+                EditTextInfoActivity.start(this, "教学风格");
                 break;
             case R.id.teaching_philosophy_tv_edit_tv:
-                EditTextInfoActivity.start(this,"教育理念");
+                EditTextInfoActivity.start(this, "教育理念");
                 break;
         }
     }
@@ -135,6 +135,12 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         } else {
             mLabel2Tv.setText(labelValue);
         }
+    }
+
+
+    @Override
+    public void getUploadPersonalInfoSuccess() {
+
     }
 
 

@@ -2,9 +2,15 @@ package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 
 import android.content.Context;
 
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
+import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MineModel;
+import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -25,32 +31,36 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     }
 
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mMineModel.onRequestVerifyCode(verifyCodeRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
-//                        () -> mPersonalInfoView.dismissLoading());
-//        mPersonalInfoView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mPersonalInfoView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mPersonalInfoView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mPersonalInfoView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
+    /**
+     * 更新用户个人信息
+     */
+    @Override
+    public void onRequestUploadPersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.onRequestUploadPersonalInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUploadPersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+    }
+
+
+    /**
+     * 更新用户个人信息成功
+     */
+    private void requestUploadPersonalInfoSuccess(ResponseData responseData) {
+        mPersonalInfoView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mPersonalInfoView.getUploadPersonalInfoSuccess();
+//            responseData.parseData(UploadPersonalInfoResponse.class);
+//            if (responseData.parsedData != null) {
+//                UploadPersonalInfoResponse response = (UploadPersonalInfoResponse) responseData.parsedData;
+//                mPersonalInfoView.getUploadPersonalInfoSuccess(response);
+//            }
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
     
     @Override
     public void onCreate() {

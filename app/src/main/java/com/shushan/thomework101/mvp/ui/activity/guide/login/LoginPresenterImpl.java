@@ -1,57 +1,96 @@
-package com.shushan.thomework101.mvp.ui.activity.login;
+package com.shushan.thomework101.mvp.ui.activity.guide.login;
 
 import android.content.Context;
 
-import com.shushan.thomework101.network.networkapi.GuideApi;
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.LoginRequest;
+import com.shushan.thomework101.entity.request.VerifyCodeRequest;
+import com.shushan.thomework101.entity.response.LoginResponse;
+import com.shushan.thomework101.entity.response.VerifyCodeResponse;
+import com.shushan.thomework101.help.RetryWithDelay;
+import com.shushan.thomework101.mvp.model.GuideModel;
+import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
  * Created by li.liu on 2019/09/17.
  */
 
-public class LoginPresenterImpl implements com.shushan.thomework101.mvp.ui.activity.login.LoginControl.PresenterLogin {
+public class LoginPresenterImpl implements LoginControl.PresenterLogin {
 
-    private com.shushan.thomework101.mvp.ui.activity.login.LoginControl.LoginView mLoginView;
-    private final GuideApi mGuideApi;
+    private LoginControl.LoginView mLoginView;
+    private final GuideModel mGuideModel;
     private final Context mContext;
 
     @Inject
-    public LoginPresenterImpl(Context context, GuideApi model, com.shushan.thomework101.mvp.ui.activity.login.LoginControl.LoginView LoginView) {
+    public LoginPresenterImpl(Context context, GuideModel model, LoginControl.LoginView LoginView) {
         mContext = context;
-        mGuideApi = model;
+        mGuideModel = model;
         mLoginView = LoginView;
     }
 
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mGuideApi.onRequestVerifyCode(verifyCodeRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mLoginView.showErrMessage(throwable),
-//                        () -> mLoginView.dismissLoading());
-//        mLoginView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mLoginView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mLoginView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mLoginView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
-    
+    /**
+     * 获取验证码
+     */
+    @Override
+    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
+        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mGuideModel.onRequestVerifyCode(verifyCodeRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestVerifyCodeSuccess, throwable -> mLoginView.showErrMessage(throwable),
+                        () -> mLoginView.dismissLoading());
+        mLoginView.addSubscription(disposable);
+    }
+
+    /**
+     * 获取验证码成功
+     */
+    private void requestVerifyCodeSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(VerifyCodeResponse.class);
+            if (responseData.parsedData != null) {
+                VerifyCodeResponse response = (VerifyCodeResponse) responseData.parsedData;
+                mLoginView.getVerifyCodeSuccess(response);
+            }
+        } else {
+            mLoginView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+    /**
+     * 登录
+     */
+    @Override
+    public void onRequestLogin(LoginRequest loginRequest) {
+        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mGuideModel.onRequestLogin(loginRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestLoginSuccess, throwable -> mLoginView.showErrMessage(throwable),
+                        () -> mLoginView.dismissLoading());
+        mLoginView.addSubscription(disposable);
+    }
+
+    /**
+     * 登录成功
+     */
+    private void requestLoginSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(LoginResponse.class);
+            if (responseData.parsedData != null) {
+                LoginResponse response = (LoginResponse) responseData.parsedData;
+                mLoginView.getLoginSuccess(response);
+            }
+        } else {
+            mLoginView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+
     @Override
     public void onCreate() {
     }

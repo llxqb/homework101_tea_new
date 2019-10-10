@@ -3,7 +3,6 @@ package com.shushan.thomework101.di;
 
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.mvp.ui.activity.bank.WalletActivity;
-import com.shushan.thomework101.mvp.ui.activity.guide.GradeSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.SettingActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -21,8 +20,6 @@ public interface ComponetGraph {
     void inject(BaseFragment baseFragment);
 
     void inject(SubjectSelectActivity subjectSelectActivity);//选择科目
-
-    void inject(GradeSelectActivity gradeSelectActivity);//选择年级
 
     void inject(SettingActivity settingActivity);//设置
 

@@ -3,7 +3,6 @@ package com.shushan.thomework101.mvp.ui.activity.guide;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,7 +11,6 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.entity.response.SelectTextResponse;
-import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.ui.adapter.SelectTextAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -37,8 +35,7 @@ public class SubjectSelectActivity extends BaseActivity {
     /**
      * 选择的科目
      */
-    private String selectSubject;
-    private User mUser;
+    private int selectSubject;
 
     @Override
     protected void initContentView() {
@@ -58,7 +55,6 @@ public class SubjectSelectActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mUser = mBuProcessor.getUser();
         mSelectSubjectAdapter = new SelectTextAdapter(selectTextResponseList);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setAdapter(mSelectSubjectAdapter);
@@ -74,7 +70,7 @@ public class SubjectSelectActivity extends BaseActivity {
                         }
                     }
                     selectTextResponse.check = true;
-                    selectSubject = selectTextResponse.name;
+                    selectSubject = position + 1;
                     mGoIv.setImageResource(R.mipmap.landing_nextstep_2);
                     mSelectSubjectAdapter.notifyDataSetChanged();
                 }
@@ -96,12 +92,10 @@ public class SubjectSelectActivity extends BaseActivity {
 
     @OnClick(R.id.go_iv)
     public void onViewClicked() {
-        if (TextUtils.isEmpty(selectSubject)) {
+        if (selectSubject == 0) {
             showToast("请选择科目");
             return;
         }
-        mUser.subject = selectSubject;
-        mBuProcessor.setLoginUser(mUser);
-        startActivitys(GradeSelectActivity.class);
+        GradeSelectActivity.start(this,selectSubject);
     }
 }

@@ -15,7 +15,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMainComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MainModule;
-import com.shushan.thomework101.entity.user.User;
+import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -43,7 +43,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_HOME_PAGE = 0;
     public static final int SWITCH_MESSAGE_PAGE = 1;
     public static final int SWITCH_MINE_PAGE = 2;
-    User mUser;
     @Inject
     MainControl.PresenterMain mPresenter;
 
@@ -56,21 +55,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initView() {
-        mUser = mBuProcessor.getUser();
         connectRongCloud();
     }
 
     @Override
     public void initData() {
-        mMainBottomNavigation.setItemIconTintList(null);
+        mMainBottomNavigation.setItemIconTintList(null);//Menu时不显示彩色图标的问题
         LogUtils.e("user:" + new Gson().toJson(mBuProcessor.getUser()));
-        if (!mBuProcessor.isValidLogin() || !mBuProcessor.isFinishFirstWrite()) {
+        if (!mBuProcessor.isValidLogin()) {
             startActivitys(LoginActivity.class);
             finish();
-        } else {
-//            mUser.grades = "";
-//            mBuProcessor.setLoginUser(mUser);
-//            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
+        } else if (!mBuProcessor.isFinishFirstWrite()) {
+            startActivitys(SubjectSelectActivity.class);
         }
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = new HomeFragment();

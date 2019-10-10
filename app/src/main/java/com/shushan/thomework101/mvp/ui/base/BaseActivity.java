@@ -20,6 +20,7 @@ import com.shushan.thomework101.di.components.AppComponent;
 import com.shushan.thomework101.entity.user.BuProcessor;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.help.ImageLoaderHelper;
+import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
 import com.shushan.thomework101.mvp.utils.SharePreferenceUtil;
 import com.shushan.thomework101.mvp.utils.StatusBarUtil;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
@@ -121,6 +122,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             mErrMessage = getString(R.string.text_wait_try);
         }
         showToast(mErrMessage);
+    }
+
+    public void judgeToken(Integer code) {
+        if (code == 2) {
+            showToast("登入过期,请重新登入");
+            mSharePreferenceUtil.clearData();
+            startActivitys(LoginActivity.class);
+        }
     }
 
     public void showToast(String message) {

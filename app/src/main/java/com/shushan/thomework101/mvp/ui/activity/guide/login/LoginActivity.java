@@ -11,18 +11,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLoginComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.LoginModule;
+import com.shushan.thomework101.entity.request.LoginRequest;
+import com.shushan.thomework101.entity.request.VerifyCodeRequest;
+import com.shushan.thomework101.entity.response.LoginResponse;
+import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
-import com.shushan.thomework101.mvp.ui.activity.login.LoginControl;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
+import com.shushan.thomework101.mvp.utils.LogUtils;
+import com.shushan.thomework101.mvp.utils.LoginUtils;
+import com.shushan.thomework101.mvp.utils.SystemUtils;
 import com.shushan.thomework101.mvp.utils.ValueUtil;
 import com.shushan.thomework101.mvp.views.TimeButton;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,7 +40,6 @@ import butterknife.OnClick;
  * 登录
  */
 public class LoginActivity extends BaseActivity implements LoginControl.LoginView {
-    User mUser;
     @BindView(R.id.phone_et)
     EditText mPhoneEt;
     @BindView(R.id.verification_code_et)
@@ -46,6 +54,9 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     TextView mServiceAgreementTv;
     @BindView(R.id.privacy_agreement_tv)
     TextView mPrivacyAgreementTv;
+    private User mUser;
+    @Inject
+    LoginControl.PresenterLogin mPresenter;
 
     @Override
     protected void initContentView() {
@@ -58,8 +69,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         mUser = mBuProcessor.getUser();
         mPhoneEt.addTextChangedListener(search_text_OnChange);
         mVerificationCodeEt.addTextChangedListener(code_text_OnChange);
-        mPhoneEt.setText("13262253731");
-        mVerificationCodeEt.setText("123456");
     }
 
     @Override
@@ -87,6 +96,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 //倒计时时候背景
                 mCodeBt.setAfterBg(R.drawable.bg_line_round_solid_5);
                 mCodeBt.setTextColor(getResources().getColor(R.color.color999));
+                onRequestVerifyCode();
                 break;
             case R.id.start_login_iv:
                 if (verificationText()) {
@@ -99,6 +109,50 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 break;
         }
     }
+
+
+    /**
+     * 获取验证码
+     */
+    private void onRequestVerifyCode() {
+        VerifyCodeRequest verifyCodeRequest = new VerifyCodeRequest();
+        verifyCodeRequest.mobile = mPhoneEt.getText().toString();
+        mPresenter.onRequestVerifyCode(verifyCodeRequest);
+    }
+
+    @Override
+    public void getVerifyCodeSuccess(VerifyCodeResponse verifyCodeResponse) {
+        LogUtils.e("verifyCodeResponse:" + new Gson().toJson(verifyCodeResponse));
+        //TODO 删除
+        mVerificationCodeEt.setText(verifyCodeResponse.getCode() + "");
+    }
+
+    /**
+     * 登录
+     */
+    private void reqLoginInfo() {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.mobile = mPhoneEt.getText().toString();
+        loginRequest.code = mVerificationCodeEt.getText().toString();
+        loginRequest.deviceId = SystemUtils.getUUID(this, mSharePreferenceUtil);
+        mPresenter.onRequestLogin(loginRequest);
+    }
+
+
+    @Override
+    public void getLoginSuccess(LoginResponse loginResponse) {
+        LogUtils.e("loginResponse:" + new Gson().toJson(loginResponse));
+        LogUtils.e("getGrade_id:" + loginResponse.getGrade_id());
+        User mUser = LoginUtils.saveLoginUser(loginResponse);
+        mBuProcessor.setLoginUser(mUser);
+        if (!mBuProcessor.isFinishFirstWrite()) {
+            startActivitys(SubjectSelectActivity.class);
+        } else {
+            startActivitys(MainActivity.class);
+        }
+        finish();
+    }
+
 
     /**
      * 验证输入文字
@@ -125,7 +179,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         return true;
     }
 
-
     /**
      * 检查app 权限
      */
@@ -144,19 +197,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             }
         });
     }
-
-    private void reqLoginInfo() {
-        User user = new User();
-        user.token = "11111111111";
-        mBuProcessor.setLoginUser(user);
-        if (!mBuProcessor.isFinishFirstWrite()) {
-            startActivitys(SubjectSelectActivity.class);
-        } else {
-            startActivitys(MainActivity.class);
-        }
-        finish();
-    }
-
 
     private boolean verificationPhone = false;
     private boolean verificationCode = false;
@@ -221,4 +261,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 .loginModule(new LoginModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
+
 }

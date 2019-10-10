@@ -14,7 +14,7 @@ public interface LoadDataView {
 
     void showToast(String message);
 
-//    void judgeToken(Integer code);
+    void judgeToken(Integer code);
 
     <T> ObservableTransformer<T, T> applySchedulers();
 

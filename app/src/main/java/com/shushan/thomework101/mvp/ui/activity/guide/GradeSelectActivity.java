@@ -11,13 +11,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.gson.Gson;
 import com.shushan.thomework101.R;
-import com.shushan.thomework101.di.components.DaggerPersonalInfoComponent;
+import com.shushan.thomework101.di.components.DaggerUploadGradeComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
-import com.shushan.thomework101.di.modules.PersonalInfoModule;
+import com.shushan.thomework101.di.modules.UploadGradeModule;
 import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
 import com.shushan.thomework101.entity.response.SelectTextResponse;
 import com.shushan.thomework101.entity.user.User;
-import com.shushan.thomework101.mvp.ui.activity.personalInfo.PersonalInfoControl;
+import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadGradeControl;
 import com.shushan.thomework101.mvp.ui.adapter.SelectTextAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.UserUtil;
@@ -33,7 +33,7 @@ import butterknife.OnClick;
 /**
  * 年级选择
  */
-public class GradeSelectActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView {
+public class GradeSelectActivity extends BaseActivity implements UploadGradeControl.UpdateGradeView {
     @BindView(R.id.primary_school_tv)
     TextView mPrimarySchoolTv;
     @BindView(R.id.primary_school_recycler_view)
@@ -53,7 +53,7 @@ public class GradeSelectActivity extends BaseActivity implements PersonalInfoCon
      */
     private int selectSubject;
     @Inject
-    PersonalInfoControl.PresenterPersonalInfo mPresenter;
+    UploadGradeControl.PresenterUpdateGrade mPresenter;
 
     public static void start(Context context, int selectSubject) {
         Intent intent = new Intent(context, GradeSelectActivity.class);
@@ -241,19 +241,11 @@ public class GradeSelectActivity extends BaseActivity implements PersonalInfoCon
     }
 
 
-    @Override
-    public void getUploadImageSuccess(String picUrl) {
-    }
-
-
-    @Override
-    public void getUploadPersonalCardInfoSuccess() {
-    }
 
 
     private void initInjectData() {
-        DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
-                .personalInfoModule(new PersonalInfoModule(this, this))
+        DaggerUploadGradeComponent.builder().appComponent(getAppComponent())
+                .uploadGradeModule(new UploadGradeModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
 

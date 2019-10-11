@@ -50,4 +50,14 @@ public interface MineApi {
      */
     @POST("teacher/user/set_guide_time")
     Observable<String> setCounsellingTime(@Body String request);
+    /**
+     * 完善个人资料
+     */
+    @POST("teacher/user/complete_userinfo")
+    Observable<String> uploadPersonalInfo(@Body String request);
+    /**
+     * 修改个人资料
+     */
+    @POST("teacher/user/setinfo")
+    Observable<String> updatePersonalInfo(@Body String request);
 }

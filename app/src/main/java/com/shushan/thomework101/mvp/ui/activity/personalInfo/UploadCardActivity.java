@@ -48,8 +48,7 @@ import butterknife.OnClick;
 /**
  * 上传证件
  */
-public class UploadCardActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView, AvatarPopupWindow.PopupWindowListener,
-        TakePhoto.TakeResultListener,InvokeListener {
+public class UploadCardActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView, AvatarPopupWindow.PopupWindowListener,TakePhoto.TakeResultListener,InvokeListener {
 
     @BindView(R.id.upload_card_layout)
     LinearLayout mUploadCardLayout;
@@ -198,15 +197,22 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
         mPresenter.uploadPersonalCardInfo(request);
     }
 
-    @Override
-    public void getUploadPersonalGradeInfoSuccess() {
-    }
 
     @Override
     public void getUploadPersonalCardInfoSuccess() {
         showToast("上传成功，请等待审核完成");
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_CHECK_INFO));
         finish();
+    }
+
+    @Override
+    public void getUploadPersonalInfoSuccess() {
+
+    }
+
+    @Override
+    public void getUpdatePersonalInfoSuccess() {
+
     }
 
 

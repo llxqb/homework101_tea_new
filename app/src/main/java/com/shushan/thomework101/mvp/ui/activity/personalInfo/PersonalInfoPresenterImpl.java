@@ -54,30 +54,6 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
 
     /**
-     * 设置老师辅导年级和科目
-     */
-    @Override
-    public void uploadPersonalGradeInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
-        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMineModel.uploadPersonalGradeInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::uploadPersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
-                        () -> mPersonalInfoView.dismissLoading());
-        mPersonalInfoView.addSubscription(disposable);
-    }
-
-    /**
-     * 设置老师辅导年级和科目成功
-     */
-    private void uploadPersonalInfoSuccess(ResponseData responseData) {
-        mPersonalInfoView.judgeToken(responseData.resultCode);
-        if (responseData.resultCode == 0) {
-            mPersonalInfoView.getUploadPersonalGradeInfoSuccess();
-        } else {
-            mPersonalInfoView.showToast(responseData.errorMsg);
-        }
-    }
-
-    /**
      * 上传老师证书
      */
     @Override
@@ -96,6 +72,54 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
         mPersonalInfoView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             mPersonalInfoView.getUploadPersonalCardInfoSuccess();
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 完善个人资料
+     */
+    @Override
+    public void uploadPersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.uploadPersonalInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::uploadPersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+    }
+
+    /**
+     * 完善个人资料成功
+     */
+    private void uploadPersonalInfoSuccess(ResponseData responseData) {
+        mPersonalInfoView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mPersonalInfoView.getUploadPersonalInfoSuccess();
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 修改个人资料
+     */
+    @Override
+    public void updatePersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.updatePersonalInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::updatePersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+    }
+
+    /**
+     * 修改个人资料成功
+     */
+    private void updatePersonalInfoSuccess(ResponseData responseData) {
+        mPersonalInfoView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mPersonalInfoView.getUploadPersonalInfoSuccess();
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }

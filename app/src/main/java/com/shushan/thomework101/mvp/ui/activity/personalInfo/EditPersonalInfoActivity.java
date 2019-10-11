@@ -1,18 +1,55 @@
 package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerPersonalInfoComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.PersonalInfoModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
+import com.shushan.thomework101.entity.request.UploadImage;
+import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
+import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
+import com.shushan.thomework101.mvp.ui.dialog.AvatarPopupWindow;
 import com.shushan.thomework101.mvp.ui.dialog.EditLabelDialog;
+import com.shushan.thomework101.mvp.utils.LogUtils;
+import com.shushan.thomework101.mvp.utils.PicUtils;
+import com.shushan.thomework101.mvp.utils.UserUtil;
+
+import org.devio.takephoto.app.TakePhoto;
+import org.devio.takephoto.app.TakePhotoImpl;
+import org.devio.takephoto.compress.CompressConfig;
+import org.devio.takephoto.model.CropOptions;
+import org.devio.takephoto.model.InvokeParam;
+import org.devio.takephoto.model.TContextWrap;
+import org.devio.takephoto.model.TResult;
+import org.devio.takephoto.permission.InvokeListener;
+import org.devio.takephoto.permission.PermissionManager;
+import org.devio.takephoto.permission.TakePhotoInvocationHandler;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,14 +57,19 @@ import butterknife.OnClick;
 /**
  * 编辑个人信息
  */
-public class EditPersonalInfoActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView, EditLabelDialog.EditLabelDialogListener {
+public class EditPersonalInfoActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView, EditLabelDialog.EditLabelDialogListener,
+        AvatarPopupWindow.PopupWindowListener, TakePhoto.TakeResultListener, InvokeListener {
 
+    @BindView(R.id.edit_personal_info_layout)
+    LinearLayout mEditPersonalInfoLayout;
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
     @BindView(R.id.common_right_iv)
     ImageView mCommonRightIv;
     @BindView(R.id.username_tv)
     TextView mUsernameTv;
+    @BindView(R.id.mine_personal_show_layout)
+    ConstraintLayout mMinePersonalShowLayout;
     @BindView(R.id.subject_tv)
     TextView mSubjectTv;
     @BindView(R.id.grade_tv)
@@ -52,6 +94,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     TextView mTeachingStyleContentTv;
     @BindView(R.id.teaching_philosophy_content_tv)
     TextView mTeachingPhilosophyContentTv;
+    @BindView(R.id.sure_tv)
+    TextView mSureTv;
     /**
      * 0：设置姓名
      * 1：标签1
@@ -59,30 +103,94 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
      */
     private int labelType;
     User mUser;
+    /**
+     * type
+     * 1: 注册流程：个人资料
+     * 2: 我的资料
+     */
+    private int type;
+    private String avatarUrl;
+    private List<String> labelString = new ArrayList<>();
+
+    private TakePhoto takePhoto;
+    private InvokeParam invokeParam;
+    private Uri uri;
+    //裁剪使用
+    private CropOptions cropOptions;
+    //成功取得照片
+    Bitmap bitmap;
+
+    @Inject
+    PersonalInfoControl.PresenterPersonalInfo mPresenter;
+
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, EditPersonalInfoActivity.class);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        getTakePhoto().onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+    }
+
 
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_edit_personal_info);
         initInjectData();
+        mUser = mBuProcessor.getUser();
+        File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
+        uri = Uri.fromFile(file);
+        int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
+        cropOptions = new CropOptions.Builder().setOutputX(size).setOutputX(size).setWithOwnCrop(false).create();
     }
 
 
     @Override
     public void initView() {
-        mUser = mBuProcessor.getUser();
-        mCommonTitleTv.setText("我的资料");
         mCommonRightIv.setImageResource(R.mipmap.tutor_service);
         mCommonRightIv.setVisibility(View.VISIBLE);
+        if (getIntent() != null) {
+            int type = getIntent().getIntExtra("type", 0);
+            if (type == 1) {
+                mCommonTitleTv.setText("个人资料");
+                mMinePersonalShowLayout.setVisibility(View.GONE);
+                mSureTv.setVisibility(View.VISIBLE);
+            } else {
+                mCommonTitleTv.setText("我的资料");
+                mMinePersonalShowLayout.setVisibility(View.VISIBLE);
+                mSureTv.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
     public void initData() {
-
+        if (!TextUtils.isEmpty(mUser.name)) {
+            mUsernameTv.setText(mUser.name);
+        }
+        if (mUser.subject != 0) {
+            mSubjectTv.setText(UserUtil.subjectIntToString(mUser.subject));
+        }
+        if (!TextUtils.isEmpty(mUser.grades)) {
+            mGradeTv.setText(UserUtil.gradeArrayToString(mUser.grades));
+        }
+        if (mUser.guideTimeBean != null) {
+            HomeResponse.UserBean.GuideTimeBean guideTimeBean = mUser.guideTimeBean;
+            mCounsellingDate1Tv.setText(UserUtil.dayArrayToString(guideTimeBean.getWorkday()));
+            mCounsellingTime1Tv.setText(guideTimeBean.getWork_time());
+            mCounsellingDate2Tv.setText(UserUtil.dayArrayToString(guideTimeBean.getOff_day()));
+            mCounsellingTime2Tv.setText(guideTimeBean.getOff_time());
+        }
+        //我的标签
     }
 
+    Intent intent;
 
     @OnClick({R.id.common_left_iv, R.id.common_right_iv, R.id.username_tv, R.id.label1_tv, R.id.label2_tv,
-            R.id.upload_photo_btn_layout, R.id.teaching_experience_tv_edit_tv, R.id.teaching_style_tv_edit_tv, R.id.teaching_philosophy_tv_edit_tv})
+            R.id.upload_photo_btn_layout, R.id.teaching_experience_tv_edit_tv, R.id.teaching_style_tv_edit_tv, R.id.teaching_philosophy_tv_edit_tv, R.id.sure_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_left_iv:
@@ -106,18 +214,31 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
                 editLabelDialog("我的标签", "请输入你的标签", mLabel2Tv.getText().toString());
                 break;
             case R.id.upload_photo_btn_layout:
+                new AvatarPopupWindow(this, this).initPopWindow(mEditPersonalInfoLayout);
                 break;
             case R.id.teaching_experience_tv_edit_tv://教学经历
-                EditTextInfoActivity.start(this, "教学经历");
+                intent = new Intent(this, EditTextInfoActivity.class);
+                intent.putExtra("title", "教学经历");
+                startActivityForResult(intent, 1);
                 break;
             case R.id.teaching_style_tv_edit_tv:
-                EditTextInfoActivity.start(this, "教学风格");
+                intent = new Intent(this, EditTextInfoActivity.class);
+                intent.putExtra("title", "教学风格");
+                startActivityForResult(intent, 2);
                 break;
             case R.id.teaching_philosophy_tv_edit_tv:
-                EditTextInfoActivity.start(this, "教育理念");
+                intent = new Intent(this, EditTextInfoActivity.class);
+                intent.putExtra("title", "教育理念");
+                startActivityForResult(intent, 3);
+                break;
+            case R.id.sure_tv:
+                if (verify()) {
+                    uploadPersonalInfo();
+                }
                 break;
         }
     }
+
 
     private void editLabelDialog(String title, String hintText, String label) {
         EditLabelDialog editLabelDialog = EditLabelDialog.newInstance();
@@ -139,16 +260,203 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     }
 
     @Override
-    public void getUploadImageSuccess(String picUrl) {
+    public void takeSuccess(TResult result) {
+        bitmap = BitmapFactory.decodeFile(result.getImage().getCompressPath());
+        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
+        LogUtils.d("path:" + result.getImage().getCompressPath());
+        //上传图片
+        uploadImage(path);
     }
 
+    /**
+     * 上传图片
+     */
+    private void uploadImage(String filename) {
+        UploadImage uploadImage = new UploadImage();
+        uploadImage.pic = filename;
+        mPresenter.uploadImageRequest(uploadImage);
+    }
+
+    private boolean verify() {
+        if (TextUtils.isEmpty(mUsernameTv.getText())) {
+            showToast("姓名不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(mLabel1Tv.getText())) {
+            showToast("标签不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(mLabel2Tv.getText())) {
+            showToast("标签不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(avatarUrl)) {
+            showToast("照片不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(mTeachingExperienceContentTv.getText())) {
+            showToast("教学经历不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(mTeachingStyleContentTv.getText())) {
+            showToast("教学风格不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(mTeachingPhilosophyContentTv.getText())) {
+            showToast("教育理念不能为空");
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * 完善个人资料
+     */
+    private void uploadPersonalInfo() {
+        labelString.add(mLabel1Tv.getText().toString());
+        labelString.add(mLabel2Tv.getText().toString());
+        UploadPersonalInfoRequest request = new UploadPersonalInfoRequest();
+        request.token = mUser.token;
+        request.name = mUsernameTv.getText().toString();
+        request.cover = avatarUrl;
+        request.label = new Gson().toJson(labelString);
+        request.experience = mTeachingExperienceContentTv.getText().toString();
+        request.style = mTeachingStyleContentTv.getText().toString();
+        request.idea = mTeachingPhilosophyContentTv.getText().toString();
+        LogUtils.e("request:" + new Gson().toJson(request));
+        mPresenter.uploadPersonalInfo(request);
+    }
+
+    /**
+     * 修改个人资料
+     */
+    private void updatePersonalInfo(String name, String cover, String label, String experience, String style, String idea) {
+        UploadPersonalInfoRequest request = new UploadPersonalInfoRequest();
+        request.token = mUser.token;
+        if (name != null) {
+            request.name = name;
+        }
+        if (cover != null) {
+            request.cover = cover;
+        }
+        if (label != null) {
+            request.label = label;
+        }
+        if (experience != null) {
+            request.experience = experience;
+        }
+        if (style != null) {
+            request.style = style;
+        }
+        if (idea != null) {
+            request.idea = idea;
+        }
+        LogUtils.e("request:" + new Gson().toJson(request));
+        mPresenter.uploadPersonalInfo(request);
+    }
+
+    /**
+     * 注册流程，上传个人信息成功
+     */
+    @Override
+    public void getUploadPersonalInfoSuccess() {
+        showToast("上传成功，请等待审核完成");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_CHECK_INFO));
+        finish();
+    }
+
+    /**
+     * 更新个人信息成功
+     */
+    @Override
+    public void getUpdatePersonalInfoSuccess() {
+
+    }
 
     @Override
-    public void getUploadPersonalGradeInfoSuccess() {
+    public void getUploadImageSuccess(String picUrl) {
+        avatarUrl = picUrl;
+        mImageLoaderHelper.displayCircularImage(this, avatarUrl, mUploadPhotoIv, 0);
     }
+
 
     @Override
     public void getUploadPersonalCardInfoSuccess() {
+    }
+
+    @Override
+    public void takePhotoBtnListener() {
+        //拍照进行裁剪
+        takePhoto.onPickFromCaptureWithCrop(uri, cropOptions);
+    }
+
+    @Override
+    public void albumBtnListener() {
+        //从相册中选取进行裁剪
+        takePhoto.onPickFromGalleryWithCrop(uri, cropOptions);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getTakePhoto().onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            String editWord = data.getStringExtra("editWord");
+            if (requestCode == 1) {
+                mTeachingExperienceContentTv.setText(editWord);
+            } else if (requestCode == 2) {
+                mTeachingStyleContentTv.setText(editWord);
+            } else if (requestCode == 3) {
+                mTeachingPhilosophyContentTv.setText(editWord);
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getTakePhoto().onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void takeFail(TResult result, String msg) {
+    }
+
+    @Override
+    public void takeCancel() {
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //以下代码为处理Android6.0、7.0动态权限所需
+        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
+    }
+
+    @Override
+    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
+        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
+        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
+            this.invokeParam = invokeParam;
+        }
+        return type;
+    }
+
+    /**
+     * 获取TakePhoto实例
+     */
+    public TakePhoto getTakePhoto() {
+        if (takePhoto == null) {
+            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
+        }
+        //设置压缩规则，最大500kb
+        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(800).create(), true);
+        return takePhoto;
     }
 
     private void initInjectData() {

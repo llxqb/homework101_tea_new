@@ -14,10 +14,11 @@ public class PersonalInfoControl {
     public interface PersonalInfoView extends LoadDataView {
         void getUploadImageSuccess(String picUrl);
 
-        void getUploadPersonalGradeInfoSuccess();
-
         void getUploadPersonalCardInfoSuccess();
 
+        void getUploadPersonalInfoSuccess();
+
+        void getUpdatePersonalInfoSuccess();
     }
 
     public interface PresenterPersonalInfo extends Presenter<PersonalInfoView> {
@@ -27,14 +28,17 @@ public class PersonalInfoControl {
         void uploadImageRequest(UploadImage uploadImage);
 
         /**
-         * 设置老师辅导年级和科目
-         */
-        void uploadPersonalGradeInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest);
-
-        /**
          * 上传老师证书
          */
         void uploadPersonalCardInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest);
+        /**
+         * 完善个人资料（注册流程）
+         */
+        void uploadPersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest);
+        /**
+         * 修改个人资料
+         */
+        void updatePersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest);
     }
 
 }

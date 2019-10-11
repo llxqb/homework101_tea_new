@@ -1,5 +1,7 @@
 package com.shushan.thomework101.entity.user;
 
+import com.shushan.thomework101.entity.response.HomeResponse;
+
 import java.io.Serializable;
 
 /**
@@ -27,12 +29,14 @@ public class User implements Serializable {
     public String grades;
 
     /**
-     * 认证流程状态
+     * 辅导时间
      */
-    public int registerState;
+    public HomeResponse.UserBean.GuideTimeBean guideTimeBean;
+
     /**
      * 我的标签
      */
     public String label1;
     public String label2;
+
 }

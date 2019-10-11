@@ -127,7 +127,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(SettingActivity.class);
                 break;
             case R.id.avatar_iv://去我的资料
-                startActivitys(EditPersonalInfoActivity.class);
+                EditPersonalInfoActivity.start(getActivity(),2);
                 break;
             case R.id.teacher_state_tv://去请假
                 startActivitys(LeaveActivity.class);

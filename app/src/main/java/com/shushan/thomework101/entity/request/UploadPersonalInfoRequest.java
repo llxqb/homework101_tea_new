@@ -34,4 +34,21 @@ public class UploadPersonalInfoRequest {
 
     //---上传老师试讲视频---//
     public String video;
+
+    //--完善个人信息--//
+    public String name;
+    public String cover;
+    public String label;
+    /**
+     * 教学经历
+     */
+    public String experience;
+    /**
+     * 教学风格
+     */
+    public String style;
+    /**
+     * 教学理念
+     */
+    public String idea;
 }

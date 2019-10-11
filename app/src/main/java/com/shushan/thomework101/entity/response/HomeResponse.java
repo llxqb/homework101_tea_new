@@ -1,8 +1,6 @@
 package com.shushan.thomework101.entity.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import java.io.Serializable;
 import java.util.List;
 
 public class HomeResponse {
@@ -327,7 +325,7 @@ public class HomeResponse {
             this.grade = grade;
         }
 
-        public static class GuideTimeBean implements Parcelable {
+        public static class GuideTimeBean implements Serializable {
             /**
              * workday : 1,2,3,4,5
              * work_time : 16:00-23:59
@@ -340,24 +338,6 @@ public class HomeResponse {
             private String off_day;
             private String off_time;
 
-            protected GuideTimeBean(Parcel in) {
-                workday = in.readString();
-                work_time = in.readString();
-                off_day = in.readString();
-                off_time = in.readString();
-            }
-
-            public static final Creator<GuideTimeBean> CREATOR = new Creator<GuideTimeBean>() {
-                @Override
-                public GuideTimeBean createFromParcel(Parcel in) {
-                    return new GuideTimeBean(in);
-                }
-
-                @Override
-                public GuideTimeBean[] newArray(int size) {
-                    return new GuideTimeBean[size];
-                }
-            };
 
             public String getWorkday() {
                 return workday;
@@ -389,19 +369,6 @@ public class HomeResponse {
 
             public void setOff_time(String off_time) {
                 this.off_time = off_time;
-            }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-                dest.writeString(workday);
-                dest.writeString(work_time);
-                dest.writeString(off_day);
-                dest.writeString(off_time);
             }
         }
     }

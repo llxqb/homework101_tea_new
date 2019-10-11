@@ -117,7 +117,6 @@ public class HomeUtil {
      * @return stateName：状态名称
      */
     public static String stateName(int cardState, int videoState, int trainState, int guideState, int completeState) {
-        LogUtils.e("cardState:"+cardState+" videoState:"+videoState+" trainState:"+trainState+" guideState:"+guideState+" completeState:"+completeState);
         String stateName = "";
         if (cardState == 0) {
             stateName = "去完成";
@@ -164,7 +163,6 @@ public class HomeUtil {
         } else if (completeState == 3) {
             stateName = "去完成";
         }
-        LogUtils.e("stateName:"+stateName);
         return stateName;
     }
 }

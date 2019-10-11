@@ -201,4 +201,34 @@ public class UserUtil {
         return subjectInt;
     }
 
+    /**
+     * 天数字转字符串
+     * 1->周一
+     */
+    public static String dayArrayToString(String day) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (day.contains("1")) {
+            stringBuffer.append("周一 ");
+        }
+        if (day.contains("2")) {
+            stringBuffer.append("周二 ");
+        }
+        if (day.contains("3")) {
+            stringBuffer.append("周三 ");
+        }
+        if (day.contains("4")) {
+            stringBuffer.append("周四 ");
+        }
+        if (day.contains("5")) {
+            stringBuffer.append("周五 ");
+        }
+        if (day.contains("6")) {
+            stringBuffer.append("周六 ");
+        }
+        if (day.contains("7")) {
+            stringBuffer.append("周日 ");
+        }
+
+        return String.valueOf(stringBuffer);
+    }
 }

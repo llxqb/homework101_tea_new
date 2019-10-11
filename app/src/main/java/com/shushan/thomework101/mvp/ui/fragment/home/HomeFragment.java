@@ -218,7 +218,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             case R.id.complete_material_tv:
                 //完善个人资料
                 if (userBean.getState() == 0 || userBean.getState() == 3) {
-                    startActivitys(EditPersonalInfoActivity.class);
+                    EditPersonalInfoActivity.start(getActivity(), 1);
                 } else if (userBean.getState() == 2) {
                     showUnderReviewDialog();
                 }
@@ -264,41 +264,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         setCheckProcess();
         setIncomeData(homeResponse.getIncome());
         setMineStudentData(homeResponse.getStudent());
-    }
-
-
-    /**
-     * 显示正在审核中dialog
-     */
-    private void showUnderReviewDialog() {
-        DialogFactory.showCommonFragmentDialog(getActivity(), this, "正在等待审核，请审核通过后再操作", "", "", "", Constant.COMMON_DIALOG_STYLE_2);
-    }
-
-
-    /**
-     * 未注册完成：初始化注册状态
-     */
-    private void initRegisterState() {
-        mVerifiedLayout.setVisibility(View.GONE);
-        mNotCertifiedLayout.setVisibility(View.VISIBLE);
-        mUploadInformationRl.setVisibility(View.GONE);
-        mPreJobTrainingRl.setVisibility(View.GONE);
-        mCompleteMaterialRl.setVisibility(View.GONE);
-        mRegistrationCompleteRl.setVisibility(View.GONE);
-    }
-
-
-    /**
-     * 注册完成：显示已认证状态
-     */
-    private void showVerifiedState() {
-        mVerifiedLayout.setVisibility(View.VISIBLE);
-        mNotCertifiedLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void commonDialogBtnOkListener() {
-
     }
 
     /**
@@ -401,6 +366,40 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mHomeStudentAdapter.setNewData(homeStudentResponseList);
     }
 
+
+    /**
+     * 显示正在审核中dialog
+     */
+    private void showUnderReviewDialog() {
+        DialogFactory.showCommonFragmentDialog(getActivity(), this, "正在等待审核，请审核通过后再操作", "", "", "", Constant.COMMON_DIALOG_STYLE_2);
+    }
+
+
+    /**
+     * 未注册完成：初始化注册状态
+     */
+    private void initRegisterState() {
+        mVerifiedLayout.setVisibility(View.GONE);
+        mNotCertifiedLayout.setVisibility(View.VISIBLE);
+        mUploadInformationRl.setVisibility(View.GONE);
+        mPreJobTrainingRl.setVisibility(View.GONE);
+        mCompleteMaterialRl.setVisibility(View.GONE);
+        mRegistrationCompleteRl.setVisibility(View.GONE);
+    }
+
+
+    /**
+     * 注册完成：显示已认证状态
+     */
+    private void showVerifiedState() {
+        mVerifiedLayout.setVisibility(View.VISIBLE);
+        mNotCertifiedLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+
+    }
 
     private void initializeInjector() {
         DaggerHomeFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())

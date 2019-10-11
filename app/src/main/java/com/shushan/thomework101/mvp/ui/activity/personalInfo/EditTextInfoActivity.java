@@ -45,7 +45,7 @@ public class EditTextInfoActivity extends BaseActivity {
         if (getIntent() != null) {
             String title = getIntent().getStringExtra("title");
             mCommonTitleTv.setText(title);
-            mContentEt.setHint("请填写"+title);
+            mContentEt.setHint("请填写" + title);
         }
     }
 
@@ -67,7 +67,10 @@ public class EditTextInfoActivity extends BaseActivity {
     }
 
     private void onRequestSaveEditText() {
-
+        Intent i = new Intent();
+        i.putExtra("editWord", mContentEt.getText().toString());
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     public TextWatcher edit_text_OnChange = new TextWatcher() {

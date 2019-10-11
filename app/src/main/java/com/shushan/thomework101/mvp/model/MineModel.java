@@ -73,5 +73,17 @@ public class MineModel {
     public Observable<ResponseData> setCounsellingTime(SetCounsellingTimeRequest request) {
         return mMineApi.setCounsellingTime(new Gson().toJson(request)).map(mTransform::transformCommon);
     }
+    /**
+     * 完善个人资料
+     */
+    public Observable<ResponseData> uploadPersonalInfo(UploadPersonalInfoRequest request) {
+        return mMineApi.uploadPersonalInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 修改个人资料
+     */
+    public Observable<ResponseData> updatePersonalInfo(UploadPersonalInfoRequest request) {
+        return mMineApi.updatePersonalInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
 
 }

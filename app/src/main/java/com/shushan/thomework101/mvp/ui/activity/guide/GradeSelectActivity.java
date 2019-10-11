@@ -139,11 +139,11 @@ public class GradeSelectActivity extends BaseActivity implements PersonalInfoCon
         request.token = mUser.token;
         request.subject = String.valueOf(selectSubject);
         request.grades = new Gson().toJson(selectGradeList);
-        mPresenter.onRequestUploadPersonalInfo(request);
+        mPresenter.uploadPersonalGradeInfo(request);
     }
 
     @Override
-    public void getUploadPersonalInfoSuccess() {
+    public void getUploadPersonalGradeInfoSuccess() {
         mUser.subject = Integer.parseInt(request.subject);
         mUser.grades = request.grades;
         mBuProcessor.setLoginUser(mUser);
@@ -161,7 +161,6 @@ public class GradeSelectActivity extends BaseActivity implements PersonalInfoCon
         startActivity(intent);
         finish();
     }
-
 
     private void initRecyclerViewData() {
         mPrimarySchoolRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -241,11 +240,21 @@ public class GradeSelectActivity extends BaseActivity implements PersonalInfoCon
         });
     }
 
+
+    @Override
+    public void getUploadImageSuccess(String picUrl) {
+    }
+
+
+    @Override
+    public void getUploadPersonalCardInfoSuccess() {
+    }
+
+
     private void initInjectData() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
                 .personalInfoModule(new PersonalInfoModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
-
 
 }

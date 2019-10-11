@@ -71,9 +71,6 @@
             android:name=".mvp.ui.activity.main.SystemMsgActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mvp.ui.activity.personalInfo.CoachingTimeActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".mvp.ui.activity.personalInfo.UploadVideoActivity"
             android:screenOrientation="portrait" />
         <activity

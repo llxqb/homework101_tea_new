@@ -3,6 +3,7 @@ package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 import android.content.Context;
 
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.UploadImage;
 import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
 import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MineModel;
@@ -30,38 +31,76 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
         mPersonalInfoView = PersonalInfoView;
     }
 
-
     /**
-     * 更新用户个人信息
+     * 上传图片
      */
     @Override
-    public void onRequestUploadPersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
+    public void uploadImageRequest(UploadImage uploadImage) {
         mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMineModel.onRequestUploadPersonalInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestUploadPersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+        Disposable disposable = mMineModel.uploadImageRequest(uploadImage).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUploadImageSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
                         () -> mPersonalInfoView.dismissLoading());
         mPersonalInfoView.addSubscription(disposable);
     }
 
 
-    /**
-     * 更新用户个人信息成功
-     */
-    private void requestUploadPersonalInfoSuccess(ResponseData responseData) {
-        mPersonalInfoView.judgeToken(responseData.resultCode);
+    private void requestUploadImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mPersonalInfoView.getUploadPersonalInfoSuccess();
-//            responseData.parseData(UploadPersonalInfoResponse.class);
-//            if (responseData.parsedData != null) {
-//                UploadPersonalInfoResponse response = (UploadPersonalInfoResponse) responseData.parsedData;
-//                mPersonalInfoView.getUploadPersonalInfoSuccess(response);
-//            }
+            mPersonalInfoView.getUploadImageSuccess(responseData.result);
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }
     }
 
-    
+
+    /**
+     * 设置老师辅导年级和科目
+     */
+    @Override
+    public void uploadPersonalGradeInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.uploadPersonalGradeInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::uploadPersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+    }
+
+    /**
+     * 设置老师辅导年级和科目成功
+     */
+    private void uploadPersonalInfoSuccess(ResponseData responseData) {
+        mPersonalInfoView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mPersonalInfoView.getUploadPersonalGradeInfoSuccess();
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 上传老师证书
+     */
+    @Override
+    public void uploadPersonalCardInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.uploadPersonalCardInfo(uploadPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::uploadPersonalCardInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+    }
+
+    /**
+     * 上传老师证书成功
+     */
+    private void uploadPersonalCardInfoSuccess(ResponseData responseData) {
+        mPersonalInfoView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mPersonalInfoView.getUploadPersonalCardInfoSuccess();
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
     @Override
     public void onCreate() {
     }

@@ -35,5 +35,4 @@ public class User implements Serializable {
      */
     public String label1;
     public String label2;
-
 }

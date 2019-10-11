@@ -26,6 +26,7 @@ import com.shushan.thomework101.mvp.ui.activity.mine.LeaveActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.MineFeedbackActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.SettingActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.StudentReplacementDetailActivity;
+import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineFunctionAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
@@ -119,11 +120,14 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
     }
 
-    @OnClick({R.id.setting_icon_iv,R.id.teacher_state_tv, R.id.wallet_tv, R.id.earned_income_layout, R.id.estimated_income_layout})
+    @OnClick({R.id.setting_icon_iv,R.id.avatar_iv,R.id.teacher_state_tv, R.id.wallet_tv, R.id.earned_income_layout, R.id.estimated_income_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_icon_iv:
                 startActivitys(SettingActivity.class);
+                break;
+            case R.id.avatar_iv://去我的资料
+                startActivitys(EditPersonalInfoActivity.class);
                 break;
             case R.id.teacher_state_tv://去请假
                 startActivitys(LeaveActivity.class);

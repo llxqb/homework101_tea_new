@@ -1,14 +1,12 @@
 package com.shushan.thomework101.mvp.ui.fragment.home;
 
-import android.content.ActivityNotFoundException;
-import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,14 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerHomeFragmentComponent;
 import com.shushan.thomework101.di.modules.HomeFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.response.HomeIncomeResponse;
+import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.response.UnSuccessfulStudentResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
@@ -37,14 +38,21 @@ import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.SetCounsellingTimeActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadCardActivity;
+import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadVideoActivity;
 import com.shushan.thomework101.mvp.ui.adapter.HomeIncomeAdapter;
 import com.shushan.thomework101.mvp.ui.adapter.HomeUnsuccessfulStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
+import com.shushan.thomework101.mvp.utils.HomeUtil;
+import com.shushan.thomework101.mvp.utils.LogUtils;
+import com.shushan.thomework101.mvp.utils.LoginUtils;
+import com.shushan.thomework101.mvp.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,8 +64,10 @@ import butterknife.Unbinder;
  * 消息
  */
 
-public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener {
 
+    @BindView(R.id.swipe_ly)
+    SwipeRefreshLayout mSwipeLy;
     //认证流程 未认证
     @BindView(R.id.not_certified_layout)
     LinearLayout mNotCertifiedLayout;
@@ -67,6 +77,12 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     TextView mVerifyStateTv;
     @BindView(R.id.go_complete_tv)
     TextView mGoCompleteTv;
+    @BindView(R.id.complete_material_tv)
+    TextView mCompleteMaterialTv;
+    @BindView(R.id.upload_video_hint_tv)
+    TextView mUploadVideoHintTv;
+    @BindView(R.id.set_coaching_time_tv)
+    TextView mSetCoachingTimeTv;
     @BindView(R.id.upload_information_rl)
     RelativeLayout mUploadInformationRl;
     @BindView(R.id.pre_job_training_rl)
@@ -112,6 +128,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     private View mEmptyView;
     User mUser;
+    HomeResponse.UserBean userBean;
+    @Inject
+    HomeFragmentControl.homeFragmentPresenter mPresenter;
 
     @Nullable
     @Override
@@ -124,86 +143,50 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         return view;
     }
 
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_CHECK_INFO)) {
+            onRequestHomeInfo();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_USER_CHECK_INFO);
+    }
+
 
     @Override
     public void initView() {
         mUser = mBuProcessor.getUser();
+        mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeLy.setOnRefreshListener(this);
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.unsuccessful_student_enpty_layout, (ViewGroup) mUnsuccessfulStudentRecyclerView.getParent(), false);
         mHomeIncomeAdapter = new HomeIncomeAdapter(homeIncomeResponseList);
         mMineIncomeRecyclerView.setAdapter(mHomeIncomeAdapter);
         mMineIncomeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mHomeIncomeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                showToast("" + position);
-            }
-        });
         //我的学生
         mHomeStudentAdapter = new HomeIncomeAdapter(homeStudentResponseList);
         mMimeStudentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mMimeStudentRecyclerView.setAdapter(mHomeStudentAdapter);
-        mHomeStudentAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                showToast("" + position);
-            }
-        });
         //未成单学生
         mHomeUnsuccessfulStudentAdapter = new HomeUnsuccessfulStudentAdapter(unSuccessfulStudentResponseList);
         mUnsuccessfulStudentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUnsuccessfulStudentRecyclerView.setAdapter(mHomeUnsuccessfulStudentAdapter);
 //        mHomeUnsuccessfulStudentAdapter.setNewData(null);
 //        mHomeUnsuccessfulStudentAdapter.setEmptyView(mEmptyView);//如果没有审核通过和没有分配学生显示emptyView
-        mHomeUnsuccessfulStudentAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                showToast("" + position);
-            }
-        });
-
-        mUser.registerState = 1;
     }
 
     @Override
     public void initData() {
-        //判断是否认证 认证流程状态
-        initRegisterState();
-        if (mUser.registerState == 1) {
-            mUploadInformationRl.setVisibility(View.VISIBLE);
-            mCircleIv.setImageResource(R.mipmap.circle1);
-        } else if (mUser.registerState == 2) {
-            mPreJobTrainingRl.setVisibility(View.VISIBLE);
-            mCircleIv.setImageResource(R.mipmap.circle2);
-        } else if (mUser.registerState == 3) {
-            mCompleteMaterialRl.setVisibility(View.VISIBLE);
-            mCircleIv.setImageResource(R.mipmap.circle3);
-        } else if (mUser.registerState == 4) {
-            mRegistrationCompleteRl.setVisibility(View.VISIBLE);
-            mCircleIv.setImageResource(R.mipmap.circle4);
-        } else {
-            mNotCertifiedLayout.setVisibility(View.GONE);
-            mVerifiedLayout.setVisibility(View.VISIBLE);
-        }
-        for (int i = 0; i < homeIncomeTitle.length; i++) {
-            HomeIncomeResponse homeIncomeResponse = new HomeIncomeResponse();
-            homeIncomeResponse.title = homeIncomeTitle[i];
-            homeIncomeResponse.money = i + 10;
-            homeIncomeResponse.bgIcon = homeIncomeBgIcon[i];
-            homeIncomeResponseList.add(homeIncomeResponse);
-        }
-        for (int i = 0; i < homeStudentTitle.length; i++) {
-            HomeIncomeResponse homeIncomeResponse = new HomeIncomeResponse();
-            homeIncomeResponse.title = homeStudentTitle[i];
-            homeIncomeResponse.money = i + 10;
-            homeIncomeResponse.bgIcon = homeStudentBgIcon[i];
-            homeStudentResponseList.add(homeIncomeResponse);
-        }
+        onRequestHomeInfo();
         for (int i = 0; i < 5; i++) {
             UnSuccessfulStudentResponse unSuccessfulStudentResponse = new UnSuccessfulStudentResponse();
             unSuccessfulStudentResponseList.add(unSuccessfulStudentResponse);
         }
     }
-
 
     @OnClick({R.id.system_msg_iv, R.id.customer_service_iv, R.id.verify_state_tv, R.id.go_complete_tv, R.id.pre_job_training_state_tv, R.id.complete_material_tv, R.id.set_coaching_time_tv, R.id.registration_complete_tv})
     public void onViewClicked(View view) {
@@ -215,25 +198,38 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 startActivitys(CustomerServiceActivity.class);
                 break;
             case R.id.verify_state_tv: //上传身份证、教师资格证
-                startActivitys(UploadCardActivity.class);
+                if (userBean.getCard_state() == 0 || userBean.getCard_state() == 3) {
+                    startActivitys(UploadCardActivity.class);
+                } else if (userBean.getCard_state() == 1) {
+                    showUnderReviewDialog();
+                }
                 break;
             case R.id.go_complete_tv://上传试讲视频
-//                startActivitys(UploadVideoActivity.class);
-                mUser.registerState = 3;
-                initData();
+                if (userBean.getVideo_state() == 0 || userBean.getVideo_state() == 3) {
+                    startActivitys(UploadVideoActivity.class);
+                } else if (userBean.getVideo_state() == 1) {
+                    showUnderReviewDialog();
+                }
                 break;
             case R.id.pre_job_training_state_tv:
                 //岗前培训
-                //TODO 如果未培训打开微信
-                toWechat(Constant.CS_WECHAT);
+                HomeUtil.toWechat(getActivity(), this, Constant.CS_WECHAT);
                 break;
             case R.id.complete_material_tv:
                 //完善个人资料
-                startActivitys(EditPersonalInfoActivity.class);
+                if (userBean.getState() == 0 || userBean.getState() == 3) {
+                    startActivitys(EditPersonalInfoActivity.class);
+                } else if (userBean.getState() == 2) {
+                    showUnderReviewDialog();
+                }
                 break;
             case R.id.set_coaching_time_tv:
                 //设置辅导时间
-                startActivitys(SetCounsellingTimeActivity.class);
+                if (userBean.getGuide_state() == 0 || userBean.getGuide_state() == 3) {
+                    startActivitys(SetCounsellingTimeActivity.class);
+                } else if (userBean.getGuide_state() == 2) {
+                    showUnderReviewDialog();
+                }
                 break;
             case R.id.registration_complete_tv:
                 //已完成
@@ -243,10 +239,39 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     /**
+     * 请求首页数据
+     */
+    private void onRequestHomeInfo() {
+        HomeRequest homeRequest = new HomeRequest();
+        homeRequest.token = mUser.token;
+        mPresenter.onRequestHomeInfo(homeRequest);
+    }
+
+    @Override
+    public void onRefresh() {
+        onRequestHomeInfo();
+    }
+
+    @Override
+    public void getHomeInfoSuccess(HomeResponse homeResponse) {
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+        }
+        userBean = homeResponse.getUser();
+        //更新User
+        mUser = LoginUtils.updateLoginUser(userBean, mUser, mBuProcessor);
+        LogUtils.e("mUser:" + new Gson().toJson(mUser));
+        setCheckProcess();
+        setIncomeData(homeResponse.getIncome());
+        setMineStudentData(homeResponse.getStudent());
+    }
+
+
+    /**
      * 显示正在审核中dialog
      */
-    private void showUnderReviewDialog(){
-        DialogFactory.showCommonFragmentDialog(getActivity(),this,"正在在等待审核，请审核通过后再操作","","","",Constant.COMMON_DIALOG_STYLE_2);
+    private void showUnderReviewDialog() {
+        DialogFactory.showCommonFragmentDialog(getActivity(), this, "正在等待审核，请审核通过后再操作", "", "", "", Constant.COMMON_DIALOG_STYLE_2);
     }
 
 
@@ -277,24 +302,103 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     /**
-     * 跳转到微信
+     * 设置审核流程
      */
-    private void toWechat(String wxNum) {
-        try {
-            ClipboardManager cm = (ClipboardManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CLIPBOARD_SERVICE);
-            // 将文本内容放到系统剪贴板里。
-            cm.setText(wxNum);
-            showToast("账号已复制");
-            //跳转到微信
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setComponent(cmp);
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            showToast("检查到您手机没有安装微信，请安装后使用该功能");
+    private void setCheckProcess() {
+        String title = "上传" + UserUtil.gradeArrayToString(mUser.grades) + "试讲题视频";
+        mUploadVideoHintTv.setText(title);
+        int checkState = HomeUtil.checkState(userBean.getCard_state(), userBean.getVideo_state(), userBean.getTrain_state(), userBean.getGuide_state(), userBean.getState());
+        switch (checkState) {
+            case 0:
+                //完成了注册全部流程
+                showVerifiedState();
+                break;
+            case 1:
+                //未完成了身份证审核和试讲视频
+                initRegisterState();
+                mUploadInformationRl.setVisibility(View.VISIBLE);
+                mCircleIv.setImageResource(R.mipmap.circle1);
+                mVerifyStateTv.setText(HomeUtil.stateName(userBean.getCard_state(), Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE));
+                mGoCompleteTv.setText(HomeUtil.stateName(Constant.DEFAULT_CHECK_STATE, userBean.getVideo_state(), Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE));
+                //0未上传  1待审核   2审核通过   3审核不通过
+                if (userBean.getCard_state() == 0 || userBean.getCard_state() == 3) {
+                    mVerifyStateTv.setBackgroundResource(R.drawable.gradient_red_bg_5);
+                } else {
+                    mVerifyStateTv.setBackgroundResource(R.drawable.gradient_round_gray2_bg_5);
+                }
+                if (userBean.getVideo_state() == 0 || userBean.getVideo_state() == 3) {
+                    mGoCompleteTv.setBackgroundResource(R.drawable.gradient_red_bg_5);
+                } else {
+                    mGoCompleteTv.setBackgroundResource(R.drawable.gradient_round_gray2_bg_5);
+                }
+                break;
+            case 2:
+                //未完成了岗前培训
+                initRegisterState();
+                mPreJobTrainingRl.setVisibility(View.VISIBLE);
+                mCircleIv.setImageResource(R.mipmap.circle2);
+                break;
+            case 3:
+                //未完成了完善资料和设置辅导时间
+                initRegisterState();
+                mCompleteMaterialRl.setVisibility(View.VISIBLE);
+                mCircleIv.setImageResource(R.mipmap.circle3);
+                mSetCoachingTimeTv.setText(HomeUtil.stateName(Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, userBean.getGuide_state(), Constant.DEFAULT_CHECK_STATE));
+                mCompleteMaterialTv.setText(HomeUtil.stateName(Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, Constant.DEFAULT_CHECK_STATE, userBean.getState()));
+                if (userBean.getGuide_state() == 0 || userBean.getGuide_state() == 3) {
+                    mSetCoachingTimeTv.setBackgroundResource(R.drawable.gradient_red_bg_5);
+                } else {
+                    mSetCoachingTimeTv.setBackgroundResource(R.drawable.gradient_round_gray2_bg_5);
+                }
+                if (userBean.getState() == 0 || userBean.getState() == 3) {
+                    mCompleteMaterialTv.setBackgroundResource(R.drawable.gradient_red_bg_5);
+                } else {
+                    mCompleteMaterialTv.setBackgroundResource(R.drawable.gradient_round_gray2_bg_5);
+                }
+                break;
         }
+    }
+
+    /**
+     * 设置我的收益数据
+     */
+    private void setIncomeData(HomeResponse.IncomeBean incomeBean) {
+        homeIncomeResponseList.clear();
+        for (int i = 0; i < homeIncomeTitle.length; i++) {
+            HomeIncomeResponse homeIncomeResponse = new HomeIncomeResponse();
+            homeIncomeResponse.title = homeIncomeTitle[i];
+            if (i == 0) {
+                homeIncomeResponse.money = incomeBean.getToday_push_money();
+            } else if (i == 1) {
+                homeIncomeResponse.money = incomeBean.getToday_class_fee();
+            } else {
+                homeIncomeResponse.money = incomeBean.getToday_income();
+            }
+            homeIncomeResponse.bgIcon = homeIncomeBgIcon[i];
+            homeIncomeResponseList.add(homeIncomeResponse);
+        }
+        mHomeIncomeAdapter.setNewData(homeIncomeResponseList);
+    }
+
+    /**
+     * 设置我的学生
+     */
+    private void setMineStudentData(HomeResponse.StudentBean studentBean) {
+        homeStudentResponseList.clear();
+        for (int i = 0; i < homeStudentTitle.length; i++) {
+            HomeIncomeResponse homeIncomeResponse = new HomeIncomeResponse();
+            homeIncomeResponse.title = homeStudentTitle[i];
+            if (i == 0) {
+                homeIncomeResponse.money = studentBean.getAll();
+            } else if (i == 1) {
+                homeIncomeResponse.money = studentBean.getPay();
+            } else {
+                homeIncomeResponse.money = studentBean.getToday_pay();
+            }
+            homeIncomeResponse.bgIcon = homeStudentBgIcon[i];
+            homeStudentResponseList.add(homeIncomeResponse);
+        }
+        mHomeStudentAdapter.setNewData(homeStudentResponseList);
     }
 
 

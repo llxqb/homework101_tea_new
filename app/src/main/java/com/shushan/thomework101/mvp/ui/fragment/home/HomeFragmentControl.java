@@ -1,6 +1,8 @@
 package com.shushan.thomework101.mvp.ui.fragment.home;
 
 
+import com.shushan.thomework101.entity.request.HomeRequest;
+import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,7 +12,7 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class HomeFragmentControl {
     public interface HomeView extends LoadDataView {
-//        void getInfoSuccess(HomeFragmentResponse response);
+        void getHomeInfoSuccess(HomeResponse homeResponse);
 
     }
 
@@ -18,7 +20,7 @@ public class HomeFragmentControl {
         /**
          * 请求homeFragment list 数据
          */
-//        void onRequestInfo(HomeFragmentRequest homeFragmentRequest);
+        void onRequestHomeInfo(HomeRequest homeRequest);
 
     }
 

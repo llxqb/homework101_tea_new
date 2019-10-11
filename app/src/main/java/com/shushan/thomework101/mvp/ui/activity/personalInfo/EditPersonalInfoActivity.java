@@ -66,6 +66,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         initInjectData();
     }
 
+
     @Override
     public void initView() {
         mUser = mBuProcessor.getUser();
@@ -137,18 +138,22 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         }
     }
 
-
     @Override
-    public void getUploadPersonalInfoSuccess() {
-
+    public void getUploadImageSuccess(String picUrl) {
     }
 
+
+    @Override
+    public void getUploadPersonalGradeInfoSuccess() {
+    }
+
+    @Override
+    public void getUploadPersonalCardInfoSuccess() {
+    }
 
     private void initInjectData() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
                 .personalInfoModule(new PersonalInfoModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
-
-
 }

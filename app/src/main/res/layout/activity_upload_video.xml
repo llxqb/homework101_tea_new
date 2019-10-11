@@ -24,7 +24,6 @@
                 android:layout_marginStart="@dimen/dp_25"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginEnd="@dimen/dp_25"
-                android:text="您选择了教授三年级、四年级、五年级数学，请按要求讲解以下试题，请抄题后，把视频对着纸上进行讲解录制。"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14"
                 app:layout_constraintEnd_toEndOf="parent"

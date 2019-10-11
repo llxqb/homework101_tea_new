@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.utils;
 
+import android.text.TextUtils;
+
 /**
  * 用户util
  */
@@ -13,6 +15,115 @@ public class UserUtil {
         return subject == 1 || subject == 2 || subject == 3;
     }
 
+
+    /**
+     * 年级json数组转字符串
+     */
+    public static String gradeArrayToString(String grade) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (grade.contains("1")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、一年级");
+            } else {
+                stringBuffer.append("一年级");
+            }
+        }
+        if (grade.contains("2")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、二年级");
+            } else {
+                stringBuffer.append("二年级");
+            }
+        }
+        if (grade.contains("3")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、三年级");
+            } else {
+                stringBuffer.append("三年级");
+            }
+        }
+        if (grade.contains("4")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、四年级");
+            } else {
+                stringBuffer.append("四年级");
+            }
+        }
+        if (grade.contains("5")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、五年级");
+            } else {
+                stringBuffer.append("五年级");
+            }
+        }
+        if (grade.contains("6")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、六年级");
+            } else {
+                stringBuffer.append("六年级");
+            }
+        }
+        if (grade.contains("7")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、初一");
+            } else {
+                stringBuffer.append("初一");
+            }
+        }
+        if (grade.contains("8")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、初二");
+            } else {
+                stringBuffer.append("初二");
+            }
+        }
+        if (grade.contains("9")) {
+            if (!TextUtils.isEmpty(stringBuffer)) {
+                stringBuffer.append("、初三");
+            } else {
+                stringBuffer.append("初三");
+            }
+        }
+        return String.valueOf(stringBuffer);
+    }
+
+    /**
+     * 年级int转换String
+     */
+    public static String gradeIntToString(int grade) {
+        String gradeString = "";
+        switch (grade) {
+            case 1:
+                gradeString = "一年级";
+                break;
+            case 2:
+                gradeString = "二年级";
+                break;
+            case 3:
+                gradeString = "三年级";
+                break;
+            case 4:
+                gradeString = "四年级";
+                break;
+            case 5:
+                gradeString = "五年级";
+                break;
+            case 6:
+                gradeString = "六年级";
+                break;
+            case 7:
+                gradeString = "初一";
+                break;
+            case 8:
+                gradeString = "初二";
+                break;
+            case 9:
+                gradeString = "初三";
+                break;
+
+        }
+        return gradeString;
+    }
 
     /**
      * 科目int转换String

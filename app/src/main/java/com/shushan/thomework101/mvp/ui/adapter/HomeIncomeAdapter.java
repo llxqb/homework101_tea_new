@@ -20,7 +20,7 @@ public class HomeIncomeAdapter extends BaseQuickAdapter<HomeIncomeResponse, Base
 
     @Override
     protected void convert(BaseViewHolder helper, HomeIncomeResponse item) {
-        helper.addOnClickListener(R.id.item_home_income_layout);
+//        helper.addOnClickListener(R.id.item_home_income_layout);
         helper.setText(R.id.income_title,item.title).setText(R.id.money_tv,String.valueOf(item.money));
         helper.setBackgroundRes(R.id.income_bg_icon_iv,item.bgIcon);
     }

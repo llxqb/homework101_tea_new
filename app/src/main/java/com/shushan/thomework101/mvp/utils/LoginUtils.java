@@ -1,6 +1,8 @@
 package com.shushan.thomework101.mvp.utils;
 
+import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.response.LoginResponse;
+import com.shushan.thomework101.entity.user.BuProcessor;
 import com.shushan.thomework101.entity.user.User;
 
 public class LoginUtils {
@@ -16,4 +18,10 @@ public class LoginUtils {
         return user;
     }
 
+    public static User updateLoginUser(HomeResponse.UserBean userBean, User user, BuProcessor buProcessor) {
+        user.subject = UserUtil.subjectStringToInt(userBean.getSubject());
+        user.grades = userBean.getGrade_id();
+        buProcessor.setLoginUser(user);
+        return buProcessor.getUser();
+    }
 }

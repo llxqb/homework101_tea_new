@@ -7,10 +7,8 @@ import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.PersonalInfoModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.GradeSelectActivity;
-import com.shushan.thomework101.mvp.ui.activity.personalInfo.CoachingTimeActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadCardActivity;
-import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadVideoActivity;
 
 import dagger.Component;
 
@@ -23,16 +21,11 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class, modules = {PersonalInfoModule.class, ActivityModule.class})
 public interface PersonalInfoComponent extends ActivityComponent {
 
-
     void inject(GradeSelectActivity gradeSelectActivity);//上传年级科目
 
     void inject(UploadCardActivity activity);//上传身份证
 
-    void inject(UploadVideoActivity activity);//上传视频
-
     void inject(EditPersonalInfoActivity activity);//编辑个人信息
-
-    void inject(CoachingTimeActivity activity);//设置辅导时间
 
     AppCompatActivity activity();
 

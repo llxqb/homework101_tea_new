@@ -141,8 +141,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void getLoginSuccess(LoginResponse loginResponse) {
-        LogUtils.e("loginResponse:" + new Gson().toJson(loginResponse));
-        LogUtils.e("getGrade_id:" + loginResponse.getGrade_id());
         User mUser = LoginUtils.saveLoginUser(loginResponse);
         mBuProcessor.setLoginUser(mUser);
         if (!mBuProcessor.isFinishFirstWrite()) {

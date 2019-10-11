@@ -43,504 +43,514 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_name">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="true">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/certification_process_layout"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-                <!-- 认证流程 未认证-->
+                android:focusableInTouchMode="true">
+
                 <LinearLayout
-                    android:id="@+id/not_certified_layout"
-                    android:layout_width="@dimen/dp_335"
-                    android:layout_height="@dimen/dp_178"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_30"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:background="@mipmap/home_authentication_process_background"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:id="@+id/certification_process_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dp_20"
-                        android:text="作业101家教老师注册认证流程"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_15" />
-
-
-                    <ImageView
-                        android:id="@+id/circle_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/circle1" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_2"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:layout_marginEnd="@dimen/dp_2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="上传信息"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_11" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="岗前培训"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_11" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="完善资料"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_11" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="完成注册"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_11" />
-                    </LinearLayout>
-
-
-                    <!-- 上传信息-->
-                    <RelativeLayout
-                        android:id="@+id/upload_information_rl"
-                        android:layout_width="@dimen/dp_305"
-                        android:layout_height="@dimen/dp_72"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        android:background="@mipmap/home_authentication_process_1"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/upload_card_hint_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_marginTop="@dimen/dp_22"
-                            android:text="上传身份证、教师资格"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/upload_video_hint_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/upload_card_hint_tv"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_marginTop="@dimen/dp_13"
-                            android:text="上传三年级、四年级、五年级试讲题视频"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-
-                        <TextView
-                            android:id="@+id/verify_state_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/dp_15"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@drawable/gradient_round_gray2_bg_5"
-                            android:paddingStart="@dimen/dp_7"
-                            android:paddingTop="@dimen/dp_4"
-                            android:paddingEnd="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_4"
-                            android:text="待审核"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/go_complete_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/verify_state_tv"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/dp_5"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@drawable/gradient_red_bg_5"
-                            android:paddingStart="@dimen/dp_7"
-                            android:paddingTop="@dimen/dp_4"
-                            android:paddingEnd="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_4"
-                            android:text="去完成"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12" />
-
-                    </RelativeLayout>
-
-                    <!-- 岗前培训-->
-                    <RelativeLayout
-                        android:id="@+id/pre_job_training_rl"
-                        android:layout_width="@dimen/dp_305"
-                        android:layout_height="@dimen/dp_72"
-                        android:layout_gravity="center"
-                        android:background="@mipmap/home_authentication_process_2"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/pre_job_training_hint_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_marginTop="@dimen/dp_22"
-                            android:text="岗前培训"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/pre_job_training_hint2_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/pre_job_training_hint_tv"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_marginTop="@dimen/dp_13"
-                            android:text="请添加您的专业培训师微信号：作业101获取培训资料"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/pre_job_training_state_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/dp_15"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@drawable/gradient_round_gray2_bg_5"
-                            android:paddingStart="@dimen/dp_7"
-                            android:paddingTop="@dimen/dp_4"
-                            android:paddingEnd="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_4"
-                            android:text="待完成"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12" />
-                    </RelativeLayout>
-
-                    <!-- 完善资料-->
-                    <RelativeLayout
-                        android:id="@+id/complete_material_rl"
-                        android:layout_width="@dimen/dp_305"
-                        android:layout_height="@dimen/dp_72"
-                        android:layout_gravity="center"
-                        android:background="@mipmap/home_authentication_process_3"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/complete_material_hint_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_marginTop="@dimen/dp_22"
-                            android:text="完善个人资料"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/set_coaching_time_hint_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/complete_material_hint_tv"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_marginTop="@dimen/dp_13"
-                            android:text="设置辅导时间"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-
-                        <TextView
-                            android:id="@+id/complete_material_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/dp_15"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@drawable/gradient_round_gray2_bg_5"
-                            android:paddingStart="@dimen/dp_7"
-                            android:paddingTop="@dimen/dp_4"
-                            android:paddingEnd="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_4"
-                            android:text="去完成"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/set_coaching_time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/complete_material_tv"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/dp_5"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@drawable/gradient_red_bg_5"
-                            android:paddingStart="@dimen/dp_7"
-                            android:paddingTop="@dimen/dp_4"
-                            android:paddingEnd="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_4"
-                            android:text="去完成"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12" />
-
-                    </RelativeLayout>
-
-                    <!-- 完成注册-->
-                    <RelativeLayout
-                        android:id="@+id/registration_complete_rl"
-                        android:layout_width="@dimen/dp_305"
-                        android:layout_height="@dimen/dp_72"
-                        android:layout_gravity="center"
-                        android:background="@mipmap/home_authentication_process_4"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/registration_complete_hint_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:text="恭喜您成为我们作业101的辅导老师，请严格按照我们相关制度进行作业和学习的辅导"
-                            android:textColor="#85513E"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/registration_complete_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginEnd="@dimen/dp_10"
-                            android:layout_marginBottom="@dimen/dp_8"
-                            android:background="@drawable/gradient_round_gray2_bg_5"
-                            android:paddingStart="@dimen/dp_7"
-                            android:paddingTop="@dimen/dp_4"
-                            android:paddingEnd="@dimen/dp_7"
-                            android:paddingBottom="@dimen/dp_4"
-                            android:text="知道了"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <!-- 认证流程 已认证-->
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/verified_layout"
+                    android:id="@+id/certification_process_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_20"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <!-- 认证流程 未认证-->
+                    <LinearLayout
+                        android:id="@+id/not_certified_layout"
+                        android:layout_width="@dimen/dp_335"
+                        android:layout_height="@dimen/dp_178"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:background="@mipmap/home_authentication_process_background"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/certification_process_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp_20"
+                            android:text="作业101家教老师注册认证流程"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_15" />
+
+
+                        <ImageView
+                            android:id="@+id/circle_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/circle1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_2"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginEnd="@dimen/dp_2"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="上传信息"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="岗前培训"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="完善资料"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="完成注册"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_11" />
+                        </LinearLayout>
+
+
+                        <!-- 上传信息-->
+                        <RelativeLayout
+                            android:id="@+id/upload_information_rl"
+                            android:layout_width="@dimen/dp_305"
+                            android:layout_height="@dimen/dp_72"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@mipmap/home_authentication_process_1"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/upload_card_hint_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_22"
+                                android:text="上传身份证、教师资格"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/upload_video_hint_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/upload_card_hint_tv"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_13"
+                                android:text="上传三年级、四年级、五年级试讲题视频"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+
+                            <TextView
+                                android:id="@+id/verify_state_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/dp_15"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:background="@drawable/gradient_round_gray2_bg_5"
+                                android:paddingStart="@dimen/dp_7"
+                                android:paddingTop="@dimen/dp_4"
+                                android:paddingEnd="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="待审核"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/go_complete_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/verify_state_tv"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:background="@drawable/gradient_red_bg_5"
+                                android:paddingStart="@dimen/dp_7"
+                                android:paddingTop="@dimen/dp_4"
+                                android:paddingEnd="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="去完成"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                        </RelativeLayout>
+
+                        <!-- 岗前培训-->
+                        <RelativeLayout
+                            android:id="@+id/pre_job_training_rl"
+                            android:layout_width="@dimen/dp_305"
+                            android:layout_height="@dimen/dp_72"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/home_authentication_process_2"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/pre_job_training_hint_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_22"
+                                android:text="岗前培训"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/pre_job_training_hint2_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/pre_job_training_hint_tv"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_13"
+                                android:singleLine="true"
+                                android:text="请添加您的专业培训师微信号：作业101获取培训资料"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/pre_job_training_state_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/dp_15"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:background="@drawable/gradient_round_gray2_bg_5"
+                                android:paddingStart="@dimen/dp_7"
+                                android:paddingTop="@dimen/dp_4"
+                                android:paddingEnd="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="待完成"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+                        </RelativeLayout>
+
+                        <!-- 完善资料-->
+                        <RelativeLayout
+                            android:id="@+id/complete_material_rl"
+                            android:layout_width="@dimen/dp_305"
+                            android:layout_height="@dimen/dp_72"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/home_authentication_process_3"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/complete_material_hint_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_22"
+                                android:text="完善个人资料"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/set_coaching_time_hint_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/complete_material_hint_tv"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_13"
+                                android:text="设置辅导时间"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+
+                            <TextView
+                                android:id="@+id/complete_material_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/dp_15"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:background="@drawable/gradient_round_gray2_bg_5"
+                                android:paddingStart="@dimen/dp_7"
+                                android:paddingTop="@dimen/dp_4"
+                                android:paddingEnd="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="去完成"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/set_coaching_time_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/complete_material_tv"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:background="@drawable/gradient_red_bg_5"
+                                android:paddingStart="@dimen/dp_7"
+                                android:paddingTop="@dimen/dp_4"
+                                android:paddingEnd="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="去完成"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                        </RelativeLayout>
+
+                        <!-- 完成注册-->
+                        <RelativeLayout
+                            android:id="@+id/registration_complete_rl"
+                            android:layout_width="@dimen/dp_305"
+                            android:layout_height="@dimen/dp_72"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/home_authentication_process_4"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/registration_complete_hint_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:text="恭喜您成为我们作业101的辅导老师，请严格按照我们相关制度进行作业和学习的辅导"
+                                android:textColor="#85513E"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/registration_complete_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:layout_marginBottom="@dimen/dp_8"
+                                android:background="@drawable/gradient_round_gray2_bg_5"
+                                android:paddingStart="@dimen/dp_7"
+                                android:paddingTop="@dimen/dp_4"
+                                android:paddingEnd="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="知道了"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <!-- 认证流程 已认证-->
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/verified_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:background="@drawable/item_bg_layer"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/teacher_subject_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/home_subject_label"
+                            android:paddingStart="@dimen/dp_10"
+                            android:paddingTop="@dimen/dp_3"
+                            android:paddingEnd="@dimen/dp_10"
+                            android:paddingBottom="@dimen/dp_3"
+                            android:text="数学"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_12"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/teacher_avatar_iv"
+                            android:layout_width="@dimen/dp_48"
+                            android:layout_height="@dimen/dp_48"
+                            android:layout_marginStart="@dimen/dp_24"
+                            android:layout_marginTop="@dimen/dp_28"
+                            android:src="@mipmap/my_default_head"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/teacher_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:text="陈老师"
+                            android:textColor="@color/color_30"
+                            android:textSize="@dimen/sp_17"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/teacher_avatar_iv"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/teacher_state_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:background="@drawable/bg_teacher_state_solid_4"
+                            android:drawableStart="@drawable/bg_round_red_360"
+                            android:drawablePadding="@dimen/dp_1"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/dp_5"
+                            android:paddingTop="@dimen/dp_2"
+                            android:paddingEnd="@dimen/dp_5"
+                            android:paddingBottom="@dimen/dp_2"
+                            android:text="请假"
+                            android:textColor="#809AD3"
+                            android:textSize="@dimen/sp_12"
+                            app:layout_constraintStart_toEndOf="@id/teacher_name_tv"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/teacher_counselling_grade_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:text="辅导年级：三年级  四年级  五年级"
+                            android:textColor="@color/color_30"
+                            android:textSize="@dimen/sp_13"
+                            app:layout_constraintStart_toEndOf="@id/teacher_avatar_iv"
+                            app:layout_constraintTop_toBottomOf="@id/teacher_name_tv" />
+
+                        <TextView
+                            android:id="@+id/teacher_counseling_time_hint_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_24"
+                            android:layout_marginTop="@dimen/dp_13"
+                            android:drawableStart="@mipmap/my_teacher_time"
+                            android:drawablePadding="@dimen/dp_2"
+                            android:text="辅导时间："
+                            android:textColor="@color/yellow_btn"
+                            android:textSize="@dimen/sp_12"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/teacher_avatar_iv" />
+
+                        <TextView
+                            android:id="@+id/teacher_counseling_time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_13"
+                            android:paddingBottom="@dimen/dp_22"
+                            android:text="周一 周二 周四 周五 14:00-20:00\n周六 周日  15:00-21:00"
+                            android:textColor="#9495A0"
+                            android:textSize="@dimen/sp_12"
+                            app:layout_constraintStart_toEndOf="@id/teacher_counseling_time_hint_tv"
+                            app:layout_constraintTop_toBottomOf="@id/teacher_avatar_iv" />
+
+                    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/mine_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_22"
                     android:layout_marginTop="@dimen/dp_30"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:background="@drawable/item_bg_layer"
-                    android:visibility="gone">
+                    android:text="我的收益"
+                    android:textColor="@color/first_text_color"
+                    android:textSize="@dimen/sp_17"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/certification_process_layout" />
 
-                    <TextView
-                        android:id="@+id/teacher_subject_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/home_subject_label"
-                        android:paddingStart="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_3"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:paddingBottom="@dimen/dp_3"
-                        android:text="数学"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_12"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mine_income_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintTop_toBottomOf="@id/mine_income" />
 
-                    <ImageView
-                        android:id="@+id/teacher_avatar_iv"
-                        android:layout_width="@dimen/dp_48"
-                        android:layout_height="@dimen/dp_48"
-                        android:layout_marginStart="@dimen/dp_24"
-                        android:layout_marginTop="@dimen/dp_28"
-                        android:src="@mipmap/my_default_head"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/teacher_name_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_12"
-                        android:layout_marginTop="@dimen/dp_30"
-                        android:text="陈老师"
-                        android:textColor="@color/color_30"
-                        android:textSize="@dimen/sp_17"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@id/teacher_avatar_iv"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/mine_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_22"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:text="我的学生"
+                    android:textColor="@color/first_text_color"
+                    android:textSize="@dimen/sp_17"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mine_income_recycler_view" />
 
 
-                    <TextView
-                        android:id="@+id/teacher_state_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_8"
-                        android:layout_marginTop="@dimen/dp_30"
-                        android:background="@drawable/bg_teacher_state_solid_4"
-                        android:drawableStart="@drawable/bg_round_red_360"
-                        android:drawablePadding="@dimen/dp_1"
-                        android:gravity="center"
-                        android:paddingStart="@dimen/dp_5"
-                        android:paddingTop="@dimen/dp_2"
-                        android:paddingEnd="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_2"
-                        android:text="请假"
-                        android:textColor="#809AD3"
-                        android:textSize="@dimen/sp_12"
-                        app:layout_constraintStart_toEndOf="@id/teacher_name_tv"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mime_student_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintTop_toBottomOf="@id/mine_student" />
 
-                    <TextView
-                        android:id="@+id/teacher_counselling_grade_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_12"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:text="辅导年级：三年级  四年级  五年级"
-                        android:textColor="@color/color_30"
-                        android:textSize="@dimen/sp_13"
-                        app:layout_constraintStart_toEndOf="@id/teacher_avatar_iv"
-                        app:layout_constraintTop_toBottomOf="@id/teacher_name_tv" />
-
-                    <TextView
-                        android:id="@+id/teacher_counseling_time_hint_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_24"
-                        android:layout_marginTop="@dimen/dp_13"
-                        android:drawableStart="@mipmap/my_teacher_time"
-                        android:drawablePadding="@dimen/dp_2"
-                        android:text="辅导时间："
-                        android:textColor="@color/yellow_btn"
-                        android:textSize="@dimen/sp_12"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/teacher_avatar_iv" />
-
-                    <TextView
-                        android:id="@+id/teacher_counseling_time_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_13"
-                        android:paddingBottom="@dimen/dp_22"
-                        android:text="周一 周二 周四 周五 14:00-20:00\n周六 周日  15:00-21:00"
-                        android:textColor="#9495A0"
-                        android:textSize="@dimen/sp_12"
-                        app:layout_constraintStart_toEndOf="@id/teacher_counseling_time_hint_tv"
-                        app:layout_constraintTop_toBottomOf="@id/teacher_avatar_iv" />
-
-                </android.support.constraint.ConstraintLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/mine_income"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_22"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="我的收益"
-                android:textColor="@color/first_text_color"
-                android:textSize="@dimen/sp_17"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/certification_process_layout" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/mine_income_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/mine_income" />
-
-            <TextView
-                android:id="@+id/mine_student"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_22"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="我的学生"
-                android:textColor="@color/first_text_color"
-                android:textSize="@dimen/sp_17"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mine_income_recycler_view" />
+                <TextView
+                    android:id="@+id/unsuccessful_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_22"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:text="未成单学生"
+                    android:textColor="@color/first_text_color"
+                    android:textSize="@dimen/sp_17"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mime_student_recycler_view" />
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/mime_student_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/mine_student" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/unsuccessful_student_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    app:layout_constraintTop_toBottomOf="@id/unsuccessful_student" />
 
-            <TextView
-                android:id="@+id/unsuccessful_student"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_22"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="未成单学生"
-                android:textColor="@color/first_text_color"
-                android:textSize="@dimen/sp_17"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mime_student_recycler_view" />
+            </android.support.constraint.ConstraintLayout>
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/unsuccessful_student_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_20"
-                app:layout_constraintTop_toBottomOf="@id/unsuccessful_student" />
+        </android.support.v4.widget.NestedScrollView>
 
-        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    </android.support.v4.widget.NestedScrollView>
 
 </android.support.constraint.ConstraintLayout>

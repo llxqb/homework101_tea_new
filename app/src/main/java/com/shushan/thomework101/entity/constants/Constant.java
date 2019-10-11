@@ -12,6 +12,7 @@ public class Constant {
     public static final String FROM = "android";
     /**
      * 照片类型
+     * 身份证正面 、身份证反面、教师资格证、教师职称证书
      */
     public static final int IDCARDF_RONT = 1;
     public static final int IDCARDF_BACK = 2;
@@ -41,5 +42,10 @@ public class Constant {
      */
     public static final int COMMON_DIALOG_STYLE_1= 1;
     public static final int COMMON_DIALOG_STYLE_2= 2;
+
+    /**
+     * 首页审核默认状态
+     */
+    public static final int DEFAULT_CHECK_STATE = 100;
 
 }

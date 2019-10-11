@@ -20,15 +20,16 @@
 
             <TextView
                 android:id="@+id/upload_card_hint_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_22"
                 android:layout_marginEnd="@dimen/dp_22"
-                android:text="*身份证和教师资格我们只做内部审核用，会严格遵循"
+                android:text="*身份证和教师资格我们只做内部审核用，会严格遵循保密制度"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14"
                 android:layout_marginTop="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

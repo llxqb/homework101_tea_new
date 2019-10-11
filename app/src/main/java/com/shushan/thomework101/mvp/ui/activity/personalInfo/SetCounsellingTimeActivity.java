@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -9,8 +11,15 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.di.components.DaggerCoachingTimeComponent;
+import com.shushan.thomework101.di.modules.ActivityModule;
+import com.shushan.thomework101.di.modules.CoachingTimeModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
+import com.shushan.thomework101.entity.request.SetCounsellingTimeRequest;
 import com.shushan.thomework101.entity.response.DateResponse;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.adapter.DateAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -20,13 +29,15 @@ import com.shushan.thomework101.mvp.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * desc:设置辅导时间
  */
-public class SetCounsellingTimeActivity extends BaseActivity {
+public class SetCounsellingTimeActivity extends BaseActivity implements CoachingTimeControl.CoachingTimeView {
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -48,18 +59,21 @@ public class SetCounsellingTimeActivity extends BaseActivity {
     TextView mOffDayStartTimeTv;
     @BindView(R.id.off_day_end_time_tv)
     TextView mOffDayEndTimeTv;
-
     DateAdapter mDateAdapter;
     List<DateResponse> dateResponseList = new ArrayList<>();
-
+    private User mUser;
+    @Inject
+    CoachingTimeControl.PresenterCoachingTime mPresenter;
 
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_set_counselling_time);
+        initInjectData();
     }
 
     @Override
     public void initView() {
+        mUser = mBuProcessor.getUser();
         mCommonTitleTv.setText("设置辅导时间");
         mCommonRightIv.setImageResource(R.mipmap.tutor_service);
         mDateAdapter = new DateAdapter(dateResponseList);
@@ -129,12 +143,13 @@ public class SetCounsellingTimeActivity extends BaseActivity {
                     String mWorkingDayStartTimeTvValue = mWorkingDayStartTimeTv.getText().toString();
                     String mWorkingDayEndTimeTvValue = mWorkingDayEndTimeTv.getText().toString();
                     if (!DateUtil.setTime16To24(mWorkingDayStartTimeTvValue, "16:00", "23:59", "HH:mm")) {
-                        showToast("周一到周五开始时间设置不正确");
+                        showToast("周一到周五设置时间在16时到24时");
                     }
                     if (!DateUtil.setTime16To24(mWorkingDayEndTimeTvValue, "16:00", "23:59", "HH:mm")) {
-                        showToast("周一到周五结束时间设置不正确");
+                        showToast("周一到周五设置时间在16时到24时");
                     }
                     //保存更改
+                    setCounsellingTime(mWorkingDayStartTimeTvValue, mWorkingDayEndTimeTvValue);
                 } else {
                     showToast("一周至少选择六天辅导");
                 }
@@ -142,6 +157,37 @@ public class SetCounsellingTimeActivity extends BaseActivity {
         }
     }
 
+    private void setCounsellingTime(String workingDayStartTime, String workingDayEndTime) {
+        StringBuilder workDayChecks = new StringBuilder();
+        StringBuilder offDayChecks = new StringBuilder();
+        for (int i = 0; i < mDateAdapter.getData().size(); i++) {
+            DateResponse dateResponse = mDateAdapter.getData().get(i);
+            if (dateResponse.check) {
+                workDayChecks.append(i + 1).append(",");
+            }
+        }
+        if (mSaturdayCheckIv.getVisibility() == View.VISIBLE) {
+            offDayChecks.append(6 + ",");
+        }
+        if (mSundayCheckIv.getVisibility() == View.VISIBLE) {
+            offDayChecks.append(7 + ",");
+        }
+        SetCounsellingTimeRequest request = new SetCounsellingTimeRequest();
+        request.token = mUser.token;
+        request.workday = workDayChecks.substring(0, workDayChecks.length() - 1);
+        request.work_time = workingDayStartTime + "-" + workingDayEndTime;
+        request.off_day = offDayChecks.substring(0, offDayChecks.length() - 1);
+        request.off_time = mOffDayStartTimeTv.getText().toString() + "-" + mOffDayEndTimeTv.getText().toString();
+        LogUtils.e("request:" + new Gson().toJson(request));
+        mPresenter.setCounsellingTime(request);
+    }
+
+    @Override
+    public void getCounsellingTimeSuccess() {
+        showToast("设置成功,请等待审核完成");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_CHECK_INFO));
+        finish();
+    }
 
     private boolean valid() {
         int isCheckNum = 0;//记录一周选中天数数量
@@ -177,5 +223,13 @@ public class SetCounsellingTimeActivity extends BaseActivity {
                 .build();
         pvTime.show();
     }
+
+
+    private void initInjectData() {
+        DaggerCoachingTimeComponent.builder().appComponent(getAppComponent())
+                .coachingTimeModule(new CoachingTimeModule(this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
 
 }

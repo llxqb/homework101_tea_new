@@ -1,6 +1,5 @@
 package com.shushan.thomework101.mvp.utils;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.response.LoginResponse;
 import com.shushan.thomework101.entity.user.BuProcessor;
@@ -23,7 +22,7 @@ public class LoginUtils {
         user.subject = UserUtil.subjectStringToInt(userBean.getSubject());
         user.grades = userBean.getGrade_id();
         user.guideTimeBean = userBean.getGuide_time();
-        LogUtils.e("user:"+new Gson().toJson(user));
+        user.checkPass = userBean.getState() == 1;
         buProcessor.setLoginUser(user);
         return buProcessor.getUser();
     }

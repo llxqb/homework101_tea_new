@@ -142,6 +142,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
     }
 
+
     private void initializeInjector() {
         DaggerMineFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))

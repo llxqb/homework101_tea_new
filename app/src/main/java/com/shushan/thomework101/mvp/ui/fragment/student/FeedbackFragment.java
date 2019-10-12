@@ -14,20 +14,26 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerFeedbackFragmentComponent;
 import com.shushan.thomework101.di.modules.FeedbackFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
-import com.shushan.thomework101.entity.response.TodayFeedBackResponse;
+import com.shushan.thomework101.entity.request.FeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.adapter.TodayFeedBackAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
+import com.shushan.thomework101.mvp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +49,14 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
     RecyclerView mRecyclerView;
     Unbinder unbinder;
     TodayFeedBackAdapter mTodayFeedBackAdapter;
-    List<TodayFeedBackResponse> todayFeedBackResponseList = new ArrayList<>();
+    List<FeedBackResponse.DataBean> todayFeedBackResponseList = new ArrayList<>();
     private View mEmptyView;
+    private User mUser;
+
+    private int page = 1;
+    private String pageSize = "10";
+    @Inject
+    FeedbackFragmentControl.FeedbackFragmentPresenter mPresenter;
 
     @Nullable
     @Override
@@ -60,6 +72,7 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
 
     @Override
     public void initView() {
+        mUser = mBuProcessor.getUser();
         initEmptyView();
         mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -87,21 +100,42 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
 
     @Override
     public void initData() {
-//        for (int i = 0; i < 10; i++) {
-//            TodayFeedBackResponse todayFeedBackResponse = new TodayFeedBackResponse();
-//            todayFeedBackResponseList.add(todayFeedBackResponse);
-//        }
-        mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+        onRequestFeedbackInfo();
     }
+
+    /**
+     * 请求辅导反馈数据
+     */
+    private void onRequestFeedbackInfo() {
+        FeedbackRequest feedbackRequest = new FeedbackRequest();
+        feedbackRequest.token = mUser.token;
+        feedbackRequest.page = page + "";
+        feedbackRequest.pagesize = pageSize;
+        mPresenter.onRequestFeedbackInfo(feedbackRequest);
+    }
+
+    @Override
+    public void getFeedbackInfoSuccess(FeedBackResponse response) {
+        LogUtils.e("response:" + new Gson().toJson(response));
+        if (!response.getData().isEmpty()) {
+            mTodayFeedBackAdapter.addData(response.getData());
+        } else {
+            mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+        }
+    }
+
 
     private void initEmptyView() {
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
         ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
         TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         emptyIv.setImageResource(R.mipmap.empty_feedback);
-        emptyTv.setText(getResources().getString(R.string.empty_feedback));
+        if (!mUser.checkPass) {
+            emptyTv.setText(getResources().getString(R.string.empty_feedback));
+        } else {
+            emptyTv.setText("暂无反馈信息");
+        }
     }
-
 
 
     private void initializeInjector() {
@@ -116,4 +150,6 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

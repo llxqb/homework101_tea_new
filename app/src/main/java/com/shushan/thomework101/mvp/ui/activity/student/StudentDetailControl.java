@@ -1,6 +1,7 @@
 package com.shushan.thomework101.mvp.ui.activity.student;
 
 
+import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,21 +11,15 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class StudentDetailControl {
     public interface StudentDetailView extends LoadDataView {
-//        void getStudentDetailSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+        void saveStudentInfoSuccess();
     }
 
     public interface PresenterStudentDetail extends Presenter<StudentDetailView> {
 
-//        /**
-//         * 登录
-//         */
-//        void onRequestStudentDetail(RegisterRequest StudentDetailRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+        /**
+         * 保存学生信息
+         */
+        void saveStudentInfo(SaveStudentInfoRequest saveStudentInfoRequest);
     }
 
 }

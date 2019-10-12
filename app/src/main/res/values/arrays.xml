@@ -64,7 +64,6 @@
 
     <string-array name="student_paid">
         <item>已付费</item>
-        <item>全部</item>
         <item>月辅导</item>
         <item>季辅导</item>
         <item>年辅导</item>
@@ -72,7 +71,6 @@
 
     <string-array name="student_unpaid">
         <item>未付费</item>
-        <item>全部</item>
         <item>今日新增</item>
         <item>三日新增</item>
         <item>七日新增</item>

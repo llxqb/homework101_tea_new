@@ -47,6 +47,7 @@ import com.shushan.thomework101.mvp.utils.HomeUtil;
 import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.LoginUtils;
 import com.shushan.thomework101.mvp.utils.UserUtil;
+import com.shushan.thomework101.mvp.views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.teacher_subject_name)
     TextView mTeacherSubjectName;
     @BindView(R.id.teacher_avatar_iv)
-    ImageView mTeacherAvatarIv;
+    CircleImageView mTeacherAvatarIv;
     @BindView(R.id.teacher_name_tv)
     TextView mTeacherNameTv;
     @BindView(R.id.teacher_state_tv)
@@ -260,6 +261,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         userBean = homeResponse.getUser();
         //更新User
         mUser = LoginUtils.updateLoginUser(userBean, mUser, mBuProcessor);
+
         LogUtils.e("mUser:" + new Gson().toJson(mUser));
         setCheckProcess();
         setIncomeData(homeResponse.getIncome());
@@ -366,7 +368,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mHomeStudentAdapter.setNewData(homeStudentResponseList);
     }
 
-
     /**
      * 显示正在审核中dialog
      */
@@ -394,6 +395,21 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private void showVerifiedState() {
         mVerifiedLayout.setVisibility(View.VISIBLE);
         mNotCertifiedLayout.setVisibility(View.GONE);
+        //设置已认证数据
+        mTeacherSubjectName.setText(userBean.getSubject());
+        mImageLoaderHelper.displayImage(getActivity(), userBean.getCover(), mTeacherAvatarIv, Constant.LOADING_AVATOR);
+        mTeacherNameTv.setText(userBean.getName());
+        if (userBean.getLeave() == 1) {//1请假中0正常
+            mTeacherStateTv.setVisibility(View.VISIBLE);
+        } else {
+            mTeacherStateTv.setVisibility(View.INVISIBLE);
+        }
+        String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(mUser.grades);
+        mTeacherCounsellingGradeTv.setText(teacherCounsellingGradeValue);
+        HomeResponse.UserBean.GuideTimeBean guideTimeBean = userBean.getGuide_time();
+        String teacherCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday())+" "+guideTimeBean.getWork_time()+"\n"
+                +UserUtil.dayArrayToString(guideTimeBean.getOff_day())+guideTimeBean.getOff_time();
+        mTeacherCounselingTimeTv.setText(teacherCounselingTimeValue);
     }
 
     @Override

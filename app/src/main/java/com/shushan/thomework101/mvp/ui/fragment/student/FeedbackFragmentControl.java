@@ -1,6 +1,8 @@
 package com.shushan.thomework101.mvp.ui.fragment.student;
 
 
+import com.shushan.thomework101.entity.request.FeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -13,15 +15,15 @@ public class FeedbackFragmentControl {
      * 我的辅导记录、老师页面辅导反馈
      */
     public interface FeedbackFragmentView extends LoadDataView {
-//        void getInfoSuccess(FeedbackFeedbackFragmentResponse response);
+        void getFeedbackInfoSuccess(FeedBackResponse response);
 
     }
 
     public interface FeedbackFragmentPresenter extends Presenter<FeedbackFragmentView> {
         /**
-         * 请求homeFragment list 数据
+         * 请求辅导反馈数据
          */
-//        void onRequestInfo(HomeFragmentRequest homeFragmentRequest);
+        void onRequestFeedbackInfo(FeedbackRequest feedbackRequest);
 
     }
 

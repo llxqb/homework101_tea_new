@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,23 +14,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineStudentFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.MineStudentFragmentModule;
+import com.shushan.thomework101.entity.request.MineStudentListRequest;
 import com.shushan.thomework101.entity.response.MineStudentResponse;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.ui.dialog.StudentTypeMorePopupWindow;
 import com.shushan.thomework101.mvp.utils.LogUtils;
+import com.shushan.thomework101.mvp.utils.StudentUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,9 +62,8 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
     @BindView(R.id.mine_student_recycler_view)
     RecyclerView mMineStudentRecyclerView;
     Unbinder unbinder;
-
     MineStudentAdapter mMineStudentAdapter;
-    List<MineStudentResponse> mineStudentResponseList = new ArrayList<>();
+    List<MineStudentResponse.DataBean> mineStudentResponseList = new ArrayList<>();
     /**
      * 学生付费类型
      * 1：已付费
@@ -65,6 +71,9 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
      */
     private int paidType;
     private View mEmptyView;
+    private User mUser;
+    @Inject
+    MineStudentFragmentControl.MineStudentFragmentPresenter mPresenter;
 
     @Nullable
     @Override
@@ -77,18 +86,19 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         return view;
     }
 
-
     @Override
     public void initView() {
+        mUser = mBuProcessor.getUser();
         initEmptyView();
-        mMineStudentAdapter = new MineStudentAdapter(mineStudentResponseList);
+        mMineStudentAdapter = new MineStudentAdapter(mineStudentResponseList, mImageLoaderHelper);
         mMineStudentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMineStudentRecyclerView.setAdapter(mMineStudentAdapter);
         mMineStudentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            MineStudentResponse.DataBean dataBean = (MineStudentResponse.DataBean) adapter.getItem(position);
             switch (view.getId()) {
                 case R.id.student_avatar_iv:
                     //跳到学生详情
-                    startActivitys(StudentDetailActivity.class);
+                    StudentDetailActivity.start(getActivity(), dataBean);
                     break;
                 case R.id.item_mine_student_layout:
                     //跳到聊天界面
@@ -103,35 +113,34 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
         TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         emptyIv.setImageResource(R.mipmap.empty_student);
-        emptyTv.setText(getResources().getString(R.string.empty_student));
+        if (!mUser.checkPass) {
+            emptyTv.setText(getResources().getString(R.string.empty_student));
+        } else {
+            emptyTv.setText("暂无学生信息");
+        }
     }
 
     @Override
     public void initData() {
-//        for (int i = 0; i < 10; i++) {
-//            MineStudentResponse mineStudentResponse = new MineStudentResponse();
-//            mineStudentResponseList.add(mineStudentResponse);
-//        }
-        mMineStudentAdapter.setEmptyView(mEmptyView);
+        onRequestMineStudentInfo("");
     }
 
     @OnClick({R.id.all_tv, R.id.paid_layout, R.id.unpaid_layout})
     public void onViewClicked(View view) {
-        initTitleColor();
         switch (view.getId()) {
             case R.id.all_tv:
+                initTitleColor();
                 mAllTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
+                onRequestMineStudentInfo("");
                 break;
             case R.id.paid_layout:
                 paidType = 1;
-                mPaidTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
-                List<String> paidTextList = Arrays.asList(getActivity().getResources().getStringArray(R.array.student_paid));
+                List<String> paidTextList = Arrays.asList(Objects.requireNonNull(getActivity()).getResources().getStringArray(R.array.student_paid));
                 new StudentTypeMorePopupWindow(getActivity(), this).initPopWindow(mPaidLayout, paidTextList);
                 break;
             case R.id.unpaid_layout:
                 paidType = 2;
-                mUnpaidTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
-                List<String> unPaidTextList = Arrays.asList(getActivity().getResources().getStringArray(R.array.student_unpaid));
+                List<String> unPaidTextList = Arrays.asList(Objects.requireNonNull(getActivity()).getResources().getStringArray(R.array.student_unpaid));
                 new StudentTypeMorePopupWindow(getActivity(), this).initPopWindow(mUnPaidLayout, unPaidTextList);
                 break;
         }
@@ -145,53 +154,37 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
 
     @Override
     public void studentTypeBtnListener(int type) {
-        LogUtils.e("type:" + type);
+        initTitleColor();
         if (paidType == 1) {
-            switch (type) {
-                case 0:
-                    showToast("已付费");
-                    mPaidTv.setText("已付费");
-                    break;
-                case 1:
-                    showToast("全部");
-                    mPaidTv.setText("全部");
-                    break;
-                case 2:
-                    showToast("月辅导");
-                    mPaidTv.setText("月辅导");
-                    break;
-                case 3:
-                    showToast("季辅导");
-                    mPaidTv.setText("季辅导");
-                    break;
-                case 4:
-                    showToast("年辅导");
-                    mPaidTv.setText("年辅导");
-                    break;
-            }
-        } else if (paidType == 2) {
-            switch (type) {
-                case 0:
-                    showToast("未付费");
-                    mUnpaidTv.setText("未付费");
-                    break;
-                case 1:
-                    showToast("全部");
-                    mUnpaidTv.setText("全部");
-                    break;
-                case 2:
-                    showToast("今日新增");
-                    mUnpaidTv.setText("今日新增");
-                    break;
-                case 3:
-                    showToast("三日新增");
-                    mUnpaidTv.setText("三日新增");
-                    break;
-                case 4:
-                    showToast("七日新增");
-                    mUnpaidTv.setText("七日新增");
-                    break;
-            }
+            mPaidTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
+        } else {
+            mUnpaidTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
+        }
+        String studentType = StudentUtil.studentTypeIntToString(paidType, type);
+        mPaidTv.setText(studentType);
+        onRequestMineStudentInfo(String.valueOf(StudentUtil.labelStringToInt(studentType)));
+    }
+
+    /**
+     * 请求我的学生列表
+     */
+    private void onRequestMineStudentInfo(String label) {
+        MineStudentListRequest request = new MineStudentListRequest();
+        request.token = mUser.token;
+        if (!TextUtils.isEmpty(label)) {
+            request.label = label;
+        }
+        mPresenter.onRequestMineStudentInfo(request);
+    }
+
+    @Override
+    public void getMineStudentInfoSuccess(MineStudentResponse response) {
+        LogUtils.e("response:" + new Gson().toJson(response));
+        if (!response.getData().isEmpty()) {
+            mMineStudentAdapter.setNewData(response.getData());
+        } else {
+            mMineStudentAdapter.setNewData(null);
+            mMineStudentAdapter.setEmptyView(mEmptyView);
         }
     }
 

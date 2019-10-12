@@ -2,9 +2,13 @@ package com.shushan.thomework101.mvp.model;
 
 
 import com.google.gson.Gson;
+import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
+import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
 import com.shushan.thomework101.network.networkapi.StudentApi;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 /**
  * Created by li.liu on 2019/09/18.
@@ -23,24 +27,17 @@ public class StudentModel {
         mTransform = transform;
     }
 
-//    /**
-//     * 登录
-//     */
-//    public Observable<ResponseData> onRequestLoginInfo(RegisterRequest request) {
-//        if (!TextUtils.isEmpty(request.phoneNum) || !TextUtils.isEmpty(request.email)) {
-//            //验证码登录
-//            return mStudentApi.onRequestLoginByCode(request.phoneNum, request.email, request.code, request.clientType).map(mTransform::transformCommon);
-//        } else {
-//            //账号密码登录
-//            return mStudentApi.onRequestLoginInfo(request.account, request.pwd, request.clientType).map(mTransform::transformCommon);
-//        }
-//    }
-//
-//    /**
-//     * 注册
-//     */
-//    public Observable<ResponseData> onRequestRegister(RegisterRequest request) {
-//        return mStudentApi.onRequestRegister(request.account, request.phoneNum, request.email, request.pwd, request.code, request.clientType).map(mTransform::transformCommon);
-//    }
+    /**
+     * 保存学生信息
+     */
+    public Observable<ResponseData> saveStudentInfo(SaveStudentInfoRequest request) {
+        return mStudentApi.saveStudentInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 提交辅导反馈
+     */
+    public Observable<ResponseData> submitFeedbackInfo(SubmitFeedbackRequest request) {
+        return mStudentApi.submitFeedbackInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
 
 }

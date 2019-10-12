@@ -11,19 +11,14 @@ import retrofit2.http.POST;
 
 public interface StudentApi {
     /**
-     * Google登录
+     * 保存学生信息
      */
-    @POST("menggoda/login")
-    Observable<String> loginRequest(@Body String request);
+    @POST("teacher/student/student_detail")
+    Observable<String> saveStudentInfo(@Body String request);
+    /**
+     * 提交辅导反馈
+     */
+    @POST("teacher/student/student_feedback")
+    Observable<String> submitFeedbackInfo(@Body String request);
 
-    /**
-     * 我的
-     */
-    @POST("menggoda/user")
-    Observable<String> onRequestPersonalInfo(@Body String token);
-    /**
-     * facebook登录
-     */
-    @POST("menggoda/login/facebook")
-    Observable<String> onRequestLoginFacebook(@Body String token);
 }

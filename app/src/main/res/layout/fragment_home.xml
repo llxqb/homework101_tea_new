@@ -393,7 +393,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
+                        <com.shushan.thomework101.mvp.views.CircleImageView
                             android:id="@+id/teacher_avatar_iv"
                             android:layout_width="@dimen/dp_48"
                             android:layout_height="@dimen/dp_48"

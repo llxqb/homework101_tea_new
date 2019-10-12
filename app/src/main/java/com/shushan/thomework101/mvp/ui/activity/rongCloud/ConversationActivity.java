@@ -11,6 +11,7 @@ import com.shushan.thomework101.di.components.DaggerConversationComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.ConversationModule;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
+import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.ChatMorePopupWindow;
 
@@ -59,11 +60,14 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     }
 
-    @OnClick({R.id.common_left_iv, R.id.common_right_iv})
+    @OnClick({R.id.common_left_iv,  R.id.start_counselling, R.id.common_right_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_left_iv:
                 finish();
+                break;
+            case R.id.start_counselling:
+                SubmitFeedbackContentActivity.start(this,"4","陈盼盼","");
                 break;
             case R.id.common_right_iv:
                 new ChatMorePopupWindow(this, this).initPopWindow(mConversationLayout);

@@ -5,27 +5,31 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.response.MineStudentResponse;
+import com.shushan.thomework101.help.ImageLoaderHelper;
+import com.shushan.thomework101.mvp.views.CircleImageView;
 
 import java.util.List;
 
 /**
  * 我的学生adapter
  */
-public class MineStudentAdapter extends BaseQuickAdapter<MineStudentResponse, BaseViewHolder> {
+public class MineStudentAdapter extends BaseQuickAdapter<MineStudentResponse.DataBean, BaseViewHolder> {
+    private ImageLoaderHelper mImageLoaderHelper;
 
-    public MineStudentAdapter(@Nullable List<MineStudentResponse> data) {
+    public MineStudentAdapter(@Nullable List<MineStudentResponse.DataBean> data, ImageLoaderHelper imageLoaderHelper) {
         super(R.layout.item_mine_student, data);
+        mImageLoaderHelper = imageLoaderHelper;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MineStudentResponse item) {
+    protected void convert(BaseViewHolder helper, MineStudentResponse.DataBean item) {
         helper.addOnClickListener(R.id.student_avatar_iv).addOnClickListener(R.id.item_mine_student_layout);
-//        helper.setText(R.id.date_name, item.name);
-//        if (item.check) {
-//            helper.setVisible(R.id.day_check_iv, true);
-//        } else {
-//            helper.setVisible(R.id.day_check_iv, false);
-//        }
+        CircleImageView circleImageView = helper.getView(R.id.student_avatar_iv);
+        mImageLoaderHelper.displayImage(mContext, item.getCover(), circleImageView, Constant.LOADING_AVATOR);
+        String versionValue = item.getGrade() + " " + item.getVersion();
+        helper.setText(R.id.student_name_tv, item.getName()).setText(R.id.textbook_version_tv, versionValue);
+        helper.setText(R.id.counselling_type_tv, item.getStatus()).setText(R.id.studengt_remarks_tv, item.getRemark());
     }
 }

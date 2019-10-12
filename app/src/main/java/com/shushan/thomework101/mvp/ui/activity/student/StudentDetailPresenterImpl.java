@@ -2,9 +2,15 @@ package com.shushan.thomework101.mvp.ui.activity.student;
 
 import android.content.Context;
 
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
+import com.shushan.thomework101.help.RetryWithDelay;
+import com.shushan.thomework101.mvp.model.ResponseData;
 import com.shushan.thomework101.mvp.model.StudentModel;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -24,34 +30,29 @@ public class StudentDetailPresenterImpl implements StudentDetailControl.Presente
         mStudentDetailView = studentDetailView;
     }
 
+    /**
+     * 保存学生信息
+     */
+    @Override
+    public void saveStudentInfo(SaveStudentInfoRequest saveStudentInfoRequest) {
+        mStudentDetailView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mStudentModel.saveStudentInfo(saveStudentInfoRequest).compose(mStudentDetailView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::saveStudentInfoSuccess, throwable -> mStudentDetailView.showErrMessage(throwable),
+                        () -> mStudentDetailView.dismissLoading());
+        mStudentDetailView.addSubscription(disposable);
+    }
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mStudentDetailView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mStudentModel.onRequestVerifyCode(verifyCodeRequest).compose(mStudentDetailView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mStudentDetailView.showErrMessage(throwable),
-//                        () -> mStudentDetailView.dismissLoading());
-//        mStudentDetailView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mStudentDetailView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mStudentDetailView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mStudentDetailView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
-    
+
+    private void saveStudentInfoSuccess(ResponseData responseData) {
+        mStudentDetailView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mStudentDetailView.saveStudentInfoSuccess();
+        } else {
+            mStudentDetailView.showToast(responseData.errorMsg);
+        }
+    }
+
+
     @Override
     public void onCreate() {
     }

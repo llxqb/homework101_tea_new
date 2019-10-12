@@ -15,7 +15,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineFeedbackComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MineFeedbackModule;
-import com.shushan.thomework101.entity.response.TodayFeedBackResponse;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.adapter.TodayFeedBackAdapter;
@@ -49,7 +49,7 @@ public class MineFeedbackActivity extends BaseActivity implements MineFeedbackCo
     RecyclerView mFeedbackRecyclerView;
 
     TodayFeedBackAdapter mTodayFeedBackAdapter;
-    List<TodayFeedBackResponse> todayFeedBackResponseList = new ArrayList<>();
+    List<FeedBackResponse.DataBean> todayFeedBackResponseList = new ArrayList<>();
 
     List<String> subjectList = new ArrayList<>();
     private View mEmptyView;

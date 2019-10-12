@@ -38,5 +38,9 @@ public class User implements Serializable {
      */
     public String label1;
     public String label2;
+    /**
+     * 是否通过审核
+     */
+    public boolean checkPass;
 
 }

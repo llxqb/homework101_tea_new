@@ -1,6 +1,10 @@
 package com.shushan.thomework101.mvp.ui.activity.bank;
 
 
+import com.shushan.thomework101.entity.request.TokenRequest;
+import com.shushan.thomework101.entity.response.MineBankCardResponse;
+import com.shushan.thomework101.entity.response.WalletResponse;
+import com.shushan.thomework101.entity.response.WithdrawResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -11,21 +15,28 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class WithdrawControl {
     public interface WithdrawView extends LoadDataView {
-//        void getWithdrawSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+        void getWalletSuccess(WalletResponse walletResponse);
+
+        void getWithdrawSuccess(WithdrawResponse withdrawResponse);
+
+        void getMineBankCardSuccess(MineBankCardResponse mineBankCardResponse);
     }
 
     public interface PresenterWithdraw extends Presenter<WithdrawView> {
+        /**
+         * 我的钱包
+         */
+        void onRequestWallet(TokenRequest tokenRequest);
 
-//        /**
-//         * 登录
-//         */
-//        void onRequestWithdraw(RegisterRequest WithdrawRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+        /**
+         * 提现(我的银行卡)
+         */
+        void onRequestWithdraw(TokenRequest tokenRequest);
+
+        /**
+         * 我的银行卡
+         */
+        void onRequestMineCardInfo(TokenRequest tokenRequest);
     }
 
 }

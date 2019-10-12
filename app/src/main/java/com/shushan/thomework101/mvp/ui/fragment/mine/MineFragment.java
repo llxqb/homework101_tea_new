@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -19,7 +18,11 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.MineFragmentModule;
+import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.request.HomeRequest;
+import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.response.MineFunctionResponse;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.bank.WalletActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.LeaveActivity;
@@ -29,10 +32,14 @@ import com.shushan.thomework101.mvp.ui.activity.mine.StudentReplacementDetailAct
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineFunctionAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
+import com.shushan.thomework101.mvp.utils.UserUtil;
+import com.shushan.thomework101.mvp.views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +54,7 @@ import butterknife.Unbinder;
 public class MineFragment extends BaseFragment implements MineFragmentControl.MineView {
 
     @BindView(R.id.avatar_iv)
-    ImageView mAvatarIv;
+    CircleImageView mAvatarIv;
     @BindView(R.id.username_tv)
     TextView mUsernameTv;
     @BindView(R.id.counselling_grade_tv)
@@ -68,6 +75,9 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     MineFunctionAdapter mMineFunctionAdapter;
     List<MineFunctionResponse> mineFunctionResponseList = new ArrayList<>();
     Integer[] mineFunctionIcon = {R.mipmap.my_tutor_feedback, R.mipmap.my_student_changes, R.mipmap.my_ervice_center, R.mipmap.my_rules, R.mipmap.my_operation};
+    private User mUser;
+    @Inject
+    MineFragmentControl.MineFragmentPresenter mPresenter;
 
     @Nullable
     @Override
@@ -83,14 +93,14 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Override
     public void initView() {
+        mUser = mBuProcessor.getUser();
         mMineFunctionAdapter = new MineFunctionAdapter(mineFunctionResponseList);
         mMineRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMineRecyclerView.setAdapter(mMineFunctionAdapter);
-
         mMineRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (position){
+                switch (position) {
                     case 0://辅导反馈
                         startActivitys(MineFeedbackActivity.class);
                         break;
@@ -118,21 +128,22 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mineFunctionResponse.name = functionName[i];
             mineFunctionResponseList.add(mineFunctionResponse);
         }
+        onRequestHomeInfo();
     }
 
-    @OnClick({R.id.setting_icon_iv,R.id.avatar_iv,R.id.teacher_state_tv, R.id.wallet_tv, R.id.earned_income_layout, R.id.estimated_income_layout})
+    @OnClick({R.id.setting_icon_iv, R.id.avatar_iv, R.id.teacher_state_tv, R.id.wallet_tv, R.id.earned_income_layout, R.id.estimated_income_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_icon_iv:
                 startActivitys(SettingActivity.class);
                 break;
             case R.id.avatar_iv://去我的资料
-                EditPersonalInfoActivity.start(getActivity(),2);
+                EditPersonalInfoActivity.start(getActivity(), 2);
                 break;
             case R.id.teacher_state_tv://去请假
                 startActivitys(LeaveActivity.class);
                 break;
-            case R.id.wallet_tv:
+            case R.id.wallet_tv://我的钱包
                 startActivitys(WalletActivity.class);
                 break;
             case R.id.earned_income_layout:
@@ -142,6 +153,31 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
     }
 
+    /**
+     * 请求首页数据
+     */
+    private void onRequestHomeInfo() {
+        HomeRequest homeRequest = new HomeRequest();
+        homeRequest.token = mUser.token;
+        mPresenter.onRequestHomeInfo(homeRequest);
+    }
+
+    @Override
+    public void getHomeInfoSuccess(HomeResponse homeResponse) {
+        HomeResponse.UserBean userBean = homeResponse.getUser();
+        mImageLoaderHelper.displayImage(getActivity(), userBean.getCover(), mAvatarIv, Constant.LOADING_AVATOR);
+        mUsernameTv.setText(userBean.getName());
+        String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(userBean.getGrade_id());
+        mCounsellingGradeTv.setText(teacherCounsellingGradeValue);
+        HomeResponse.UserBean.GuideTimeBean guideTimeBean = userBean.getGuide_time();
+        String workDayCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday()) + " " + guideTimeBean.getWork_time();
+        String offDayCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getOff_day()) + " " + guideTimeBean.getOff_time();
+        mWorkingDayTv.setText(workDayCounselingTimeValue);
+        mOffDayTv.setText(offDayCounselingTimeValue);
+        HomeResponse.EarningsBean earningsBean = homeResponse.getEarnings();
+        mEarnedMoneyTv.setText(String.valueOf(earningsBean.getAlready_money()));
+        mEstimatedMoneyTv.setText(String.valueOf(earningsBean.getPredict_money()));
+    }
 
     private void initializeInjector() {
         DaggerMineFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())

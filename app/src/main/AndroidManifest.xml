@@ -24,13 +24,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"/>
-        <activity android:name=".mvp.ui.activity.mine.ExpectedTotalIncomeActivity" />
-        <activity android:name=".mvp.ui.activity.bank.MineBankCardActivity" />
-        <activity android:name=".mvp.ui.activity.bank.BindCardActivity" />
-        <activity android:name=".mvp.ui.activity.bank.AddBankCardActivity" />
-        <activity android:name=".mvp.ui.activity.personalInfo.EditTextInfoActivity" />
-        <activity android:name=".mvp.ui.activity.personalInfo.SetCounsellingTimeActivity" />
+        <activity android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.mine.ExpectedTotalIncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.bank.MineBankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.bank.BindCardActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.bank.AddBankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.personalInfo.EditTextInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.personalInfo.SetCounsellingTimeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.main.SetCounselingTimeActivity"
             android:screenOrientation="portrait" />

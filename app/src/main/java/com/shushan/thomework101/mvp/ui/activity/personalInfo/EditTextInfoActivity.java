@@ -1,8 +1,8 @@
 package com.shushan.thomework101.mvp.ui.activity.personalInfo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -27,12 +27,6 @@ public class EditTextInfoActivity extends BaseActivity {
     @BindView(R.id.text_quantity_tv)
     TextView mTextQuantityTv;
 
-    public static void start(Context context, String title) {
-        Intent intent = new Intent(context, EditTextInfoActivity.class);
-        intent.putExtra("title", title);
-        context.startActivity(intent);
-    }
-
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_edit_text_info);
@@ -44,8 +38,13 @@ public class EditTextInfoActivity extends BaseActivity {
         mContentEt.addTextChangedListener(edit_text_OnChange);
         if (getIntent() != null) {
             String title = getIntent().getStringExtra("title");
+            String editContent = getIntent().getStringExtra("editContent");
             mCommonTitleTv.setText(title);
-            mContentEt.setHint("请填写" + title);
+            if (!TextUtils.isEmpty(editContent)) {
+                mContentEt.setText(editContent);
+            } else {
+                mContentEt.setHint("请填写" + title);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,6 @@ import com.shushan.thomework101.mvp.ui.adapter.HomeUnsuccessfulStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
 import com.shushan.thomework101.mvp.utils.HomeUtil;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.LoginUtils;
 import com.shushan.thomework101.mvp.utils.UserUtil;
 import com.shushan.thomework101.mvp.views.CircleImageView;
@@ -122,7 +122,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     List<HomeIncomeResponse> homeIncomeResponseList = new ArrayList<>();
     List<HomeIncomeResponse> homeStudentResponseList = new ArrayList<>();
     List<UnSuccessfulStudentResponse> unSuccessfulStudentResponseList = new ArrayList<>();
-    String[] homeIncomeTitle = {"今日提成", "今日课时费", "今日收益"};
+    String[] homeIncomeTitle = {"昨日提成", "昨日课时费", "昨日收益"};
     Integer[] homeIncomeBgIcon = {R.mipmap.home_profit_royalty, R.mipmap.home_profit_class_hour, R.mipmap.home_profit_today};
     String[] homeStudentTitle = {"我的学生", "已付费学生", "今日付费学生"};
     Integer[] homeStudentBgIcon = {R.mipmap.home_profit_student, R.mipmap.home_profit_paying_students, R.mipmap.home_profit_paya_today};
@@ -261,8 +261,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         userBean = homeResponse.getUser();
         //更新User
         mUser = LoginUtils.updateLoginUser(userBean, mUser, mBuProcessor);
-
-        LogUtils.e("mUser:" + new Gson().toJson(mUser));
+        Log.e("ddd","mUser"+new Gson().toJson(mUser));
         setCheckProcess();
         setIncomeData(homeResponse.getIncome());
         setMineStudentData(homeResponse.getStudent());
@@ -404,11 +403,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         } else {
             mTeacherStateTv.setVisibility(View.INVISIBLE);
         }
-        String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(mUser.grades);
+        String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(userBean.getGrade_id());
         mTeacherCounsellingGradeTv.setText(teacherCounsellingGradeValue);
         HomeResponse.UserBean.GuideTimeBean guideTimeBean = userBean.getGuide_time();
         String teacherCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday())+" "+guideTimeBean.getWork_time()+"\n"
-                +UserUtil.dayArrayToString(guideTimeBean.getOff_day())+guideTimeBean.getOff_time();
+                +UserUtil.dayArrayToString(guideTimeBean.getOff_day())+" "+guideTimeBean.getOff_time();
         mTeacherCounselingTimeTv.setText(teacherCounselingTimeValue);
     }
 

@@ -102,7 +102,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     }
 
     /**
-     * 修改个人资料
+     * 更新个人资料
      */
     @Override
     public void updatePersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest) {
@@ -119,7 +119,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     private void updatePersonalInfoSuccess(ResponseData responseData) {
         mPersonalInfoView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
-            mPersonalInfoView.getUploadPersonalInfoSuccess();
+            mPersonalInfoView.getUpdatePersonalInfoSuccess();
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }

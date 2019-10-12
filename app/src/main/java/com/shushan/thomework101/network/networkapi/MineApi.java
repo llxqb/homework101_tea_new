@@ -60,4 +60,24 @@ public interface MineApi {
      */
     @POST("teacher/user/setinfo")
     Observable<String> updatePersonalInfo(@Body String request);
+    /**
+     * 请假
+     */
+    @POST("teacher/user/leave")
+    Observable<String> onRequestLeave(@Body String request);
+    /**
+     * 我的钱包
+     */
+    @POST("teacher/wallet")
+    Observable<String> onRequestWallet(@Body String request);
+    /**
+     * 提现
+     */
+    @POST("teacher/wallet/extract")
+    Observable<String> onRequestWithdraw(@Body String request);
+    /**
+     * 我的银行卡
+     */
+    @POST("teacher/wallet/my_bank")
+    Observable<String> onRequestMineCardInfo(@Body String request);
 }

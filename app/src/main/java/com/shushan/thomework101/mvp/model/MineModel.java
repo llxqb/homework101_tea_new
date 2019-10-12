@@ -2,6 +2,7 @@ package com.shushan.thomework101.mvp.model;
 
 
 import com.google.gson.Gson;
+import com.shushan.thomework101.entity.request.LeaveRequest;
 import com.shushan.thomework101.entity.request.SetCounsellingTimeRequest;
 import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.request.UploadImage;
@@ -84,6 +85,30 @@ public class MineModel {
      */
     public Observable<ResponseData> updatePersonalInfo(UploadPersonalInfoRequest request) {
         return mMineApi.updatePersonalInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 请假
+     */
+    public Observable<ResponseData> onRequestLeave(LeaveRequest request) {
+        return mMineApi.onRequestLeave(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 我的钱包
+     */
+    public Observable<ResponseData> onRequestWallet(TokenRequest request) {
+        return mMineApi.onRequestWallet(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 提现
+     */
+    public Observable<ResponseData> onRequestWithdraw(TokenRequest request) {
+        return mMineApi.onRequestWithdraw(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 我的银行卡
+     */
+    public Observable<ResponseData> onRequestMineCardInfo(TokenRequest request) {
+        return mMineApi.onRequestMineCardInfo(new Gson().toJson(request)).map(mTransform::transformListType);
     }
 
 }

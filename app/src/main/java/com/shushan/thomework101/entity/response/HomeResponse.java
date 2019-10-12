@@ -1,16 +1,18 @@
 package com.shushan.thomework101.entity.response;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class HomeResponse {
+public class HomeResponse implements Parcelable{
 
 
     /**
-     * user : {"tid":4,"name":"","cover":"","subject":"英语","grade_id":"[2,5,7]","guide_time":{"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"7","off_time":"00:00-23:59"},"label":[],"experience":"","style":"","idea":"","state":0,"third_id":"teacher1014","third_token":"nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb","login_num":7,"card_front":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png","card_reverse":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png","license":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png","evaluation":"","video":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/teacher/video/20191011/caa9e4ac401c1675e108a1aa7bc897","card_state":2,"video_state":2,"train_state":2,"grade":["二年级","五年级","初一"],"money":"0.00","guide_state":0,"leave":0}
+     * user : {"tid":4,"name":"李白","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191011/5da04f4796072.png","subject":"英语","grade_id":"[2,5,7]","guide_time":{"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"6","off_time":"00:00-23:59"},"label":["幽默","风趣"],"experience":"啊啊a","style":"bbbb","idea":"就是考试开始就是抗生素男男生男生女石家庄计算机视觉设计设计师设计开始年终奖怎么做看着看着","state":1,"third_id":"teacher1014","third_token":"nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb","login_num":13,"card_front":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png","card_reverse":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png","license":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png","evaluation":"","video":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/teacher/video/20191011/caa9e4ac401c1675e108a1aa7bc897","card_state":2,"video_state":2,"train_state":2,"grade":["二年级","五年级","初一"],"money":"0.00","guide_state":1,"leave":0}
      * income : {"today_push_money":0,"today_class_fee":0,"today_income":0}
      * student : {"all":0,"pay":0,"today_pay":0}
-     * order : []
+     * order : [{"id":12,"t_id":4,"s_id":12,"version":"人教版","remark":"刚刚更换花好几万块的话哈哈镜个","grade_id":5,"create_time":1570707023,"name":"zy7053","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":13,"t_id":4,"s_id":18,"version":"","remark":"","grade_id":7,"create_time":1570845600,"name":"zy3732","grade":"初一","cover":"","status":"未付费","end_time":0},{"id":22,"t_id":4,"s_id":19,"version":"","remark":"","grade_id":2,"create_time":1570858345,"name":"zy3492","grade":"二年级","cover":"","status":"未付费","end_time":0},{"id":25,"t_id":4,"s_id":20,"version":"","remark":"","grade_id":2,"create_time":1570858737,"name":"zy7052","grade":"二年级","cover":"","status":"未付费","end_time":0}]
      * earnings : {"already_money":0,"predict_money":0}
      */
 
@@ -18,7 +20,23 @@ public class HomeResponse {
     private IncomeBean income;
     private StudentBean student;
     private EarningsBean earnings;
-    private List<?> order;
+    private List<OrderBean> order;
+
+    protected HomeResponse(Parcel in) {
+        user = in.readParcelable(UserBean.class.getClassLoader());
+    }
+
+    public static final Creator<HomeResponse> CREATOR = new Creator<HomeResponse>() {
+        @Override
+        public HomeResponse createFromParcel(Parcel in) {
+            return new HomeResponse(in);
+        }
+
+        @Override
+        public HomeResponse[] newArray(int size) {
+            return new HomeResponse[size];
+        }
+    };
 
     public UserBean getUser() {
         return user;
@@ -52,30 +70,40 @@ public class HomeResponse {
         this.earnings = earnings;
     }
 
-    public List<?> getOrder() {
+    public List<OrderBean> getOrder() {
         return order;
     }
 
-    public void setOrder(List<?> order) {
+    public void setOrder(List<OrderBean> order) {
         this.order = order;
     }
 
-    public static class UserBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(user, flags);
+    }
+
+    public static class UserBean implements Parcelable {
         /**
          * tid : 4
-         * name :
-         * cover :
+         * name : 李白
+         * cover : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191011/5da04f4796072.png
          * subject : 英语
          * grade_id : [2,5,7]
-         * guide_time : {"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"7","off_time":"00:00-23:59"}
-         * label : []
-         * experience :
-         * style :
-         * idea :
-         * state : 0
+         * guide_time : {"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"6","off_time":"00:00-23:59"}
+         * label : ["幽默","风趣"]
+         * experience : 啊啊a
+         * style : bbbb
+         * idea : 就是考试开始就是抗生素男男生男生女石家庄计算机视觉设计设计师设计开始年终奖怎么做看着看着
+         * state : 1
          * third_id : teacher1014
          * third_token : nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb
-         * login_num : 7
+         * login_num : 13
          * card_front : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png
          * card_reverse : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png
          * license : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png
@@ -86,7 +114,7 @@ public class HomeResponse {
          * train_state : 2
          * grade : ["二年级","五年级","初一"]
          * money : 0.00
-         * guide_state : 0
+         * guide_state : 1
          * leave : 0
          */
 
@@ -114,8 +142,48 @@ public class HomeResponse {
         private String money;
         private int guide_state;
         private int leave;
-        private List<?> label;
+        private List<String> label;
         private List<String> grade;
+
+        protected UserBean(Parcel in) {
+            tid = in.readInt();
+            name = in.readString();
+            cover = in.readString();
+            subject = in.readString();
+            grade_id = in.readString();
+            experience = in.readString();
+            style = in.readString();
+            idea = in.readString();
+            state = in.readInt();
+            third_id = in.readString();
+            third_token = in.readString();
+            login_num = in.readInt();
+            card_front = in.readString();
+            card_reverse = in.readString();
+            license = in.readString();
+            evaluation = in.readString();
+            video = in.readString();
+            card_state = in.readInt();
+            video_state = in.readInt();
+            train_state = in.readInt();
+            money = in.readString();
+            guide_state = in.readInt();
+            leave = in.readInt();
+            label = in.createStringArrayList();
+            grade = in.createStringArrayList();
+        }
+
+        public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+            @Override
+            public UserBean createFromParcel(Parcel in) {
+                return new UserBean(in);
+            }
+
+            @Override
+            public UserBean[] newArray(int size) {
+                return new UserBean[size];
+            }
+        };
 
         public int getTid() {
             return tid;
@@ -309,11 +377,11 @@ public class HomeResponse {
             this.leave = leave;
         }
 
-        public List<?> getLabel() {
+        public List<String> getLabel() {
             return label;
         }
 
-        public void setLabel(List<?> label) {
+        public void setLabel(List<String> label) {
             this.label = label;
         }
 
@@ -325,11 +393,45 @@ public class HomeResponse {
             this.grade = grade;
         }
 
-        public static class GuideTimeBean implements Serializable {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(tid);
+            dest.writeString(name);
+            dest.writeString(cover);
+            dest.writeString(subject);
+            dest.writeString(grade_id);
+            dest.writeString(experience);
+            dest.writeString(style);
+            dest.writeString(idea);
+            dest.writeInt(state);
+            dest.writeString(third_id);
+            dest.writeString(third_token);
+            dest.writeInt(login_num);
+            dest.writeString(card_front);
+            dest.writeString(card_reverse);
+            dest.writeString(license);
+            dest.writeString(evaluation);
+            dest.writeString(video);
+            dest.writeInt(card_state);
+            dest.writeInt(video_state);
+            dest.writeInt(train_state);
+            dest.writeString(money);
+            dest.writeInt(guide_state);
+            dest.writeInt(leave);
+            dest.writeStringList(label);
+            dest.writeStringList(grade);
+        }
+
+        public static class GuideTimeBean implements Parcelable{
             /**
              * workday : 1,2,3,4,5
              * work_time : 16:00-23:59
-             * off_day : 7
+             * off_day : 6
              * off_time : 00:00-23:59
              */
 
@@ -338,6 +440,24 @@ public class HomeResponse {
             private String off_day;
             private String off_time;
 
+            protected GuideTimeBean(Parcel in) {
+                workday = in.readString();
+                work_time = in.readString();
+                off_day = in.readString();
+                off_time = in.readString();
+            }
+
+            public static final Creator<GuideTimeBean> CREATOR = new Creator<GuideTimeBean>() {
+                @Override
+                public GuideTimeBean createFromParcel(Parcel in) {
+                    return new GuideTimeBean(in);
+                }
+
+                @Override
+                public GuideTimeBean[] newArray(int size) {
+                    return new GuideTimeBean[size];
+                }
+            };
 
             public String getWorkday() {
                 return workday;
@@ -369,6 +489,19 @@ public class HomeResponse {
 
             public void setOff_time(String off_time) {
                 this.off_time = off_time;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(workday);
+                dest.writeString(work_time);
+                dest.writeString(off_day);
+                dest.writeString(off_time);
             }
         }
     }
@@ -468,6 +601,132 @@ public class HomeResponse {
 
         public void setPredict_money(int predict_money) {
             this.predict_money = predict_money;
+        }
+    }
+
+    public static class OrderBean {
+        /**
+         * id : 12
+         * t_id : 4
+         * s_id : 12
+         * version : 人教版
+         * remark : 刚刚更换花好几万块的话哈哈镜个
+         * grade_id : 5
+         * create_time : 1570707023
+         * name : zy7053
+         * grade : 五年级
+         * cover :
+         * status : 未付费
+         * end_time : 0
+         */
+
+        private int id;
+        private int t_id;
+        private int s_id;
+        private String version;
+        private String remark;
+        private int grade_id;
+        private int create_time;
+        private String name;
+        private String grade;
+        private String cover;
+        private String status;
+        private int end_time;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getT_id() {
+            return t_id;
+        }
+
+        public void setT_id(int t_id) {
+            this.t_id = t_id;
+        }
+
+        public int getS_id() {
+            return s_id;
+        }
+
+        public void setS_id(int s_id) {
+            this.s_id = s_id;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public int getGrade_id() {
+            return grade_id;
+        }
+
+        public void setGrade_id(int grade_id) {
+            this.grade_id = grade_id;
+        }
+
+        public int getCreate_time() {
+            return create_time;
+        }
+
+        public void setCreate_time(int create_time) {
+            this.create_time = create_time;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getCover() {
+            return cover;
+        }
+
+        public void setCover(String cover) {
+            this.cover = cover;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public int getEnd_time() {
+            return end_time;
+        }
+
+        public void setEnd_time(int end_time) {
+            this.end_time = end_time;
         }
     }
 }

@@ -57,7 +57,7 @@ public class SelectDialogUtil {
             }
 //            mSelectDateTv.setText(DateUtil.dateTranString(date, "yyyy年MM月dd日"));
         })
-                .setType(new boolean[]{true, true, true, true, true, false})// 默认全部显示
+                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
                 .setTitleText("选择日期")//标题文字
                 .setTitleColor(mContext.getResources().getColor(R.color.color999))//标题文字颜色
                 .setSubmitColor(mContext.getResources().getColor(R.color.color_blue_btn))//确定按钮文字颜色

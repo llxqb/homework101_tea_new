@@ -1,7 +1,5 @@
 package com.shushan.thomework101.entity.user;
 
-import com.shushan.thomework101.entity.response.HomeResponse;
-
 import java.io.Serializable;
 
 /**
@@ -18,6 +16,10 @@ public class User implements Serializable {
      */
     public String name;
     /**
+     * 头像
+     */
+    public String cover;
+    /**
      * 辅导科目
      * 单选
      */
@@ -29,18 +31,30 @@ public class User implements Serializable {
     public String grades;
 
     /**
-     * 辅导时间
+     * 辅导时间 Gson字符串对象
      */
-    public HomeResponse.UserBean.GuideTimeBean guideTimeBean;
+    public String coachingTime;
 
     /**
-     * 我的标签
+     * 我的标签 Gson字符串对象
      */
-    public String label1;
-    public String label2;
+    public String labels;
     /**
      * 是否通过审核
      */
     public boolean checkPass;
+    /**
+     * 教学经历
+     */
+    public String teachingExperience;
+    /**
+     * 教学风格
+     */
+    public String teachingStyle;
+    /**
+     * 教学理念
+     */
+    public String teachingPhilosophy;
+
 
 }

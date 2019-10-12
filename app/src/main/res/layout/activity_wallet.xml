@@ -32,7 +32,7 @@
             android:layout_below="@id/earned_income"
             android:layout_marginStart="@dimen/dp_41"
             android:layout_marginTop="@dimen/dp_15"
-            android:text="5890.00"
+            android:text="0.00"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_42" />
 
@@ -96,7 +96,7 @@
             android:layout_marginEnd="@dimen/dp_25"
             android:drawableEnd="@mipmap/my_arrow_black"
             android:drawablePadding="@dimen/dp_6"
-            android:text="8000"
+            android:text="0.00"
             android:textColor="#FF5353"
             android:textSize="@dimen/sp_26" />
 
@@ -137,7 +137,7 @@
             android:layout_marginEnd="@dimen/dp_25"
             android:drawableEnd="@mipmap/my_arrow_black"
             android:drawablePadding="@dimen/dp_6"
-            android:text="8000"
+            android:text="0.00"
             android:textColor="#FF5353"
             android:textSize="@dimen/sp_26" />
 

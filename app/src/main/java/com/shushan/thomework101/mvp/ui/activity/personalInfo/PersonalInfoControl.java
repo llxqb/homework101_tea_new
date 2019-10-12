@@ -36,7 +36,7 @@ public class PersonalInfoControl {
          */
         void uploadPersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest);
         /**
-         * 修改个人资料
+         * 更新个人资料
          */
         void updatePersonalInfo(UploadPersonalInfoRequest uploadPersonalInfoRequest);
     }

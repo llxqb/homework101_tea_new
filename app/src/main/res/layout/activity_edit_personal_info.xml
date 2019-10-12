@@ -331,6 +331,7 @@
                 android:layout_height="@dimen/dp_158"
                 android:layout_marginTop="@dimen/dp_18"
                 android:src="@mipmap/id_photo"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/upload_photo_tv" />

@@ -206,7 +206,11 @@ public class UserUtil {
      * 1->周一
      */
     public static String dayArrayToString(String day) {
+        if(day==null) return "";
         StringBuffer stringBuffer = new StringBuffer();
+        if (day.contains("1,2,3,4,5")) {
+            return "周一 至 周五";
+        }
         if (day.contains("1")) {
             stringBuffer.append("周一 ");
         }
@@ -228,7 +232,6 @@ public class UserUtil {
         if (day.contains("7")) {
             stringBuffer.append("周日 ");
         }
-
         return String.valueOf(stringBuffer);
     }
 }

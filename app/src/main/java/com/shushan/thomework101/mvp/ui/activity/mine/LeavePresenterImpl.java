@@ -2,9 +2,15 @@ package com.shushan.thomework101.mvp.ui.activity.mine;
 
 import android.content.Context;
 
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.LeaveRequest;
+import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MineModel;
+import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -25,33 +31,29 @@ public class LeavePresenterImpl implements LeaveControl.PresenterLeave {
     }
 
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mLeaveView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mLeaveModel.onRequestVerifyCode(verifyCodeRequest).compose(mLeaveView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mLeaveView.showErrMessage(throwable),
-//                        () -> mLeaveView.dismissLoading());
-//        mLeaveView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mLeaveView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mLeaveView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mLeaveView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
-    
+    /**
+     * 请假
+     */
+    @Override
+    public void onRequestLeave(LeaveRequest leaveRequest) {
+        mLeaveView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.onRequestLeave(leaveRequest).compose(mLeaveView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestLeaveSuccess, throwable -> mLeaveView.showErrMessage(throwable),
+                        () -> mLeaveView.dismissLoading());
+        mLeaveView.addSubscription(disposable);
+    }
+
+
+    private void requestLeaveSuccess(ResponseData responseData) {
+        mLeaveView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mLeaveView.getLeaveSuccess();
+        } else {
+            mLeaveView.showToast(responseData.errorMsg);
+        }
+    }
+
+
     @Override
     public void onCreate() {
     }

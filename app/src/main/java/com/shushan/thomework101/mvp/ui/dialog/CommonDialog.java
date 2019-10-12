@@ -125,6 +125,9 @@ public class CommonDialog extends BaseDialogFragment {
                 closeCommonDialog();
                 break;
             case R.id.sure_tv:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.commonDialogBtnOkListener();
+                }
                 closeCommonDialog();
                 break;
         }

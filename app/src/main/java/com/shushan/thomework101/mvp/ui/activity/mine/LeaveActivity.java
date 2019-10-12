@@ -12,12 +12,16 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLeaveComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.LeaveModule;
+import com.shushan.thomework101.entity.request.LeaveRequest;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.DateUtil;
 import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.SelectDialogUtil;
 
 import java.util.Date;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,10 +46,15 @@ public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveVie
     @BindView(R.id.text_quantity_tv)
     TextView mTextQuantityTv;
 
+    private User mUser;
+    @Inject
+    LeaveControl.PresenterLeave mPresenter;
+
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_leave);
         initInjectData();
+        mUser = mBuProcessor.getUser();
     }
 
     @Override
@@ -87,7 +96,18 @@ public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveVie
     }
 
     private void onReqSubmit() {
+        LeaveRequest leaveRequest = new LeaveRequest();
+        leaveRequest.token = mUser.token;
+        leaveRequest.start_time = DateUtil.getTime(mStartTimeTv.getText().toString(), DateUtil.TIME_YYMMDD);
+        leaveRequest.end_time = DateUtil.getTime(mEndTimeTv.getText().toString(), DateUtil.TIME_YYMMDD);
+        leaveRequest.duration = mTotalTimeEt.getText().toString();
+        leaveRequest.reason = mLeaveReasonEt.getText().toString();
+        mPresenter.onRequestLeave(leaveRequest);
+    }
 
+    @Override
+    public void getLeaveSuccess() {
+        showToast("申请成功，请等待审核");
     }
 
     private boolean valid() {
@@ -122,7 +142,7 @@ public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveVie
 
             @Override
             public void getSelectDate(Date date) {
-                textView.setText(DateUtil.dateTranString(date, "yyyy-MM-dd HH:mm"));
+                textView.setText(DateUtil.dateTranString(date, DateUtil.TIME_YYMMDD));
             }
         }).showBirthdayDialog();
     }
@@ -161,4 +181,6 @@ public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveVie
                 .leaveModule(new LeaveModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
+
 }

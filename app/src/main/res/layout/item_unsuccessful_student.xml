@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/dp_13"
     android:paddingBottom="@dimen/dp_13">
 
-    <ImageView
+    <com.shushan.thomework101.mvp.views.CircleImageView
         android:id="@+id/student_avatar_iv"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"

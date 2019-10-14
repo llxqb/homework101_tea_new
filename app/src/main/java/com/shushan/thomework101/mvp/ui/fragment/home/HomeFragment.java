@@ -31,7 +31,6 @@ import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.response.HomeIncomeResponse;
 import com.shushan.thomework101.entity.response.HomeResponse;
-import com.shushan.thomework101.entity.response.UnSuccessfulStudentResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgActivity;
@@ -121,7 +120,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     HomeUnsuccessfulStudentAdapter mHomeUnsuccessfulStudentAdapter;
     List<HomeIncomeResponse> homeIncomeResponseList = new ArrayList<>();
     List<HomeIncomeResponse> homeStudentResponseList = new ArrayList<>();
-    List<UnSuccessfulStudentResponse> unSuccessfulStudentResponseList = new ArrayList<>();
+    List<HomeResponse.OrderBean> unSuccessfulStudentResponseList = new ArrayList<>();
     String[] homeIncomeTitle = {"昨日提成", "昨日课时费", "昨日收益"};
     Integer[] homeIncomeBgIcon = {R.mipmap.home_profit_royalty, R.mipmap.home_profit_class_hour, R.mipmap.home_profit_today};
     String[] homeStudentTitle = {"我的学生", "已付费学生", "今日付费学生"};
@@ -162,9 +161,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void initView() {
         mUser = mBuProcessor.getUser();
+        initEmptyView();
         mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         mSwipeLy.setOnRefreshListener(this);
-        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.unsuccessful_student_enpty_layout, (ViewGroup) mUnsuccessfulStudentRecyclerView.getParent(), false);
         mHomeIncomeAdapter = new HomeIncomeAdapter(homeIncomeResponseList);
         mMineIncomeRecyclerView.setAdapter(mHomeIncomeAdapter);
         mMineIncomeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -173,19 +172,22 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mMimeStudentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mMimeStudentRecyclerView.setAdapter(mHomeStudentAdapter);
         //未成单学生
-        mHomeUnsuccessfulStudentAdapter = new HomeUnsuccessfulStudentAdapter(unSuccessfulStudentResponseList);
+        mHomeUnsuccessfulStudentAdapter = new HomeUnsuccessfulStudentAdapter(unSuccessfulStudentResponseList,mImageLoaderHelper);
         mUnsuccessfulStudentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUnsuccessfulStudentRecyclerView.setAdapter(mHomeUnsuccessfulStudentAdapter);
-//        mHomeUnsuccessfulStudentAdapter.setNewData(null);
-//        mHomeUnsuccessfulStudentAdapter.setEmptyView(mEmptyView);//如果没有审核通过和没有分配学生显示emptyView
     }
 
     @Override
     public void initData() {
         onRequestHomeInfo();
-        for (int i = 0; i < 5; i++) {
-            UnSuccessfulStudentResponse unSuccessfulStudentResponse = new UnSuccessfulStudentResponse();
-            unSuccessfulStudentResponseList.add(unSuccessfulStudentResponse);
+    }
+
+    private void initEmptyView() {
+        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.unsuccessful_student_enpty_layout, (ViewGroup) mUnsuccessfulStudentRecyclerView.getParent(), false);
+        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
+        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        if (mUser.checkPass) {
+            emptyTv.setText("暂无学生信息");
         }
     }
 
@@ -261,10 +263,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         userBean = homeResponse.getUser();
         //更新User
         mUser = LoginUtils.updateLoginUser(userBean, mUser, mBuProcessor);
-        Log.e("ddd","mUser"+new Gson().toJson(mUser));
+        Log.e("ddd", "mUser" + new Gson().toJson(mUser));
         setCheckProcess();
         setIncomeData(homeResponse.getIncome());
         setMineStudentData(homeResponse.getStudent());
+        //设置未成单学生列表数据
+        if (!homeResponse.getOrder().isEmpty()) {
+            mHomeUnsuccessfulStudentAdapter.setNewData(homeResponse.getOrder());
+        } else {
+//            mHomeUnsuccessfulStudentAdapter.setNewData(null);
+            mHomeUnsuccessfulStudentAdapter.setEmptyView(mEmptyView);//如果没有审核通过和没有分配学生显示emptyView
+        }
     }
 
     /**
@@ -406,8 +415,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(userBean.getGrade_id());
         mTeacherCounsellingGradeTv.setText(teacherCounsellingGradeValue);
         HomeResponse.UserBean.GuideTimeBean guideTimeBean = userBean.getGuide_time();
-        String teacherCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday())+" "+guideTimeBean.getWork_time()+"\n"
-                +UserUtil.dayArrayToString(guideTimeBean.getOff_day())+" "+guideTimeBean.getOff_time();
+        String teacherCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday()) + " " + guideTimeBean.getWork_time() + "\n"
+                + UserUtil.dayArrayToString(guideTimeBean.getOff_day()) + " " + guideTimeBean.getOff_time();
         mTeacherCounselingTimeTv.setText(teacherCounselingTimeValue);
     }
 

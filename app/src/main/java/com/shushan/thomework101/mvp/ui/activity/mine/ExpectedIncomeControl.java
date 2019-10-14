@@ -1,6 +1,10 @@
 package com.shushan.thomework101.mvp.ui.activity.mine;
 
 
+import com.shushan.thomework101.entity.request.ExpectedIncomeRequest;
+import com.shushan.thomework101.entity.request.RevenueIncomeRequest;
+import com.shushan.thomework101.entity.response.ExpectedIncomeResponse;
+import com.shushan.thomework101.entity.response.RevenueIncomeResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,21 +14,22 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class ExpectedIncomeControl {
     public interface ExpectedIncomeView extends LoadDataView {
-//        void getExpectedIncomeSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+        void getExpectedIncomeSuccess(ExpectedIncomeResponse expectedIncomeResponse);
+
+        void getRevenueIncomeSuccess(RevenueIncomeResponse revenueIncomeResponse);
     }
 
     public interface PresenterExpectedIncome extends Presenter<ExpectedIncomeView> {
 
-//        /**
-//         * 登录
-//         */
-//        void onRequestExpectedIncome(RegisterRequest ExpectedIncomeRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+        /**
+         * 预计收益
+         */
+        void onRequestExpectedIncome(ExpectedIncomeRequest expectedIncomeRequest);
+
+        /**
+         * 已到手金额明细
+         */
+        void onRequestRevenueIncome(RevenueIncomeRequest revenueIncomeRequest);
     }
 
 }

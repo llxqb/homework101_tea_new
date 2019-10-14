@@ -48,4 +48,39 @@ public class Constant {
      */
     public static final int DEFAULT_CHECK_STATE = 100;
 
+
+    /**
+     * 银行label标识
+     */
+    public  static final String LABEL_ABC_NAME ="中国农业银行";
+    public  static final String LABEL_ABC ="ABC";
+    public  static final String LABEL_BOC_NAME ="中国银行";
+    public  static final String LABEL_BOC ="BOC";
+    public  static final String LABEL_BOHAIB_NAME ="渤海银行";
+    public  static final String LABEL_BOHAIB ="BOHAIB";
+    public  static final String LABEL_CCB_NAME ="中国建设银行";
+    public  static final String LABEL_CCB ="CCB";
+    public  static final String LABEL_CEB_NAME ="中国光大银行";
+    public  static final String LABEL_CEB ="CEB";
+    public  static final String LABEL_CIB_NAME ="兴业银行";
+    public  static final String LABEL_CIB ="CIB";
+    public  static final String LABEL_CITIC_NAME ="中信银行";
+    public  static final String LABEL_CITIC ="CITIC";
+    public  static final String LABEL_CMB_NAME ="招商银行";
+    public  static final String LABEL_CMB ="CMB";
+    public  static final String LABEL_CMBC_NAME ="中国民生银行";
+    public  static final String LABEL_CMBC ="CMBC";
+    public  static final String LABEL_COMM_NAME ="交通银行";
+    public  static final String LABEL_COMM ="COMM";
+    public  static final String LABEL_CZBANK_NAME ="浙商银行";
+    public  static final String LABEL_CZBANK ="CZBANK";
+    public  static final String LABEL_EGBANK_NAME ="恒丰银行";
+    public  static final String LABEL_EGBANK ="EGBANK";
+    public  static final String LABEL_HXBANK_NAME ="华夏银行";
+    public  static final String LABEL_HXBANK ="HXBANK";
+    public  static final String LABEL_ICBC_NAME ="中国工商银行";
+    public  static final String LABEL_ICBC ="ICBC";
+    public  static final String LABEL_PSBC_NAME ="中国邮政储蓄银行";
+    public  static final String LABEL_PSBC ="PSBC";
+
 }

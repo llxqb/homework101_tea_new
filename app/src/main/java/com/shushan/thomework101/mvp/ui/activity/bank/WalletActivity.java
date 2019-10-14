@@ -36,6 +36,7 @@ public class WalletActivity extends BaseActivity implements WithdrawControl.With
     @BindView(R.id.commission_income_tv)
     TextView mCommissionIncomeTv;
     private User mUser;
+    WalletResponse mWalletResponse;
 
     @Inject
     WithdrawControl.PresenterWithdraw mPresenter;
@@ -64,10 +65,12 @@ public class WalletActivity extends BaseActivity implements WithdrawControl.With
                 finish();
                 break;
             case R.id.money_detailed_tv://已到手金额明细
-                startActivitys(RevenueIncomeActivity.class);
+                RevenueIncomeActivity.start(this, String.valueOf(mWalletResponse.getMoney()));
                 break;
             case R.id.withdraw_tv://提现
-                startActivitys(WithdrawActivity.class);
+                if (mWalletResponse != null) {
+                    WithdrawActivity.start(this, String.valueOf(mWalletResponse.getWithdraw_money()));
+                }
                 break;
             case R.id.total_income_rl://预计总收益
                 startActivitys(ExpectedTotalIncomeActivity.class);
@@ -90,17 +93,23 @@ public class WalletActivity extends BaseActivity implements WithdrawControl.With
 
     @Override
     public void getWalletSuccess(WalletResponse walletResponse) {
+        mWalletResponse = walletResponse;
         mEarnedIncomeTv.setText(String.valueOf(walletResponse.getMoney()));
         mTotalIncomeTv.setText(String.valueOf(walletResponse.getPredict_money()));
         mCommissionIncomeTv.setText(String.valueOf(walletResponse.getAmort_money()));
     }
 
     @Override
-    public void getWithdrawSuccess(WithdrawResponse withdrawResponse) {
+    public void getDefaultCardSuccess(WithdrawResponse withdrawResponse) {
     }
 
     @Override
     public void getMineBankCardSuccess(MineBankCardResponse mineBankCardResponse) {
+    }
+
+    @Override
+    public void getWithDrawSuccess() {
+
     }
 
 

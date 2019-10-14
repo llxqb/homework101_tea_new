@@ -5,11 +5,12 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.entity.request.TokenRequest;
+import com.shushan.thomework101.entity.request.WithDrawRequest;
 import com.shushan.thomework101.entity.response.MineBankCardResponse;
 import com.shushan.thomework101.entity.response.WalletResponse;
 import com.shushan.thomework101.entity.response.WithdrawResponse;
 import com.shushan.thomework101.help.RetryWithDelay;
-import com.shushan.thomework101.mvp.model.MineModel;
+import com.shushan.thomework101.mvp.model.BankModel;
 import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
@@ -24,13 +25,13 @@ import io.reactivex.disposables.Disposable;
 public class WithdrawPresenterImpl implements WithdrawControl.PresenterWithdraw {
 
     private WithdrawControl.WithdrawView mWithdrawView;
-    private final MineModel mMineModel;
+    private final BankModel mBankModel;
     private final Context mContext;
 
     @Inject
-    public WithdrawPresenterImpl(Context context, MineModel model, WithdrawControl.WithdrawView WithdrawView) {
+    public WithdrawPresenterImpl(Context context, BankModel model, WithdrawControl.WithdrawView WithdrawView) {
         mContext = context;
-        mMineModel = model;
+        mBankModel = model;
         mWithdrawView = WithdrawView;
     }
 
@@ -41,7 +42,7 @@ public class WithdrawPresenterImpl implements WithdrawControl.PresenterWithdraw 
     @Override
     public void onRequestWallet(TokenRequest request) {
         mWithdrawView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMineModel.onRequestWallet(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+        Disposable disposable = mBankModel.onRequestWallet(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestWalletSuccess, throwable -> mWithdrawView.showErrMessage(throwable),
                         () -> mWithdrawView.dismissLoading());
         mWithdrawView.addSubscription(disposable);
@@ -61,24 +62,24 @@ public class WithdrawPresenterImpl implements WithdrawControl.PresenterWithdraw 
     }
 
     /**
-     * 提现
+     * 默认提现卡号
      */
     @Override
-    public void onRequestWithdraw(TokenRequest request) {
+    public void onRequestDefaultCard(TokenRequest request) {
         mWithdrawView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMineModel.onRequestWithdraw(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestWithdrawSuccess, throwable -> mWithdrawView.showErrMessage(throwable),
+        Disposable disposable = mBankModel.onRequestDefaultCard(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestDefaultCardSuccess, throwable -> mWithdrawView.showErrMessage(throwable),
                         () -> mWithdrawView.dismissLoading());
         mWithdrawView.addSubscription(disposable);
     }
 
-    private void requestWithdrawSuccess(ResponseData responseData) {
+    private void requestDefaultCardSuccess(ResponseData responseData) {
         mWithdrawView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             responseData.parseData(WithdrawResponse.class);
             if (responseData.parsedData != null) {
                 WithdrawResponse response = (WithdrawResponse) responseData.parsedData;
-                mWithdrawView.getWithdrawSuccess(response);
+                mWithdrawView.getDefaultCardSuccess(response);
             }
         } else {
             mWithdrawView.showToast(responseData.errorMsg);
@@ -91,7 +92,7 @@ public class WithdrawPresenterImpl implements WithdrawControl.PresenterWithdraw 
     @Override
     public void onRequestMineCardInfo(TokenRequest request) {
         mWithdrawView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMineModel.onRequestMineCardInfo(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+        Disposable disposable = mBankModel.onRequestMineCardInfo(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestMineCardInfoSuccess, throwable -> mWithdrawView.showErrMessage(throwable),
                         () -> mWithdrawView.dismissLoading());
         mWithdrawView.addSubscription(disposable);
@@ -102,6 +103,27 @@ public class WithdrawPresenterImpl implements WithdrawControl.PresenterWithdraw 
         if (responseData.resultCode == 0) {
             MineBankCardResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), MineBankCardResponse.class);
             mWithdrawView.getMineBankCardSuccess(response);
+        } else {
+            mWithdrawView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 去提现
+     */
+    @Override
+    public void onRequestWithdraw(WithDrawRequest request) {
+        mWithdrawView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mBankModel.onRequestWithdraw(request).compose(mWithdrawView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestWithdrawSuccess, throwable -> mWithdrawView.showErrMessage(throwable),
+                        () -> mWithdrawView.dismissLoading());
+        mWithdrawView.addSubscription(disposable);
+    }
+
+    private void requestWithdrawSuccess(ResponseData responseData) {
+        mWithdrawView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            mWithdrawView.getWithDrawSuccess();
         } else {
             mWithdrawView.showToast(responseData.errorMsg);
         }

@@ -66,18 +66,15 @@ public interface MineApi {
     @POST("teacher/user/leave")
     Observable<String> onRequestLeave(@Body String request);
     /**
-     * 我的钱包
+     * 预计收益
      */
-    @POST("teacher/wallet")
-    Observable<String> onRequestWallet(@Body String request);
+    @POST("teacher/wallet/predict_earnings")
+    Observable<String> onRequestExpectedIncome(@Body String request);
     /**
-     * 提现
+     * 已到手金额明细
      */
-    @POST("teacher/wallet/extract")
-    Observable<String> onRequestWithdraw(@Body String request);
-    /**
-     * 我的银行卡
-     */
-    @POST("teacher/wallet/my_bank")
-    Observable<String> onRequestMineCardInfo(@Body String request);
+    @POST("teacher/wallet/income")
+    Observable<String> onRequestRevenueIncome(@Body String request);
+
+
 }

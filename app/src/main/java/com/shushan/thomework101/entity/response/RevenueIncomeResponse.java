@@ -2,51 +2,54 @@ package com.shushan.thomework101.entity.response;
 
 import java.util.List;
 
-/**
- * 预计收益
- */
-public class ExpectedIncomeResponse {
+public class RevenueIncomeResponse {
     /**
-     * all : 3000
-     * list : [{"name":"zy2790","pay_money":"4999.00","money":"3000.00","create_time":1570674399,"type":1,"status":1,"cover":""}]
+     * error : 0
+     * msg : 成功
+     * data : [{"name":"zy2790","pay_money":"4999.00","money":"4.90","type":2,"cover":""},{"name":"zy2790","pay_money":"4999.00","money":"40.00","type":1,"cover":""}]
      */
 
-    private int all;
-    private List<ListBean> list;
+    private int error;
+    private String msg;
+    private List<DataBean> data;
 
-    public int getAll() {
-        return all;
+    public int getError() {
+        return error;
     }
 
-    public void setAll(int all) {
-        this.all = all;
+    public void setError(int error) {
+        this.error = error;
     }
 
-    public List<ListBean> getList() {
-        return list;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setList(List<ListBean> list) {
-        this.list = list;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public static class ListBean {
+    public List<DataBean> getData() {
+        return data;
+    }
+
+    public void setData(List<DataBean> data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
         /**
          * name : zy2790
          * pay_money : 4999.00
-         * money : 3000.00
-         * create_time : 1570674399
-         * type : 1
-         * status : 1
+         * money : 4.90
+         * type : 2
          * cover :
          */
 
         private String name;
         private String pay_money;
         private String money;
-        private int create_time;
         private int type;
-        private int status;
         private String cover;
 
         public String getName() {
@@ -73,28 +76,12 @@ public class ExpectedIncomeResponse {
             this.money = money;
         }
 
-        public int getCreate_time() {
-            return create_time;
-        }
-
-        public void setCreate_time(int create_time) {
-            this.create_time = create_time;
-        }
-
         public int getType() {
             return type;
         }
 
         public void setType(int type) {
             this.type = type;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
         }
 
         public String getCover() {

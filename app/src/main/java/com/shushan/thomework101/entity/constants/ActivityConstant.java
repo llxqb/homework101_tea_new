@@ -9,7 +9,7 @@ public class ActivityConstant {
      */
     public static final String UPDATE_USER_CHECK_INFO = "update_user_check_info";
     /**
-     * 返回填写的教学经历文字
+     * 绑定银行卡刷新提现页面
      */
-    public static final String EDIT_TEXT_INFO = "editTextInfo";
+    public static final String UPDATE_CARD_INFO = "updateCardInfo";
 }

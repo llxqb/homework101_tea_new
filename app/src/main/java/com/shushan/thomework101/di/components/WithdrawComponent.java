@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.WithdrawModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
+import com.shushan.thomework101.mvp.ui.activity.bank.MineBankCardActivity;
 import com.shushan.thomework101.mvp.ui.activity.bank.WalletActivity;
 import com.shushan.thomework101.mvp.ui.activity.bank.WithdrawActivity;
 
@@ -21,6 +22,7 @@ import dagger.Component;
 public interface WithdrawComponent extends ActivityComponent {
     void inject(WalletActivity activity);//我的钱包
     void inject(WithdrawActivity activity);//提现
+    void inject(MineBankCardActivity activity);//我的银行卡
 
     AppCompatActivity activity();
 

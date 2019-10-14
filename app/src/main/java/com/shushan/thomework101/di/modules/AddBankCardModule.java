@@ -7,8 +7,8 @@ import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.di.scopes.PerActivity;
 import com.shushan.thomework101.mvp.model.BankModel;
 import com.shushan.thomework101.mvp.model.ModelTransform;
-import com.shushan.thomework101.mvp.ui.activity.bank.WithdrawControl;
-import com.shushan.thomework101.mvp.ui.activity.bank.WithdrawPresenterImpl;
+import com.shushan.thomework101.mvp.ui.activity.bank.AddBankCardControl;
+import com.shushan.thomework101.mvp.ui.activity.bank.AddBankPresenterImpl;
 import com.shushan.thomework101.network.RetrofitUtil;
 import com.shushan.thomework101.network.networkapi.BankApi;
 
@@ -19,16 +19,16 @@ import dagger.Provides;
  * Created by li.liu on 16/3/20.
  */
 @Module
-public class WithdrawModule {
+public class AddBankCardModule {
     private final AppCompatActivity activity;
-    private WithdrawControl.WithdrawView view;
+    private AddBankCardControl.AddBankCardView view;
 
-    public WithdrawModule(AppCompatActivity activity, WithdrawControl.WithdrawView view) {
+    public AddBankCardModule(AppCompatActivity activity, AddBankCardControl.AddBankCardView view) {
         this.activity = activity;
         this.view = view;
     }
 
-    public WithdrawModule(AppCompatActivity activity) {
+    public AddBankCardModule(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -40,14 +40,14 @@ public class WithdrawModule {
 
     @Provides
     @PerActivity
-    WithdrawControl.WithdrawView view() {
+    AddBankCardControl.AddBankCardView view() {
         return this.view;
     }
 
     @Provides
     @PerActivity
-    WithdrawControl.PresenterWithdraw providePresenterWithdraw(WithdrawPresenterImpl withdrawPresenter) {
-        return withdrawPresenter;
+    AddBankCardControl.PresenterAddBankCard providePresenterAddBankCard(AddBankPresenterImpl addBankPresenter) {
+        return addBankPresenter;
     }
 
     @Provides

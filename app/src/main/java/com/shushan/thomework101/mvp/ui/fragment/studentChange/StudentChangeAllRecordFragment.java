@@ -17,13 +17,17 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentChangeRecordFragmentComponent;
 import com.shushan.thomework101.di.modules.StudentChangeRecordFragmentModule;
 import com.shushan.thomework101.di.modules.StudentReplaceDetailModule;
+import com.shushan.thomework101.entity.request.StudentChangeRequest;
 import com.shushan.thomework101.entity.response.StudentChangeRecordResponse;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.adapter.StudentChangeRecordAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,8 +44,14 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
     RecyclerView mRecyclerView;
     Unbinder unbinder;
     StudentChangeRecordAdapter mStudentChangeRecordAdapter;
-    List<StudentChangeRecordResponse> studentChangeRecordResponseList = new ArrayList<>();
+    List<StudentChangeRecordResponse.DataBean> studentChangeRecordResponseList = new ArrayList<>();
     private View mEmptyView;
+    private User mUser;
+    private int page = 1;
+    private int pageSize = 10;
+    @Inject
+    StudentChangeRecordControl.StudentChangeRecordFragmentPresenter mPresenter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +66,7 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
 
     @Override
     public void initView() {
+        mUser = mBuProcessor.getUser();
         initEmptyView();
         mStudentChangeRecordAdapter = new StudentChangeRecordAdapter(studentChangeRecordResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -64,11 +75,7 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
 
     @Override
     public void initData() {
-//        for (int i = 0; i < 10; i++) {
-//            StudentChangeRecordResponse studentChangeRecordResponse = new StudentChangeRecordResponse();
-//            studentChangeRecordResponseList.add(studentChangeRecordResponse);
-//        }
-        mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+        onRequestStudentChange();
     }
 
     private void initEmptyView() {
@@ -79,6 +86,23 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
         emptyTv.setText(getResources().getString(R.string.empty_student_change));
     }
 
+
+    private void onRequestStudentChange() {
+        StudentChangeRequest request = new StudentChangeRequest();
+        request.token = mUser.token;
+        request.page = String.valueOf(page);
+        request.pagesize = String.valueOf(pageSize);
+        mPresenter.onRequestStudentChange(request);
+    }
+
+    @Override
+    public void getStudentChangeSuccess(StudentChangeRecordResponse studentChangeRecordResponse) {
+        if (!studentChangeRecordResponse.getData().isEmpty()) {
+            mStudentChangeRecordAdapter.addData(studentChangeRecordResponse.getData());
+        } else {
+            mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+        }
+    }
 
     private void initializeInjector() {
         DaggerStudentChangeRecordFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
@@ -92,4 +116,6 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

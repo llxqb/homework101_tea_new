@@ -50,9 +50,12 @@ public class StudentReplacementDetailActivity extends BaseActivity implements St
 
     @Override
     public void initData() {
-
+        mCommonTitleTv.setText("我的学生变动");
     }
 
+    private void onRequestStudentChange() {
+
+    }
 
     @OnClick(R.id.common_left_iv)
     public void onViewClicked() {

@@ -10,21 +10,12 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class StudentReplaceDetailControl {
     public interface StudentReplaceDetailView extends LoadDataView {
-//        void getStudentReplaceDetailSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+
     }
 
     public interface PresenterStudentReplaceDetail extends Presenter<StudentReplaceDetailView> {
 
-//        /**
-//         * 登录
-//         */
-//        void onRequestStudentReplaceDetail(RegisterRequest StudentReplaceDetailRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+
     }
 
 }

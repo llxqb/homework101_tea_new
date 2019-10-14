@@ -1,6 +1,8 @@
 package com.shushan.thomework101.mvp.ui.fragment.studentChange;
 
 
+import com.shushan.thomework101.entity.request.StudentChangeRequest;
+import com.shushan.thomework101.entity.response.StudentChangeRecordResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,16 +12,14 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class StudentChangeRecordControl {
     public interface StudentChangeRecordView extends LoadDataView {
-//        void getInfoSuccess(HomeFragmentResponse response);
-
+        void getStudentChangeSuccess(StudentChangeRecordResponse studentChangeRecordResponse);
     }
 
     public interface StudentChangeRecordFragmentPresenter extends Presenter<StudentChangeRecordView> {
         /**
-         * 请求homeFragment list 数据
+         * 学生变动
          */
-//        void onRequestInfo(HomeFragmentRequest homeFragmentRequest);
-
+        void onRequestStudentChange(StudentChangeRequest StudentReplaceDetailRequest);
     }
 
 

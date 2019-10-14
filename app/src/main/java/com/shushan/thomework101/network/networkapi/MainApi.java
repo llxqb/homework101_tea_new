@@ -12,6 +12,11 @@ import retrofit2.http.POST;
 public interface MainApi {
 
     /**
+     * 上传设备信息
+     */
+    @POST("teacher/device")
+    Observable<String> uploadDeviceInfo(@Body String request);
+    /**
      * 请求homeFragment list 数据
      */
     @POST("teacher")

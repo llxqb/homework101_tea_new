@@ -1,6 +1,7 @@
 package com.shushan.thomework101.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.thomework101.entity.request.DeviceInfoRequest;
 import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.request.MineStudentListRequest;
@@ -27,6 +28,12 @@ public class MainModel {
         mTransform = transform;
     }
 
+    /**
+     * 上传设备信息
+     */
+    public Observable<ResponseData> uploadDeviceInfo(DeviceInfoRequest request) {
+        return mMainApi.uploadDeviceInfo(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
     /**
      * 请求homeFragment list 数据
      */

@@ -6,6 +6,7 @@ import com.shushan.thomework101.entity.request.ExpectedIncomeRequest;
 import com.shushan.thomework101.entity.request.LeaveRequest;
 import com.shushan.thomework101.entity.request.RevenueIncomeRequest;
 import com.shushan.thomework101.entity.request.SetCounsellingTimeRequest;
+import com.shushan.thomework101.entity.request.StudentChangeRequest;
 import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.request.UploadImage;
 import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
@@ -115,6 +116,12 @@ public class MineModel {
      */
     public Observable<ResponseData> onRequestRevenueIncome(RevenueIncomeRequest request) {
         return mMineApi.onRequestRevenueIncome(new Gson().toJson(request)).map(mTransform::transformListType);
+    }
+    /**
+     * 学生变动
+     */
+    public Observable<ResponseData> onRequestStudentChange(StudentChangeRequest request) {
+        return mMineApi.onRequestStudentChange(new Gson().toJson(request)).map(mTransform::transformListType);
     }
 
 

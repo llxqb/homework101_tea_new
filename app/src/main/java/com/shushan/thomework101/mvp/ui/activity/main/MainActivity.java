@@ -15,6 +15,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMainComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MainModule;
+import com.shushan.thomework101.entity.request.DeviceInfoRequest;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MyFragmentAdapter;
@@ -23,7 +24,9 @@ import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragment;
 import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragment;
 import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragment;
 import com.shushan.thomework101.mvp.utils.LogUtils;
+import com.shushan.thomework101.mvp.utils.SystemUtils;
 import com.shushan.thomework101.mvp.views.MyNoScrollViewPager;
+import com.umeng.analytics.AnalyticsConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_MINE_PAGE = 2;
     @Inject
     MainControl.PresenterMain mPresenter;
-
 
     @Override
     protected void initContentView() {
@@ -79,6 +81,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setOffscreenPageLimit(fragments.size());
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
+        uploadDeviceInfo();
+    }
+
+    private void uploadDeviceInfo() {
+        DeviceInfoRequest deviceInfoRequest = new DeviceInfoRequest();
+        deviceInfoRequest.version = SystemUtils.getVersionName(this);
+        deviceInfoRequest.channel = AnalyticsConfig.getChannel(this);
+        deviceInfoRequest.deviceType = SystemUtils.getSystemModel();
+        deviceInfoRequest.deviceId = SystemUtils.getUUID(this, mSharePreferenceUtil);
+        deviceInfoRequest.sysVer = SystemUtils.getSystemVersion();
+        mPresenter.uploadDeviceInfo(deviceInfoRequest);
     }
 
     @Override

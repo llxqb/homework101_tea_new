@@ -25,32 +25,7 @@ public class StudentReplaceDetailPresenterImpl implements StudentReplaceDetailCo
     }
 
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mStudentReplaceDetailView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mStudentReplaceDetailModel.onRequestVerifyCode(verifyCodeRequest).compose(mStudentReplaceDetailView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mStudentReplaceDetailView.showErrMessage(throwable),
-//                        () -> mStudentReplaceDetailView.dismissLoading());
-//        mStudentReplaceDetailView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mStudentReplaceDetailView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mStudentReplaceDetailView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mStudentReplaceDetailView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
+
     
     @Override
     public void onCreate() {

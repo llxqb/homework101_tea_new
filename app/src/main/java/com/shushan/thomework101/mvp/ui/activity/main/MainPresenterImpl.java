@@ -2,10 +2,16 @@ package com.shushan.thomework101.mvp.ui.activity.main;
 
 import android.content.Context;
 
-
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.DeviceInfoRequest;
+import com.shushan.thomework101.entity.response.HomeResponse;
+import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MainModel;
+import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -26,8 +32,35 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         mMainView = mainView;
     }
 
+    /**
+     * 上传设备信息
+     */
+    @Override
+    public void uploadDeviceInfo(DeviceInfoRequest deviceInfoRequest) {
+        mMainView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMainModel.uploadDeviceInfo(deviceInfoRequest).compose(mMainView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::uploadDeviceInfoSuccess, throwable -> mMainView.showErrMessage(throwable),
+                        () -> mMainView.dismissLoading());
+        mMainView.addSubscription(disposable);
+    }
 
-
+    /**
+     * 上传设备信息 成功
+     */
+    private void uploadDeviceInfoSuccess(ResponseData responseData) {
+        mMainView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+//            responseData.parseData(HomeResponse.class);
+//            if (responseData.parsedData != null) {
+//                HomeResponse response = (HomeResponse) responseData.parsedData;
+//                mMainView.getHomeInfoSuccess(response);
+//            }
+        } else {
+            mMainView.showToast(responseData.errorMsg);
+        }
+    }
+    
+    
     @Override
     public void onCreate() {
     }
@@ -35,4 +68,6 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
     @Override
     public void onDestroy() {
     }
+
+   
 }

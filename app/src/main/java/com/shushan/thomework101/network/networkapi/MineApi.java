@@ -75,6 +75,11 @@ public interface MineApi {
      */
     @POST("teacher/wallet/income")
     Observable<String> onRequestRevenueIncome(@Body String request);
+    /**
+     * 已到手金额明细
+     */
+    @POST("teacher/user/student_change")
+    Observable<String> onRequestStudentChange(@Body String request);
 
 
 }

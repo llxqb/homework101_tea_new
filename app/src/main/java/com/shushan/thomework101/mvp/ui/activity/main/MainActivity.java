@@ -16,6 +16,7 @@ import com.shushan.thomework101.di.components.DaggerMainComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.entity.request.DeviceInfoRequest;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MyFragmentAdapter;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_HOME_PAGE = 0;
     public static final int SWITCH_MESSAGE_PAGE = 1;
     public static final int SWITCH_MINE_PAGE = 2;
+    private User mUser;
     @Inject
     MainControl.PresenterMain mPresenter;
 
@@ -53,11 +55,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void initContentView() {
         setContentView(R.layout.activity_main);
         initInjectData();
+        mUser = mBuProcessor.getUser();
     }
 
     @Override
     public void initView() {
-        connectRongCloud();
+
     }
 
     @Override
@@ -70,6 +73,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         } else if (!mBuProcessor.isFinishFirstWrite()) {
             startActivitys(SubjectSelectActivity.class);
         }
+        connectRongCloud();
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = new HomeFragment();
         StudentFragment studentFragment = new StudentFragment();
@@ -171,11 +175,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
      * 舍弃 RongCloudHelper类
      */
     private void connectRongCloud() {
-        String rToken = "doc7+tNUcJTTrUB7DOQ08I5qW7VD/FIB/Wuhywai/EI3xtPF3/gpkEBBXMDK5e3/lh+WhPJz20BPzLAhtFdlhg==";
+        String rToken = mUser.rToken;
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {
-//            Log.d("ddd", "rToken:" + rToken);
-//            RongCloudHelper.connect(rToken); 不能这样使用静态方法
             RongIM.connect(rToken, new RongIMClient.ConnectCallback() {
                 /**
                  * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token

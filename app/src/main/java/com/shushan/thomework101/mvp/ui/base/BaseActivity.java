@@ -64,8 +64,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         addFilter();
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, mFilter);
         initContentView();
-        setStatusBar();
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

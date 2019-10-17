@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.shushan.thomework101.mvp.utils.LogUtils;
 
+import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
@@ -19,7 +20,7 @@ public class NotificationReceiver extends PushMessageReceiver {
      * 如果需要自定义通知栏的展示，在这里实现⾃己的通知栏展现代码，只要return true即可
      */
     @Override
-    public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
+    public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         LogUtils.e("pushNotificationMessage:" + new Gson().toJson(pushNotificationMessage));
         return false;
     }
@@ -30,9 +31,8 @@ public class NotificationReceiver extends PushMessageReceiver {
      * 如果需要自定义点击通知时的跳转，return true即可
      */
     @Override
-    public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
+    public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         LogUtils.e("pushNotificationMessage:" + new Gson().toJson(pushNotificationMessage));
         return false;
     }
-
 }

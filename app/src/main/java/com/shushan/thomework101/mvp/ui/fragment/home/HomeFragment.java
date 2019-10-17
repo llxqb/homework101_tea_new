@@ -244,7 +244,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     /**
      * 请求首页数据
      */
-    private void onRequestHomeInfo() {
+    private void  onRequestHomeInfo() {
         HomeRequest homeRequest = new HomeRequest();
         homeRequest.token = mUser.token;
         mPresenter.onRequestHomeInfo(homeRequest);

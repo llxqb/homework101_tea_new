@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineFragmentComponent;
@@ -170,10 +171,12 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(userBean.getGrade_id());
         mCounsellingGradeTv.setText(teacherCounsellingGradeValue);
         HomeResponse.UserBean.GuideTimeBean guideTimeBean = userBean.getGuide_time();
-        String workDayCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday()) + " " + guideTimeBean.getWork_time();
-        String offDayCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getOff_day()) + " " + guideTimeBean.getOff_time();
-        mWorkingDayTv.setText(workDayCounselingTimeValue);
-        mOffDayTv.setText(offDayCounselingTimeValue);
+        if (!new Gson().toJson(guideTimeBean).equals("{}")) {
+            String workDayCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getWorkday()) + " " + guideTimeBean.getWork_time();
+            String offDayCounselingTimeValue = UserUtil.dayArrayToString(guideTimeBean.getOff_day()) + " " + guideTimeBean.getOff_time();
+            mWorkingDayTv.setText(workDayCounselingTimeValue);
+            mOffDayTv.setText(offDayCounselingTimeValue);
+        }
         HomeResponse.EarningsBean earningsBean = homeResponse.getEarnings();
         mEarnedMoneyTv.setText(String.valueOf(earningsBean.getAlready_money()));
         mEstimatedMoneyTv.setText(String.valueOf(earningsBean.getPredict_money()));

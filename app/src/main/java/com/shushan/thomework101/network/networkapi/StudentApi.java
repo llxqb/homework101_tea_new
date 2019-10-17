@@ -20,5 +20,10 @@ public interface StudentApi {
      */
     @POST("teacher/student/student_feedback")
     Observable<String> submitFeedbackInfo(@Body String request);
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    @POST("teacher/student/search_student")
+    Observable<String> onRequestUserInfoByRid(@Body String request);
 
 }

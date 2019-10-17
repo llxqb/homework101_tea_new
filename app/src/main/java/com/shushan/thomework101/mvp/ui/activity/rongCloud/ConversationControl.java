@@ -1,6 +1,8 @@
 package com.shushan.thomework101.mvp.ui.activity.rongCloud;
 
 
+import com.shushan.thomework101.entity.request.UserInfoByRidRequest;
+import com.shushan.thomework101.entity.response.UserInfoByRidResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,21 +12,14 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class ConversationControl {
     public interface ConversationView extends LoadDataView {
-//        void getConversationSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+        void getUserInfoByRidSuccess(UserInfoByRidResponse userInfoByRidResponse);
     }
 
     public interface PresenterConversation extends Presenter<ConversationView> {
-
-//        /**
-//         * 登录
-//         */
-//        void onRequestConversation(RegisterRequest ConversationRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+        /**
+         * 根据融云第三方id获取用户头像和昵称
+         */
+        void onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest);
     }
 
 }

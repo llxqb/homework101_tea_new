@@ -6,8 +6,8 @@ android {
         applicationId "com.shushan.thomework101"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "3.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -136,7 +136,6 @@ dependencies {
 //    implementation project(':mzbanner')
     //融云
     implementation project(':IMKit')
-    implementation project(':IMLib')
     //时间日期选择控件
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
     //友盟

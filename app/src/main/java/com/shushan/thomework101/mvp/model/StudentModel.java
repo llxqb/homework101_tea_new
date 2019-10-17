@@ -4,6 +4,7 @@ package com.shushan.thomework101.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
 import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.request.UserInfoByRidRequest;
 import com.shushan.thomework101.network.networkapi.StudentApi;
 
 import javax.inject.Inject;
@@ -40,4 +41,10 @@ public class StudentModel {
         return mStudentApi.submitFeedbackInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    public Observable<ResponseData> onRequestUserInfoByRid(UserInfoByRidRequest request) {
+        return mStudentApi.onRequestUserInfoByRid(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
 }

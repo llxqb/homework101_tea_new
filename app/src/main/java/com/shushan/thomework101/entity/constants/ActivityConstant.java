@@ -12,4 +12,8 @@ public class ActivityConstant {
      * 绑定银行卡刷新提现页面
      */
     public static final String UPDATE_CARD_INFO = "updateCardInfo";
+    /**
+     * 小灰条提示通知消息
+     */
+    public static final String SHOW_NOTIFICATION_MESSAGE = "show_notification_message";
 }

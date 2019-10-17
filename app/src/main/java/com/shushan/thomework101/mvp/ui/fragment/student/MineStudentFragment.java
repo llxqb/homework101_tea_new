@@ -23,7 +23,6 @@ import com.shushan.thomework101.di.modules.MineStudentFragmentModule;
 import com.shushan.thomework101.entity.request.MineStudentListRequest;
 import com.shushan.thomework101.entity.response.MineStudentResponse;
 import com.shushan.thomework101.entity.user.User;
-import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
@@ -101,8 +100,8 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
                     StudentDetailActivity.start(getActivity(), dataBean);
                     break;
                 case R.id.item_mine_student_layout:
-                    //跳到聊天界面
-                    startActivitys(ConversationActivity.class);
+                    //启动单聊页面
+//                    RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), dataBean.getS_id(), UserUtil.toTeacherName(dataBean.getName()));
                     break;
             }
         });

@@ -12,6 +12,14 @@ public class User implements Serializable {
 
     public String token;
     /**
+     * 融云id
+     */
+    public String rId;
+    /**
+     * 融云token
+     */
+    public String rToken;
+    /**
      * 姓名
      */
     public String name;

@@ -2,9 +2,16 @@ package com.shushan.thomework101.mvp.ui.activity.rongCloud;
 
 import android.content.Context;
 
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.UserInfoByRidRequest;
+import com.shushan.thomework101.entity.response.UserInfoByRidResponse;
+import com.shushan.thomework101.help.RetryWithDelay;
+import com.shushan.thomework101.mvp.model.ResponseData;
 import com.shushan.thomework101.mvp.model.StudentModel;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -24,33 +31,30 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
         mConversationView = ConversationView;
     }
 
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    @Override
+    public void onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest) {
+        mConversationView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mStudentModel.onRequestUserInfoByRid(userInfoByRidRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUserInfoByRidSuccess, throwable -> mConversationView.showErrMessage(throwable),
+                        () -> mConversationView.dismissLoading());
+        mConversationView.addSubscription(disposable);
+    }
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mConversationView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mStudentModel.onRequestVerifyCode(verifyCodeRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mConversationView.showErrMessage(throwable),
-//                        () -> mConversationView.dismissLoading());
-//        mConversationView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mConversationView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mConversationView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mConversationView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
+
+    private void requestUserInfoByRidSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(UserInfoByRidResponse.class);
+            if (responseData.parsedData != null) {
+                UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
+                mConversationView.getUserInfoByRidSuccess(response);
+            }
+        } else {
+            mConversationView.showToast(responseData.errorMsg);
+        }
+    }
     
     @Override
     public void onCreate() {

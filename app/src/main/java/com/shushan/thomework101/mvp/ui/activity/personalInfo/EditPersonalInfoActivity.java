@@ -281,7 +281,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         } else {
             mLabel2Tv.setText(labelValue);
             if (type == 2) {
-                updatePersonalInfo(null, null, stringToList(mLabel1Tv.getText().toString()).toString() + "," + labelValue, null, null, null);
+                updatePersonalInfo(null, null, stringToList(mLabel1Tv.getText().toString() + "," + labelValue).toString(), null, null, null);
             }
         }
     }
@@ -328,7 +328,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
 
     /**
-     * 完善个人资料
+     * 注册流程，完善个人资料
      */
     private void uploadPersonalInfo() {
         labelString.add(mLabel1Tv.getText().toString());
@@ -351,6 +351,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     @Override
     public void getUploadPersonalInfoSuccess() {
         showUnderReviewDialog();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_CHECK_INFO));
     }
 
     /**
@@ -362,7 +363,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
     @Override
     public void commonDialogBtnOkListener() {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_CHECK_INFO));
         finish();
     }
 
@@ -374,13 +374,19 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             String editWord = data.getStringExtra("editWord");
             if (requestCode == 1) {
                 mTeachingExperienceContentTv.setText(editWord);
-                updatePersonalInfo(null, null, null, editWord, null, null);
+                if (type == 2) {
+                    updatePersonalInfo(null, null, null, editWord, null, null);
+                }
             } else if (requestCode == 2) {
                 mTeachingStyleContentTv.setText(editWord);
-                updatePersonalInfo(null, null, null, null, editWord, null);
+                if (type == 2) {
+                    updatePersonalInfo(null, null, null, null, editWord, null);
+                }
             } else if (requestCode == 3) {
                 mTeachingPhilosophyContentTv.setText(editWord);
-                updatePersonalInfo(null, null, null, null, null, editWord);
+                if (type == 2) {
+                    updatePersonalInfo(null, null, null, null, null, editWord);
+                }
             }
         }
     }

@@ -57,6 +57,7 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_20"
                 android:focusableInTouchMode="true">
 
                 <LinearLayout
@@ -162,7 +163,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/dp_10"
-                                android:layout_marginTop="@dimen/dp_22"
+                                android:layout_marginTop="@dimen/dp_18"
                                 android:text="上传身份证、教师资格"
                                 android:textColor="#85513E"
                                 android:textSize="@dimen/sp_12" />
@@ -174,7 +175,6 @@
                                 android:layout_below="@id/upload_card_hint_tv"
                                 android:layout_marginStart="@dimen/dp_10"
                                 android:layout_marginTop="@dimen/dp_13"
-                                android:text="上传三年级、四年级、五年级试讲题视频"
                                 android:textColor="#85513E"
                                 android:textSize="@dimen/sp_12" />
 
@@ -228,7 +228,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/dp_10"
-                                android:layout_marginTop="@dimen/dp_22"
+                                android:layout_marginTop="@dimen/dp_18"
                                 android:text="岗前培训"
                                 android:textColor="#85513E"
                                 android:textSize="@dimen/sp_12" />
@@ -276,7 +276,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/dp_10"
-                                android:layout_marginTop="@dimen/dp_22"
+                                android:layout_marginTop="@dimen/dp_18"
                                 android:text="完善个人资料"
                                 android:textColor="#85513E"
                                 android:textSize="@dimen/sp_12" />

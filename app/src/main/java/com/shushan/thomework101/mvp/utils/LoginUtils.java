@@ -16,6 +16,8 @@ public class LoginUtils {
     public static User saveLoginUser(LoginResponse loginResponse) {
         User user = new User();
         user.token = loginResponse.getToken();
+        user.rId = loginResponse.getThird_id();
+        user.rToken = loginResponse.getThird_token();
         user.subject = UserUtil.subjectStringToInt(loginResponse.getSubject());
         user.grades = loginResponse.getGrade_id();
         return user;
@@ -41,15 +43,17 @@ public class LoginUtils {
      */
     private static String ListToString(List<String> list) {
         StringBuilder sb = new StringBuilder();
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) == null || list.get(i).equals("")) {
                     continue;
                 }
                 sb.append(list.get(i)).append(",");
             }
+            return sb.toString().substring(0, sb.toString().length() - 1);
+        } else {
+            return "";
         }
-        return sb.toString().substring(0, sb.toString().length() - 1);
     }
 
 

@@ -11,7 +11,7 @@ public class HomeIncomeResponse {
     /**
      * 金额
      */
-    public int money;
+    public double money;
     /**
      * 背景图片
      */

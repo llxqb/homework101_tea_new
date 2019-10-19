@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerExpectedIncomeComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 /**
  * desc：预计总收益
  */
-public class ExpectedTotalIncomeActivity extends BaseActivity implements ExpectedIncomeControl.ExpectedIncomeView {
+public class ExpectedTotalIncomeActivity extends BaseActivity implements ExpectedIncomeControl.ExpectedIncomeView, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -42,7 +43,7 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
     List<ExpectedIncomeResponse.ListBean> expectedIncomeResponseList = new ArrayList<>();
     private View mEmptyView;
     private User mUser;
-    private int page;
+    private int page = 1;
     private int pageSize = 10;
     @Inject
     ExpectedIncomeControl.PresenterExpectedIncome mPresenter;
@@ -58,8 +59,9 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
     public void initView() {
         initEmptyView();
         mCommonTitleTv.setText("预计收益");
-        mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList);
+        mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mExpectedIncomeAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.setAdapter(mExpectedIncomeAdapter);
     }
 
@@ -79,7 +81,7 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
     private void onRequestTotalIncome() {
         ExpectedIncomeRequest expectedIncomeRequest = new ExpectedIncomeRequest();
         expectedIncomeRequest.token = mUser.token;
-//        expectedIncomeRequest.label =
+        expectedIncomeRequest.label = "0";//0全部2提成
         expectedIncomeRequest.page = String.valueOf(page);
         expectedIncomeRequest.pagesize = String.valueOf(pageSize);
         mPresenter.onRequestExpectedIncome(expectedIncomeRequest);
@@ -87,10 +89,32 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
 
     @Override
     public void getExpectedIncomeSuccess(ExpectedIncomeResponse expectedIncomeResponse) {
+        expectedIncomeResponseList = expectedIncomeResponse.getList();
+        mExpectedIncomeTv.setText(String.valueOf(expectedIncomeResponse.getAll()));
         if (!expectedIncomeResponse.getList().isEmpty()) {
             mExpectedIncomeAdapter.addData(expectedIncomeResponse.getList());
         } else {
             mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+        }
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        if (!expectedIncomeResponseList.isEmpty()) {
+            if (page == 1 && expectedIncomeResponseList.size() < pageSize) {
+                mExpectedIncomeAdapter.loadMoreEnd(true);
+            } else {
+                if (expectedIncomeResponseList.size() < pageSize) {
+                    mExpectedIncomeAdapter.loadMoreEnd();
+                } else {
+                    //等于10条
+                    page++;
+                    mExpectedIncomeAdapter.loadMoreComplete();
+                    onRequestTotalIncome();
+                }
+            }
+        } else {
+            mExpectedIncomeAdapter.loadMoreEnd();
         }
     }
 

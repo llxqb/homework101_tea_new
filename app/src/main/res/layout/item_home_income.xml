@@ -33,18 +33,6 @@
             android:textColor="#4C5467"
             android:textSize="@dimen/sp_14" />
 
-        <TextView
-            android:id="@+id/money_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/income_title"
-            android:layout_marginTop="@dimen/dp_8"
-            android:textStyle="bold"
-            android:layout_toEndOf="@id/money_icon_tv"
-            android:text="0"
-            android:textColor="#4C5467"
-            android:textSize="@dimen/sp_25" />
-
         <ImageView
             android:id="@+id/income_bg_icon_iv"
             android:layout_width="wrap_content"
@@ -52,6 +40,20 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:src="@mipmap/home_profit_royalty" />
+
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/income_title"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_toEndOf="@id/money_icon_tv"
+            android:text="0"
+            android:textColor="#4C5467"
+            android:textSize="@dimen/sp_25"
+            android:textStyle="bold" />
+
+
     </RelativeLayout>
 
 </LinearLayout>

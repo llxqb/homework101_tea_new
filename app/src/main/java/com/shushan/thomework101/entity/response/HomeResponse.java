@@ -5,15 +5,14 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-public class HomeResponse implements Parcelable{
-
+public class HomeResponse {
 
     /**
-     * user : {"tid":4,"name":"李白","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191011/5da04f4796072.png","subject":"英语","grade_id":"[2,5,7]","guide_time":{"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"6","off_time":"00:00-23:59"},"label":["幽默","风趣"],"experience":"啊啊a","style":"bbbb","idea":"就是考试开始就是抗生素男男生男生女石家庄计算机视觉设计设计师设计开始年终奖怎么做看着看着","state":1,"third_id":"teacher1014","third_token":"nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb","login_num":13,"card_front":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png","card_reverse":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png","license":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png","evaluation":"","video":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/teacher/video/20191011/caa9e4ac401c1675e108a1aa7bc897","card_state":2,"video_state":2,"train_state":2,"grade":["二年级","五年级","初一"],"money":"0.00","guide_state":1,"leave":0}
-     * income : {"today_push_money":0,"today_class_fee":0,"today_income":0}
-     * student : {"all":0,"pay":0,"today_pay":0}
-     * order : [{"id":12,"t_id":4,"s_id":12,"version":"人教版","remark":"刚刚更换花好几万块的话哈哈镜个","grade_id":5,"create_time":1570707023,"name":"zy7053","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":13,"t_id":4,"s_id":18,"version":"","remark":"","grade_id":7,"create_time":1570845600,"name":"zy3732","grade":"初一","cover":"","status":"未付费","end_time":0},{"id":22,"t_id":4,"s_id":19,"version":"","remark":"","grade_id":2,"create_time":1570858345,"name":"zy3492","grade":"二年级","cover":"","status":"未付费","end_time":0},{"id":25,"t_id":4,"s_id":20,"version":"","remark":"","grade_id":2,"create_time":1570858737,"name":"zy7052","grade":"二年级","cover":"","status":"未付费","end_time":0}]
-     * earnings : {"already_money":0,"predict_money":0}
+     * user : {"tid":4,"name":"李白","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191011/5da04f4796072.png","subject":"英语","grade_id":"[2,5,7]","guide_time":{"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"6","off_time":"00:00-23:59"},"label":["幽默","风趣"],"experience":"啊啊a","style":"bbbb","idea":"就是考试开始就是抗生素男男生男生女石家庄计算机视觉设计设计师设计开始年终奖怎么做看着看着","state":1,"third_id":"teacher1014","third_token":"nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb","login_num":26,"card_front":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png","card_reverse":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png","license":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png","evaluation":"","video":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/teacher/video/20191011/caa9e4ac401c1675e108a1aa7bc897","card_state":2,"video_state":2,"train_state":2,"grade":["二年级","五年级","初一"],"money":"0.00","guide_state":1,"leave":0}
+     * income : {"today_push_money":0.02,"today_class_fee":0.02,"today_income":0.02}
+     * student : {"all":12,"pay":1,"today_pay":0}
+     * order : [{"id":12,"t_id":4,"s_id":12,"version":"人教版","remark":"刚刚更换花好几万块的话哈哈镜个","grade_id":5,"create_time":1570707023,"name":"zy7053","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":13,"t_id":4,"s_id":18,"version":"","remark":"","grade_id":7,"create_time":1570845600,"name":"zy啊啊啊","grade":"初一","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da5ba9aec501.png","status":"未付费","end_time":0},{"id":22,"t_id":4,"s_id":19,"version":"","remark":"","grade_id":2,"create_time":1570858345,"name":"zy3492","grade":"二年级","cover":"","status":"未付费","end_time":0},{"id":25,"t_id":4,"s_id":20,"version":"","remark":"","grade_id":2,"create_time":1570858737,"name":"子非鱼","grade":"二年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191012/5da17d598da54.png","status":"未付费","end_time":0},{"id":27,"t_id":4,"s_id":21,"version":"","remark":"","grade_id":5,"create_time":1571106146,"name":"charis","grade":"五年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da53e0551da7.png","status":"未付费","end_time":0},{"id":30,"t_id":4,"s_id":21,"version":"","remark":"","grade_id":2,"create_time":1571106213,"name":"charis","grade":"二年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da53e0551da7.png","status":"未付费","end_time":0},{"id":38,"t_id":4,"s_id":23,"version":"","remark":"","grade_id":7,"create_time":1571138137,"name":"zy7055","grade":"初一","cover":"","status":"未付费","end_time":0},{"id":42,"t_id":4,"s_id":24,"version":"","remark":"","grade_id":5,"create_time":1571190300,"name":"孙楠","grade":"五年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191016/5da6769f7d1c0.png","status":"未付费","end_time":0},{"id":45,"t_id":4,"s_id":25,"version":"","remark":"","grade_id":5,"create_time":1571215716,"name":"zy8390","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":49,"t_id":4,"s_id":26,"version":"","remark":"","grade_id":5,"create_time":1571217342,"name":"zy8399","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":53,"t_id":4,"s_id":27,"version":"","remark":"","grade_id":5,"create_time":1571217756,"name":"zy8398","grade":"五年级","cover":"","status":"未付费","end_time":0}]
+     * earnings : {"already_money":"0.02","predict_money":0.05}
      */
 
     private UserBean user;
@@ -21,22 +20,6 @@ public class HomeResponse implements Parcelable{
     private StudentBean student;
     private EarningsBean earnings;
     private List<OrderBean> order;
-
-    protected HomeResponse(Parcel in) {
-        user = in.readParcelable(UserBean.class.getClassLoader());
-    }
-
-    public static final Creator<HomeResponse> CREATOR = new Creator<HomeResponse>() {
-        @Override
-        public HomeResponse createFromParcel(Parcel in) {
-            return new HomeResponse(in);
-        }
-
-        @Override
-        public HomeResponse[] newArray(int size) {
-            return new HomeResponse[size];
-        }
-    };
 
     public UserBean getUser() {
         return user;
@@ -78,16 +61,6 @@ public class HomeResponse implements Parcelable{
         this.order = order;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(user, flags);
-    }
-
     public static class UserBean implements Parcelable {
         /**
          * tid : 4
@@ -103,7 +76,7 @@ public class HomeResponse implements Parcelable{
          * state : 1
          * third_id : teacher1014
          * third_token : nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb
-         * login_num : 13
+         * login_num : 26
          * card_front : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png
          * card_reverse : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png
          * license : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png
@@ -427,7 +400,7 @@ public class HomeResponse implements Parcelable{
             dest.writeStringList(grade);
         }
 
-        public static class GuideTimeBean implements Parcelable{
+        public static class GuideTimeBean implements Parcelable {
             /**
              * workday : 1,2,3,4,5
              * work_time : 16:00-23:59
@@ -508,44 +481,44 @@ public class HomeResponse implements Parcelable{
 
     public static class IncomeBean {
         /**
-         * today_push_money : 0
-         * today_class_fee : 0
-         * today_income : 0
+         * today_push_money : 0.02
+         * today_class_fee : 0.02
+         * today_income : 0.02
          */
 
-        private int today_push_money;
-        private int today_class_fee;
-        private int today_income;
+        private double today_push_money;
+        private double today_class_fee;
+        private double today_income;
 
-        public int getToday_push_money() {
+        public double getToday_push_money() {
             return today_push_money;
         }
 
-        public void setToday_push_money(int today_push_money) {
+        public void setToday_push_money(double today_push_money) {
             this.today_push_money = today_push_money;
         }
 
-        public int getToday_class_fee() {
+        public double getToday_class_fee() {
             return today_class_fee;
         }
 
-        public void setToday_class_fee(int today_class_fee) {
+        public void setToday_class_fee(double today_class_fee) {
             this.today_class_fee = today_class_fee;
         }
 
-        public int getToday_income() {
+        public double getToday_income() {
             return today_income;
         }
 
-        public void setToday_income(int today_income) {
+        public void setToday_income(double today_income) {
             this.today_income = today_income;
         }
     }
 
     public static class StudentBean {
         /**
-         * all : 0
-         * pay : 0
+         * all : 12
+         * pay : 1
          * today_pay : 0
          */
 
@@ -580,26 +553,26 @@ public class HomeResponse implements Parcelable{
 
     public static class EarningsBean {
         /**
-         * already_money : 0
-         * predict_money : 0
+         * already_money : 0.02
+         * predict_money : 0.05
          */
 
-        private int already_money;
-        private int predict_money;
+        private String already_money;
+        private double predict_money;
 
-        public int getAlready_money() {
+        public String getAlready_money() {
             return already_money;
         }
 
-        public void setAlready_money(int already_money) {
+        public void setAlready_money(String already_money) {
             this.already_money = already_money;
         }
 
-        public int getPredict_money() {
+        public double getPredict_money() {
             return predict_money;
         }
 
-        public void setPredict_money(int predict_money) {
+        public void setPredict_money(double predict_money) {
             this.predict_money = predict_money;
         }
     }

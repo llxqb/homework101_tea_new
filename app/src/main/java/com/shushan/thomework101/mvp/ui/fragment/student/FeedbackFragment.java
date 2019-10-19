@@ -3,6 +3,7 @@ package com.shushan.thomework101.mvp.ui.fragment.student;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerFeedbackFragmentComponent;
@@ -28,6 +28,7 @@ import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentAct
 import com.shushan.thomework101.mvp.ui.adapter.TodayFeedBackAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.utils.LogUtils;
+import com.shushan.thomework101.mvp.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +39,16 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
 
 /**
  * 学生页面 -- 今日反馈fragment
  */
 
-public class FeedbackFragment extends BaseFragment implements FeedbackFragmentControl.FeedbackFragmentView {
+public class FeedbackFragment extends BaseFragment implements FeedbackFragmentControl.FeedbackFragmentView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
+    @BindView(R.id.swipe_ly)
+    SwipeRefreshLayout mSwipeLy;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     Unbinder unbinder;
@@ -54,7 +58,7 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
     private User mUser;
 
     private int page = 1;
-    private String pageSize = "10";
+    private int pageSize = 10;
     @Inject
     FeedbackFragmentControl.FeedbackFragmentPresenter mPresenter;
 
@@ -74,25 +78,32 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
     public void initView() {
         mUser = mBuProcessor.getUser();
         initEmptyView();
-        mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList);
+        mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeLy.setOnRefreshListener(this);
+        mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mTodayFeedBackAdapter);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                FeedBackResponse.DataBean dataBean = (FeedBackResponse.DataBean) adapter.getItem(position);
                 switch (view.getId()) {
                     case R.id.student_avatar_iv:
-                        startActivitys(StudentDetailActivity.class);
+                        if (dataBean != null) {
+                            StudentDetailActivity.start(getActivity(), UserUtil.feedBackTranStudentDetail(dataBean));
+                        }
                         break;
                     case R.id.look_counselling_content_tv:
-                        showToast("查看辅导内容");
+                        //启动单聊页面
+                        if (dataBean != null) {
+                            RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), dataBean.getThird_id(), dataBean.getName());
+                        }
                         break;
-                    case R.id.edit_counselling_content_tv:
-                        startActivitys(SubmitFeedbackContentActivity.class);
+                    case R.id.edit_counselling_content_tv://填写辅导反馈
+                        if (dataBean != null && dataBean.getStatus() != 1) {
+                            SubmitFeedbackContentActivity.start(getActivity(), String.valueOf(dataBean.getId()), dataBean.getName());
+                        }
                         break;
-//                    case R.id.item_mine_student_layout:
-//                        showToast("" + position);
-//                        break;
                 }
             }
         });
@@ -103,6 +114,31 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         onRequestFeedbackInfo();
     }
 
+    @Override
+    public void onRefresh() {
+        page = 1;
+        onRequestFeedbackInfo();
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        LogUtils.e("onLoadMoreRequested()");
+        if (!todayFeedBackResponseList.isEmpty()) {
+            if (page == 1 && todayFeedBackResponseList.size() < pageSize) {
+                mTodayFeedBackAdapter.loadMoreEnd(true);
+            } else {
+                if (todayFeedBackResponseList.size() < pageSize) {
+                    mTodayFeedBackAdapter.loadMoreEnd();
+                } else {
+                    page++;
+                    onRequestFeedbackInfo();
+                }
+            }
+        } else {
+            mTodayFeedBackAdapter.loadMoreEnd(true);
+        }
+    }
+
     /**
      * 请求辅导反馈数据
      */
@@ -110,17 +146,27 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         FeedbackRequest feedbackRequest = new FeedbackRequest();
         feedbackRequest.token = mUser.token;
         feedbackRequest.page = page + "";
-        feedbackRequest.pagesize = pageSize;
+        feedbackRequest.pagesize = String.valueOf(pageSize);
         mPresenter.onRequestFeedbackInfo(feedbackRequest);
     }
 
     @Override
     public void getFeedbackInfoSuccess(FeedBackResponse response) {
-        LogUtils.e("response:" + new Gson().toJson(response));
-        if (!response.getData().isEmpty()) {
-            mTodayFeedBackAdapter.addData(response.getData());
+        LogUtils.e("getFeedbackInfoSuccess()");
+        todayFeedBackResponseList = response.getData();
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+            if (!response.getData().isEmpty()) {
+                mTodayFeedBackAdapter.setNewData(response.getData());
+            } else {
+                mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+            }
         } else {
-            mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+            if (!response.getData().isEmpty()) {
+                mTodayFeedBackAdapter.addData(response.getData());
+            } else {
+                mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 

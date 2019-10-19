@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.ui.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerExpectedIncomeComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -30,7 +33,7 @@ import butterknife.OnClick;
 /**
  * 预计提成总收益收益
  */
-public class ExpectedCommissionIncomeActivity extends BaseActivity implements ExpectedIncomeControl.ExpectedIncomeView {
+public class ExpectedCommissionIncomeActivity extends BaseActivity implements ExpectedIncomeControl.ExpectedIncomeView, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -42,10 +45,16 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
     List<ExpectedIncomeResponse.ListBean> expectedIncomeResponseList = new ArrayList<>();
     private View mEmptyView;
     private User mUser;
-    private int page;
+    private int page =1 ;
     private int pageSize = 10;
     @Inject
     ExpectedIncomeControl.PresenterExpectedIncome mPresenter;
+
+    public static void start(Context context, String expectedIncome) {
+        Intent intent = new Intent(context, ExpectedCommissionIncomeActivity.class);
+        intent.putExtra("expectedIncome", expectedIncome);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void initContentView() {
@@ -58,7 +67,11 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
     public void initView() {
         initEmptyView();
         mCommonTitleTv.setText("预计提成收益");
-        mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList);
+        if (getIntent() != null) {
+            String expectedIncome = getIntent().getStringExtra("expectedIncome");
+            mExpectedIncomeTv.setText(expectedIncome);
+        }
+        mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mExpectedIncomeAdapter);
     }
@@ -93,12 +106,33 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
 
     @Override
     public void getExpectedIncomeSuccess(ExpectedIncomeResponse expectedIncomeResponse) {
+        expectedIncomeResponseList = expectedIncomeResponse.getList();
         if (!expectedIncomeResponse.getList().isEmpty()) {
             mExpectedIncomeAdapter.addData(expectedIncomeResponse.getList());
         } else {
             mExpectedIncomeAdapter.setEmptyView(mEmptyView);
         }
     }
+
+    @Override
+    public void onLoadMoreRequested() {
+        if (!expectedIncomeResponseList.isEmpty()) {
+            if (page == 1 && expectedIncomeResponseList.size() < pageSize) {
+                mExpectedIncomeAdapter.loadMoreEnd(true);
+            } else {
+                if (expectedIncomeResponseList.size() < pageSize) {
+                    mExpectedIncomeAdapter.loadMoreEnd();
+                } else {
+                    //等于10条
+                    page++;
+                    onRequestExpectedIncome();
+                }
+            }
+        } else {
+            mExpectedIncomeAdapter.loadMoreEnd();
+        }
+    }
+
 
     @Override
     public void getRevenueIncomeSuccess(RevenueIncomeResponse revenueIncomeResponse) {
@@ -110,5 +144,6 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
                 .expectedIncomeModule(new ExpectedIncomeModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 }

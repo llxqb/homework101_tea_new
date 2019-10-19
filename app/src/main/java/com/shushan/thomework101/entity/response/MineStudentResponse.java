@@ -44,6 +44,9 @@ public class MineStudentResponse {
     }
 
     public static class DataBean implements Parcelable {
+        public DataBean() {
+        }
+
         /**
          * id : 12
          * t_id : 4

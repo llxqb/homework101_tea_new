@@ -6,19 +6,20 @@ import java.util.List;
  * 预计收益
  */
 public class ExpectedIncomeResponse {
+
     /**
-     * all : 3000
-     * list : [{"name":"zy2790","pay_money":"4999.00","money":"3000.00","create_time":1570674399,"type":1,"status":1,"cover":""}]
+     * all : 0.7
+     * list : [{"name":"学生111","pay_money":"1.00","money":"0.60","create_time":1571284119,"type":1,"status":1,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png"},{"name":"学生111","pay_money":"1.00","money":"0.10","create_time":1571284119,"type":1,"status":1,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png"}]
      */
 
-    private int all;
+    private double all;
     private List<ListBean> list;
 
-    public int getAll() {
+    public double getAll() {
         return all;
     }
 
-    public void setAll(int all) {
+    public void setAll(double all) {
         this.all = all;
     }
 
@@ -32,13 +33,13 @@ public class ExpectedIncomeResponse {
 
     public static class ListBean {
         /**
-         * name : zy2790
-         * pay_money : 4999.00
-         * money : 3000.00
-         * create_time : 1570674399
+         * name : 学生111
+         * pay_money : 1.00
+         * money : 0.60
+         * create_time : 1571284119
          * type : 1
          * status : 1
-         * cover :
+         * cover : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png
          */
 
         private String name;

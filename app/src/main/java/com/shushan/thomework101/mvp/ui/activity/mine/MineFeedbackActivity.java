@@ -64,7 +64,7 @@ public class MineFeedbackActivity extends BaseActivity implements MineFeedbackCo
     public void initView() {
         initEmptyView();
         mCommonTitleTv.setText("辅导反馈");
-        mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList);
+        mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList,mImageLoaderHelper);
         mFeedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mFeedbackRecyclerView.setAdapter(mTodayFeedBackAdapter);
         mFeedbackRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {

@@ -15,7 +15,7 @@
         android:paddingEnd="@dimen/dp_6"
         android:paddingBottom="@dimen/dp_18">
 
-        <ImageView
+        <com.shushan.thomework101.mvp.views.CircleImageView
             android:id="@+id/student_avatar_iv"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_1"
-            android:text="冯宝宝"
             android:textColor="@color/color_30"
             android:textSize="@dimen/sp_15"
             android:textStyle="bold"
@@ -43,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_8"
-            android:text="三年级 人教版"
             android:textColor="@color/color_6d"
             android:textSize="@dimen/sp_13"
             app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
@@ -52,10 +50,12 @@
 
         <TextView
             android:id="@+id/look_counselling_content_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_90"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_27"
+            android:layout_marginEnd="@dimen/dp_10"
             android:background="@drawable/selector_left_bg"
+            android:gravity="center"
             android:paddingStart="@dimen/dp_8"
             android:paddingTop="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_8"
@@ -63,23 +63,23 @@
             android:text="查看辅导内容"
             android:textColor="@color/select_left_color"
             android:textSize="@dimen/sp_11"
-            app:layout_constraintStart_toEndOf="@id/textbook_version_tv"
+            app:layout_constraintEnd_toStartOf="@id/edit_counselling_content_tv"
             app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
 
         <TextView
             android:id="@+id/edit_counselling_content_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_90"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_8"
             android:background="@drawable/selector_right_bg"
-            android:paddingStart="@dimen/dp_8"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_5"
             android:paddingTop="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_5"
             android:text="填写辅导反馈"
             android:textColor="#FF5353"
             android:textSize="@dimen/sp_11"
-            app:layout_constraintStart_toEndOf="@id/look_counselling_content_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
 
 

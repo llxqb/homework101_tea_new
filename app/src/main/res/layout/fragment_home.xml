@@ -155,8 +155,8 @@
                             android:layout_marginStart="@dimen/dp_10"
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@mipmap/home_authentication_process_1"
-                            android:visibility="gone">
+                            android:visibility="invisible"
+                            android:background="@mipmap/home_authentication_process_1">
 
                             <TextView
                                 android:id="@+id/upload_card_hint_tv"

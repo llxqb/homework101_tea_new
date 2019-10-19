@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerExpectedIncomeComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -21,6 +23,7 @@ import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.bank.WithdrawActivity;
 import com.shushan.thomework101.mvp.ui.adapter.RevenueIncomeAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
+import com.shushan.thomework101.mvp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ import butterknife.OnClick;
 /**
  * 已到手金额明细
  */
-public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncomeControl.ExpectedIncomeView {
+public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncomeControl.ExpectedIncomeView, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
     @BindView(R.id.expected_income_tv)
@@ -66,7 +69,7 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
     public void initView() {
         initEmptyView();
         mCommonTitleTv.setText("已到手金额");
-        mRevenueIncomeAdapter = new RevenueIncomeAdapter(expectedIncomeResponseList);
+        mRevenueIncomeAdapter = new RevenueIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRevenueIncomeAdapter);
     }
@@ -101,6 +104,9 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
         }
     }
 
+    /**
+     * 已到手金额明细
+     */
     private void onRequestRevenueIncome() {
         RevenueIncomeRequest revenueIncomeRequest = new RevenueIncomeRequest();
         revenueIncomeRequest.token = mUser.token;
@@ -111,11 +117,12 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
 
     @Override
     public void getExpectedIncomeSuccess(ExpectedIncomeResponse expectedIncomeResponse) {
-
     }
 
     @Override
     public void getRevenueIncomeSuccess(RevenueIncomeResponse revenueIncomeResponse) {
+        LogUtils.e("revenueIncomeResponse:"+new Gson().toJson(revenueIncomeResponse));
+        expectedIncomeResponseList = revenueIncomeResponse.getData();
         if (!revenueIncomeResponse.getData().isEmpty()) {
             mRevenueIncomeAdapter.addData(revenueIncomeResponse.getData());
         } else {
@@ -123,10 +130,30 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
         }
     }
 
+    @Override
+    public void onLoadMoreRequested() {
+        if (!expectedIncomeResponseList.isEmpty()) {
+            if (page == 1 && expectedIncomeResponseList.size() < pageSize) {
+                mRevenueIncomeAdapter.loadMoreEnd(true);
+            } else {
+                if (expectedIncomeResponseList.size() < pageSize) {
+                    mRevenueIncomeAdapter.loadMoreEnd();
+                } else {
+                    //等于10条
+                    page++;
+                    onRequestRevenueIncome();
+                }
+            }
+        } else {
+            mRevenueIncomeAdapter.loadMoreEnd();
+        }
+    }
 
     private void initInjectData() {
         DaggerExpectedIncomeComponent.builder().appComponent(getAppComponent())
                 .expectedIncomeModule(new ExpectedIncomeModule(this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
+
 }

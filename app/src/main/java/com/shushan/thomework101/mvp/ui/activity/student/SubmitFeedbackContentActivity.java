@@ -40,17 +40,16 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
     TextView mDisadvantageTextQuantityTv;
     private User mUser;
     /**
-     * 学生id
+     * 辅导反馈列表页返回的id
      */
-    String stuId;
+    String feedbackId;
     @Inject
     FeedbackControl.PresenterFeedback mPresenter;
 
-    public static void start(Context context, String stuId, String stuName,String date) {
+    public static void start(Context context, String feedbackId, String stuName) {
         Intent intent = new Intent(context, SubmitFeedbackContentActivity.class);
-        intent.putExtra("stuId", stuId);
+        intent.putExtra("feedbackId", feedbackId);
         intent.putExtra("stuName", stuName);
-        intent.putExtra("date", date);
         context.startActivity(intent);
     }
 
@@ -70,10 +69,10 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
         mAdvantageEv.addTextChangedListener(advantage_text_OnChange);
         mDisadvantageEv.addTextChangedListener(disadvantage_text_OnChange);
         if (getIntent() != null) {
-            stuId = getIntent().getStringExtra("stuId");
+            feedbackId = getIntent().getStringExtra("feedbackId");
             String stuName = getIntent().getStringExtra("stuName");
-            String date = getIntent().getStringExtra("date");
-            mCommonTitleTv.setText(stuName + "-辅导反馈");
+            String title = stuName + "-辅导反馈";
+            mCommonTitleTv.setText(title);
         }
     }
 
@@ -97,7 +96,7 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
     private void onSubmitFeedback() {
         SubmitFeedbackRequest submitFeedbackRequest = new SubmitFeedbackRequest();
         submitFeedbackRequest.token = mUser.token;
-        submitFeedbackRequest.id = stuId;
+        submitFeedbackRequest.id = feedbackId;
         submitFeedbackRequest.defect = mAdvantageEv.getText().toString();
         submitFeedbackRequest.merit = mDisadvantageEv.getText().toString();
         mPresenter.submitFeedbackInfo(submitFeedbackRequest);
@@ -105,7 +104,8 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
 
     @Override
     public void submitFeedbackInfoSuccess() {
-        showToast("提交成功");
+        showToast("反馈成功");
+        finish();
     }
 
 

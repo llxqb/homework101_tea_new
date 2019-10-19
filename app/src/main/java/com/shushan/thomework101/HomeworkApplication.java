@@ -10,6 +10,7 @@ import com.shushan.thomework101.di.components.DaggerAppComponent;
 import com.shushan.thomework101.di.modules.AppModule;
 import com.shushan.thomework101.entity.constants.ServerConstant;
 import com.shushan.thomework101.mvp.ui.activity.rongCloud.MyReceiveMessageListener;
+import com.shushan.thomework101.mvp.utils.ExtensionModulesUtil;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -57,6 +58,8 @@ public class HomeworkApplication extends Application {
                 || "io.rong.push"
                 .equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
+            //融云模块自定义
+            ExtensionModulesUtil.getInstance().init(this);
             //融云接收消息的监听
             RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(getApplicationContext()));
 //            //注册自定义消息

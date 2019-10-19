@@ -2,6 +2,9 @@ package com.shushan.thomework101.mvp.utils;
 
 import android.text.TextUtils;
 
+import com.shushan.thomework101.entity.response.FeedBackResponse;
+import com.shushan.thomework101.entity.response.MineStudentResponse;
+
 /**
  * 用户util
  */
@@ -233,5 +236,36 @@ public class UserUtil {
             stringBuffer.append("周日 ");
         }
         return String.valueOf(stringBuffer);
+    }
+
+//    /**
+//     * 学生名字转某某老师
+//     */
+//    public static String toTeacherName(String name) {
+//        String teacherName = "";
+//        if (!TextUtils.isEmpty(name)) {
+//            if (name.contains("老师")) {
+//                teacherName = name;
+//            } else {
+////                teacherName = name.substring(0, 1) + "老师";
+//                teacherName = name + "老师";
+//            }
+//        }
+//        return teacherName;
+//    }
+
+
+    public static MineStudentResponse.DataBean feedBackTranStudentDetail(FeedBackResponse.DataBean dataBean){
+        MineStudentResponse.DataBean dataBean1 = new MineStudentResponse.DataBean();
+        dataBean1.setId(dataBean.getId());
+        dataBean1.setS_id(dataBean.getS_id());
+        dataBean1.setVersion(dataBean.getVersion());
+        dataBean1.setCreate_time(dataBean.getStart_time());
+        dataBean1.setName(dataBean.getName());
+        dataBean1.setGrade(dataBean.getGrade());
+        dataBean1.setCover(dataBean.getCover());
+//        dataBean1.setStatus(dataBean.getStatus());
+        dataBean1.setEnd_time(dataBean.getEnd_time());
+        return dataBean1;
     }
 }

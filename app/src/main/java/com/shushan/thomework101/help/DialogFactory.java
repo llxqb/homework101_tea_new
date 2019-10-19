@@ -171,20 +171,20 @@ public class DialogFactory {
 
     /**
      * activity中 显示公共dialog
-     *
-     * @param context      context
-     * @param title        标题
-     * @param subtitle     副标题
-     * @param leftBtnText  左边按钮文字
-     * @param rightBtnText 右边按钮文字
+     * @param context context
+     * @param title   标题
+     * @param subtitle  副标题
+     * @param leftBtnText   左边按钮文字
+     * @param rightBtnText  右边按钮文字
      */
     public static void showCommonDialog(Activity context, String title, String subtitle, String leftBtnText, String rightBtnText, int style) {
         CommonDialog commonDialog = CommonDialog.newInstance();
         commonDialog.setListener((CommonDialog.CommonDialogListener) context);
-        commonDialog.setStyle(style);
         commonDialog.setValue(title, subtitle, leftBtnText, rightBtnText);
+        commonDialog.setStyle(style);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
+
 
 
     /**

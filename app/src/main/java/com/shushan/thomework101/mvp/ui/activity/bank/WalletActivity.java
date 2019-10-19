@@ -76,7 +76,7 @@ public class WalletActivity extends BaseActivity implements WithdrawControl.With
                 startActivitys(ExpectedTotalIncomeActivity.class);
                 break;
             case R.id.commission_income_rl://预计提成总收益
-                startActivitys(ExpectedCommissionIncomeActivity.class);
+                ExpectedCommissionIncomeActivity.start(this,mWalletResponse.getAmort_money());
                 break;
         }
     }
@@ -94,8 +94,8 @@ public class WalletActivity extends BaseActivity implements WithdrawControl.With
     @Override
     public void getWalletSuccess(WalletResponse walletResponse) {
         mWalletResponse = walletResponse;
-        mEarnedIncomeTv.setText(String.valueOf(walletResponse.getMoney()));
-        mTotalIncomeTv.setText(String.valueOf(walletResponse.getPredict_money()));
+        mEarnedIncomeTv.setText(walletResponse.getMoney());
+        mTotalIncomeTv.setText(walletResponse.getPredict_money());
         mCommissionIncomeTv.setText(String.valueOf(walletResponse.getAmort_money()));
     }
 

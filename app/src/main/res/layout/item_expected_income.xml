@@ -13,7 +13,7 @@
         android:paddingStart="@dimen/dp_18"
         android:paddingEnd="@dimen/dp_18">
 
-        <ImageView
+        <com.shushan.thomework101.mvp.views.CircleImageView
             android:id="@+id/avatar_iv"
             android:layout_width="@dimen/dp_34"
             android:layout_height="@dimen/dp_34"
@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_13"
-            android:text="陈满案"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_15"
             app:layout_constraintStart_toEndOf="@id/avatar_iv"
@@ -40,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_12"
-            android:text="2019-09-09"
+            android:layout_marginTop="@dimen/dp_2"
             android:textColor="#9495A0"
             android:textSize="@dimen/sp_13"
             app:layout_constraintStart_toEndOf="@id/avatar_iv"
@@ -51,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_8"
-            android:text="付费：¥4999"
+            android:layout_marginTop="@dimen/dp_2"
             android:textColor="#9495A0"
             android:textSize="@dimen/sp_13"
             app:layout_constraintStart_toEndOf="@id/date_tv"
@@ -62,8 +61,7 @@
             android:id="@+id/commission_income_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_14"
-            android:text="+499"
+            android:layout_marginTop="@dimen/dp_16"
             android:textColor="@color/add_income_bg"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold"
@@ -74,7 +72,7 @@
             android:id="@+id/commission_income_hint_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_20"
             android:text="提成："
             android:textColor="@color/add_income_bg"
             android:textSize="@dimen/sp_13"

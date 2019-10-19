@@ -1,8 +1,10 @@
 package com.shushan.thomework101.mvp.ui.fragment.mine;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,14 +48,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * MimeFragment
  * 我的
  */
 
-public class MineFragment extends BaseFragment implements MineFragmentControl.MineView {
-
+public class MineFragment extends BaseFragment implements MineFragmentControl.MineView, SwipeRefreshLayout.OnRefreshListener {
+    @BindView(R.id.swipe_ly)
+    SwipeRefreshLayout mSwipeLy;
     @BindView(R.id.avatar_iv)
     CircleImageView mAvatarIv;
     @BindView(R.id.username_tv)
@@ -95,6 +100,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     @Override
     public void initView() {
         mUser = mBuProcessor.getUser();
+        mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeLy.setOnRefreshListener(this);
         mMineFunctionAdapter = new MineFunctionAdapter(mineFunctionResponseList);
         mMineRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMineRecyclerView.setAdapter(mMineFunctionAdapter);
@@ -154,8 +161,13 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
     }
 
+    @Override
+    public void onRefresh() {
+        onRequestHomeInfo();
+    }
+
     /**
-     * 请求首页数据
+     * 请求我的数据，与首页调的一个接口
      */
     private void onRequestHomeInfo() {
         HomeRequest homeRequest = new HomeRequest();
@@ -165,7 +177,12 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Override
     public void getHomeInfoSuccess(HomeResponse homeResponse) {
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+        }
         HomeResponse.UserBean userBean = homeResponse.getUser();
+        //更新融云信息
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userBean.getThird_id(), userBean.getName(), Uri.parse(userBean.getCover())));
         mImageLoaderHelper.displayImage(getActivity(), userBean.getCover(), mAvatarIv, Constant.LOADING_AVATOR);
         mUsernameTv.setText(userBean.getName());
         String teacherCounsellingGradeValue = "辅导年级：" + UserUtil.gradeArrayToString(userBean.getGrade_id());
@@ -181,6 +198,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mEarnedMoneyTv.setText(String.valueOf(earningsBean.getAlready_money()));
         mEstimatedMoneyTv.setText(String.valueOf(earningsBean.getPredict_money()));
     }
+
 
     private void initializeInjector() {
         DaggerMineFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())

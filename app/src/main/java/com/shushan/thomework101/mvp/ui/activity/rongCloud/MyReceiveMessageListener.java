@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.shushan.thomework101.entity.constants.ActivityConstant;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
@@ -36,7 +35,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         if (messageContent instanceof InformationNotificationMessage) {
             String extra = ((InformationNotificationMessage) messageContent).getExtra();
 //            LogUtils.e("content:" + ((InformationNotificationMessage) messageContent).getMessage());
-            LogUtils.e("Extra:" + extra);
+//            LogUtils.e("Extra:" + extra);
             //发送广播
             Intent intent = new Intent();
             intent.setAction(ActivityConstant.SHOW_NOTIFICATION_MESSAGE);

@@ -164,6 +164,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         initEmptyView();
         mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         mSwipeLy.setOnRefreshListener(this);
+        //我的收益
         mHomeIncomeAdapter = new HomeIncomeAdapter(homeIncomeResponseList);
         mMineIncomeRecyclerView.setAdapter(mHomeIncomeAdapter);
         mMineIncomeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));

@@ -28,6 +28,7 @@ import com.shushan.thomework101.entity.response.MineFunctionResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.bank.WalletActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.IntroductionActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.LeaveActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.MineFeedbackActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.SettingActivity;
@@ -121,6 +122,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                     case 3://规章制度
                         break;
                     case 4://操作介绍
+                        startActivitys(IntroductionActivity.class);
                         break;
                 }
             }

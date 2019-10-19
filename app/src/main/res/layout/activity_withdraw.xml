@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_26"
                 android:layout_marginTop="@dimen/dp_7"
-                android:text="1.申请提现金额不得低于50元\n2.每日提现最高金额不得超过5000\n3.每周日之前提交申请"
+                android:text="1.每月15号为上个月可提现金额提现日\n2.提现到账时间为一个工作日\n3.本月已到手金额不计入可提现金额"
                 android:textColor="@color/color_80"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>

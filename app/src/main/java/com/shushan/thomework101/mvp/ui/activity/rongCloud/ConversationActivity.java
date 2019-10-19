@@ -15,7 +15,9 @@ import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.ConversationModule;
 import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.request.FeedbackIdRequest;
 import com.shushan.thomework101.entity.request.UserInfoByRidRequest;
+import com.shushan.thomework101.entity.response.FeedbackIdResponse;
 import com.shushan.thomework101.entity.response.UserInfoByRidResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
@@ -71,6 +73,10 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      * 根据融云id 查询出学生信息
      */
     private UserInfoByRidResponse mUserInfoByRidResponse;
+    /**
+     * 辅导结束 辅导id
+     */
+    String feedbackId = null;
 
     @Inject
     ConversationControl.PresenterConversation mPresenter;
@@ -93,10 +99,11 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                 mEndCounselling.setText("结束辅导");
                 mEndCounsellingLayoutRl.setVisibility(View.VISIBLE);
             } else if (extra.equals("end_coach")) {
+                counsellingEndState = true;
                 mEndCounsellingLayoutRl.setVisibility(View.VISIBLE);
                 mEndCounsellingMessageTv.setText("辅导已完成");
                 mEndCounselling.setText("去反馈");
-                counsellingEndState = true;
+                onRequestFeedBackId();
             }
         }
         super.onReceivePro(context, intent);
@@ -124,7 +131,6 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     @Override
     public void initData() {
-
     }
 
     @OnClick({R.id.common_left_iv, R.id.end_counselling, R.id.common_right_iv})
@@ -134,11 +140,9 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                 finish();
                 break;
             case R.id.end_counselling:
-                if (counsellingEndState) {
-                    //去反馈
-                    if (mUserInfoByRidResponse != null) {
-                        //TODO
-                        SubmitFeedbackContentActivity.start(this, String.valueOf(mUserInfoByRidResponse.getS_id()), mUserInfoByRidResponse.getName());
+                if (counsellingEndState) { //去反馈
+                    if (mUserInfoByRidResponse != null && feedbackId != null) {
+                        SubmitFeedbackContentActivity.start(this, feedbackId, mUserInfoByRidResponse.getName());
                     }
                 } else {
                     DialogFactory.showCommonDialog(ConversationActivity.this, "结束辅导", "你确定要结束辅导~", "继续辅导", "确定结束", Constant.COMMON_DIALOG_STYLE_1);
@@ -154,10 +158,10 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     public void commonDialogBtnOkListener() {
         //结束辅导  通知学生端调用结束辅导接口
         ConversationUtil.SendInformationNotificationMessage(mTargetId, mConversationType, "老师结束辅导", "end_coach");
-        mEndCounsellingLayoutRl.setVisibility(View.VISIBLE);
-        mEndCounsellingMessageTv.setText("辅导已完成");
-        mEndCounselling.setText("去反馈");
-        counsellingEndState = true;
+//        mEndCounsellingLayoutRl.setVisibility(View.VISIBLE);
+//        mEndCounsellingMessageTv.setText("辅导已完成");
+//        mEndCounselling.setText("去反馈");
+//        counsellingEndState = true;
     }
 
     /**
@@ -183,6 +187,21 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         } else {
             mEndCounsellingLayoutRl.setVisibility(View.GONE);
         }
+    }
+
+    private void onRequestFeedBackId() {
+        FeedbackIdRequest feedbackIdRequest = new FeedbackIdRequest();
+        feedbackIdRequest.token = mUser.token;
+        if (mUserInfoByRidResponse != null) {
+            feedbackIdRequest.s_id = String.valueOf(mUserInfoByRidResponse.getS_id());
+        }
+        mPresenter.onRequestFeedBackId(feedbackIdRequest);
+    }
+
+
+    @Override
+    public void getFeedBackIdSuccess(FeedbackIdResponse feedbackIdResponse) {
+        feedbackId = String.valueOf(feedbackIdResponse.getId());
     }
 
     /**

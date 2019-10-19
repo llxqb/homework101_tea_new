@@ -81,5 +81,14 @@ public interface MineApi {
     @POST("teacher/user/student_change")
     Observable<String> onRequestStudentChange(@Body String request);
 
-
+    /**
+     * 请求系统消息
+     */
+    @POST("teacher/message")
+    Observable<String> onRequestSystemMsg(@Body String request);
+    /**
+     * 删除系统消息
+     */
+    @POST("teacher/message/empty_message")
+    Observable<String> onRequestDeleteMsg(@Body String request);
 }

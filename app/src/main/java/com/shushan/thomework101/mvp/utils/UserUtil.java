@@ -264,7 +264,7 @@ public class UserUtil {
         dataBean1.setName(dataBean.getName());
         dataBean1.setGrade(dataBean.getGrade());
         dataBean1.setCover(dataBean.getCover());
-//        dataBean1.setStatus(dataBean.getStatus());
+        dataBean1.setStatus("已付费");
         dataBean1.setEnd_time(dataBean.getEnd_time());
         return dataBean1;
     }

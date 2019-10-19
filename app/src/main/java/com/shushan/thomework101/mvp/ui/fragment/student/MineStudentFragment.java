@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineStudentFragmentComponent;
@@ -27,7 +26,6 @@ import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.ui.dialog.StudentTypeMorePopupWindow;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.StudentUtil;
 
 import java.util.ArrayList;
@@ -47,7 +45,6 @@ import butterknife.Unbinder;
  */
 
 public class MineStudentFragment extends BaseFragment implements MineStudentFragmentControl.MineStudentFragmentView, StudentTypeMorePopupWindow.PopupWindowListener {
-
     @BindView(R.id.all_tv)
     TextView mAllTv;
     @BindView(R.id.paid_tv)
@@ -164,6 +161,7 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         onRequestMineStudentInfo(String.valueOf(StudentUtil.labelStringToInt(studentType)));
     }
 
+
     /**
      * 请求我的学生列表
      */
@@ -178,7 +176,6 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
 
     @Override
     public void getMineStudentInfoSuccess(MineStudentResponse response) {
-        LogUtils.e("response:" + new Gson().toJson(response));
         if (!response.getData().isEmpty()) {
             mMineStudentAdapter.setNewData(response.getData());
         } else {

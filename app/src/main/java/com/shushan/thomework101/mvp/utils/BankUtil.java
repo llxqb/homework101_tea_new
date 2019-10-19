@@ -14,6 +14,7 @@ public class BankUtil {
     public static void labelToBankIcon(String label, ImageView mBankIconIv, RelativeLayout mBankLayout) {
         int bankIcon = 0;
         if (TextUtils.isEmpty(label)) return;
+        label = label.toUpperCase();//默认小写转大写
         switch (label) {
             case Constant.LABEL_ABC:
                 mBankIconIv.setImageResource(R.mipmap.abc);

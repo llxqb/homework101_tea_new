@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerExpectedIncomeComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -23,7 +22,6 @@ import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.bank.WithdrawActivity;
 import com.shushan.thomework101.mvp.ui.adapter.RevenueIncomeAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +70,7 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
         mRevenueIncomeAdapter = new RevenueIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRevenueIncomeAdapter);
+        mRevenueIncomeAdapter.setOnLoadMoreListener(this, mRecyclerView);
     }
 
     @Override
@@ -121,7 +120,6 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
 
     @Override
     public void getRevenueIncomeSuccess(RevenueIncomeResponse revenueIncomeResponse) {
-        LogUtils.e("revenueIncomeResponse:"+new Gson().toJson(revenueIncomeResponse));
         expectedIncomeResponseList = revenueIncomeResponse.getData();
         if (!revenueIncomeResponse.getData().isEmpty()) {
             mRevenueIncomeAdapter.addData(revenueIncomeResponse.getData());
@@ -141,6 +139,7 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
                 } else {
                     //等于10条
                     page++;
+                    mRevenueIncomeAdapter.loadMoreComplete();
                     onRequestRevenueIncome();
                 }
             }

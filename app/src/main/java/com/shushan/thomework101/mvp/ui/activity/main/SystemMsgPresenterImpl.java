@@ -2,9 +2,18 @@ package com.shushan.thomework101.mvp.ui.activity.main;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.SystemMsgRequest;
+import com.shushan.thomework101.entity.request.TokenRequest;
+import com.shushan.thomework101.entity.response.SystemMsgResponse;
+import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MineModel;
+import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -25,32 +34,47 @@ public class SystemMsgPresenterImpl implements SystemMsgControl.PresenterSystemM
     }
 
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mSystemMsgView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mMineModel.onRequestVerifyCode(verifyCodeRequest).compose(mSystemMsgView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mSystemMsgView.showErrMessage(throwable),
-//                        () -> mSystemMsgView.dismissLoading());
-//        mSystemMsgView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mSystemMsgView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mSystemMsgView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mSystemMsgView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
+    /**
+     * 请求系统消息
+     */
+    @Override
+    public void onRequestSystemMsg(SystemMsgRequest systemMsgRequest) {
+        mSystemMsgView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.onRequestSystemMsg(systemMsgRequest).compose(mSystemMsgView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestCoachingPriceListSuccess, throwable -> mSystemMsgView.showErrMessage(throwable),
+                        () -> mSystemMsgView.dismissLoading());
+        mSystemMsgView.addSubscription(disposable);
+    }
+
+
+    private void requestCoachingPriceListSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            SystemMsgResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), SystemMsgResponse.class);
+            mSystemMsgView.getSystemMsgSuccess(response);
+        } else {
+            mSystemMsgView.showToast(responseData.errorMsg);
+        }
+    }
+    /**
+     * 清空消息列表
+     */
+    @Override
+    public void onRequestDeleteMsg(TokenRequest tokenRequest) {
+        mSystemMsgView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineModel.onRequestDeleteMsg(tokenRequest).compose(mSystemMsgView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestDeleteMsgListSuccess, throwable -> mSystemMsgView.showErrMessage(throwable),
+                        () -> mSystemMsgView.dismissLoading());
+        mSystemMsgView.addSubscription(disposable);
+    }
+
+
+    private void requestDeleteMsgListSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mSystemMsgView.getDeleteMsgSuccess();
+        } else {
+            mSystemMsgView.showToast(responseData.errorMsg);
+        }
+    }
     
     @Override
     public void onCreate() {

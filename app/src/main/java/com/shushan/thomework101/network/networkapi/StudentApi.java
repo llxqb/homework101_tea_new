@@ -25,5 +25,10 @@ public interface StudentApi {
      */
     @POST("teacher/student/search_student")
     Observable<String> onRequestUserInfoByRid(@Body String request);
+    /**
+     * 学生结束辅导，老师去反馈，查询反馈id
+     */
+    @POST("teacher/student/search_guideid")
+    Observable<String> onRequestFeedBackId(@Body String request);
 
 }

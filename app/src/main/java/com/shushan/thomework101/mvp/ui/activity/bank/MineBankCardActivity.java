@@ -76,15 +76,15 @@ public class MineBankCardActivity extends BaseActivity implements WithdrawContro
         mCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mCardRecyclerView.setAdapter(mBankCardAdapter);
         mBankCardAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            showToast("" + position);
-            MineBankCardResponse.DataBean dataBean  =  (MineBankCardResponse.DataBean)adapter.getItem(position);
-            Intent intent = new Intent();
-            assert dataBean != null;
-            intent.putExtra("label",dataBean.getLabel());
-            intent.putExtra("bank",dataBean.getBank());
-            intent.putExtra("card_no",dataBean.getCard_no());
-            setResult(RESULT_OK,intent);
-            finish();
+            MineBankCardResponse.DataBean dataBean = (MineBankCardResponse.DataBean) adapter.getItem(position);
+            if (dataBean != null) {
+                Intent intent = new Intent();
+                intent.putExtra("label", dataBean.getLabel());
+                intent.putExtra("bank", dataBean.getBank());
+                intent.putExtra("card_no", dataBean.getCard_no());
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         });
     }
 

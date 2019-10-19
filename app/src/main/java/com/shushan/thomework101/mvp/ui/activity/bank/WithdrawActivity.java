@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,7 +25,6 @@ import com.shushan.thomework101.entity.response.WithdrawResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.BankUtil;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 
 import javax.inject.Inject;
 
@@ -37,7 +35,6 @@ import butterknife.OnClick;
  * desc:提现
  */
 public class WithdrawActivity extends BaseActivity implements WithdrawControl.WithdrawView {
-
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
     @BindView(R.id.withdraw_money_et)
@@ -60,6 +57,10 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
     RelativeLayout mMineCardRl;//有银行卡
     String withdrawMoney;//可提现金额
     private User mUser;
+    /**
+     * 银行卡号
+     */
+    private String cardNo = null;
     @Inject
     WithdrawControl.PresenterWithdraw mPresenter;
 
@@ -102,8 +103,8 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
     public void initData() {
         if (getIntent() != null) {
             withdrawMoney = getIntent().getStringExtra("withdrawMoney");
-            LogUtils.e("withdrawMoney:" + withdrawMoney);
-            mCanWithdrawMoneyTv.setText("可提现金额：¥" + withdrawMoney);
+            String withdrawMoneyValue = "可提现金额：¥" + withdrawMoney;
+            mCanWithdrawMoneyTv.setText(withdrawMoneyValue);
         }
         onRequestDefaultCard();
     }
@@ -128,11 +129,28 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
                 mWithdrawMoneyEt.setText(withdrawMoney);
                 break;
             case R.id.sure_tv:
-                if (!TextUtils.isEmpty(mCardNumTv.getText().toString()) && !TextUtils.isEmpty(mWithdrawMoneyEt.getText())) {
+                if (verify()) {
                     onRequestWithdraw();
                 }
                 break;
         }
+    }
+
+    private boolean verify() {
+        String WithdrawMoneyValue = mWithdrawMoneyEt.getText().toString();
+        if (cardNo == null) {
+            showToast("请先添加银行卡");
+            return false;
+        }
+        if (TextUtils.isEmpty(WithdrawMoneyValue) || Float.parseFloat(WithdrawMoneyValue) == 0) {
+            showToast("提现金额必须大于0");
+            return false;
+        }
+        if (Float.parseFloat(WithdrawMoneyValue) > Float.parseFloat(withdrawMoney)) {
+            showToast("提现金额小于可提现金额");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -150,10 +168,8 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
     private void onRequestWithdraw() {
         WithDrawRequest withDrawRequest = new WithDrawRequest();
         withDrawRequest.token = mUser.token;
-        withDrawRequest.card = mCardNumTv.getText().toString();
-        if (!TextUtils.isEmpty(mWithdrawMoneyEt.getText().toString())) {
-            withDrawRequest.money = Float.parseFloat(mWithdrawMoneyEt.getText().toString());
-        }
+        withDrawRequest.card = cardNo;
+        withDrawRequest.money = Float.parseFloat(mWithdrawMoneyEt.getText().toString());
         mPresenter.onRequestWithdraw(withDrawRequest);
     }
 
@@ -169,11 +185,10 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
     private void updateCardInfo(Intent resultIntent) {
         String label = resultIntent.getStringExtra("label").toLowerCase();
         String bank = resultIntent.getStringExtra("bank");
-        String card_no = resultIntent.getStringExtra("card_no");
-        Log.d("ddd", "updateCardInfo --> label = " + label + ",bank = " + bank + ",card_no = " + card_no);
+        cardNo = resultIntent.getStringExtra("card_no");
         BankUtil.labelToBankIcon(label, mBankIconIv, mBankLayout);
         mBankNameTv.setText(bank);
-        mCardNumTv.setText(BankUtil.getBankHidedNum(card_no));
+        mCardNumTv.setText(BankUtil.getBankHidedNum(cardNo));
     }
 
 
@@ -181,9 +196,11 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
     public void getWalletSuccess(WalletResponse withdrawResponse) {
     }
 
+
     @Override
     public void getDefaultCardSuccess(WithdrawResponse withdrawResponse) {
         WithdrawResponse.BankBean bankBean = withdrawResponse.getBank();
+        cardNo = bankBean.getCard_no();
         if (withdrawResponse.getBank() == null || new Gson().toJson(bankBean).equals("{}")) {
             mAddWalletRl.setVisibility(View.VISIBLE);
             mMineCardRl.setVisibility(View.GONE);
@@ -221,11 +238,12 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (TextUtils.isEmpty(s.toString())) return;
-            if (Integer.parseInt(s.toString()) <= Integer.parseInt(withdrawMoney)) {
-                mSureTv.setBackgroundResource(R.drawable.withdraw_sure_bg);
-            } else {
-                mSureTv.setBackgroundResource(R.drawable.not_withdraw_sure_bg);
+            if (!TextUtils.isEmpty(s.toString())) {
+                if (Float.parseFloat(s.toString()) > 0 && Float.parseFloat(s.toString()) <= Float.parseFloat(withdrawMoney)) {
+                    mSureTv.setBackgroundResource(R.drawable.withdraw_sure_bg);
+                } else {
+                    mSureTv.setBackgroundResource(R.drawable.not_withdraw_sure_bg);
+                }
             }
         }
     };

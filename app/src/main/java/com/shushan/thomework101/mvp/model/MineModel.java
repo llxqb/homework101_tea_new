@@ -7,6 +7,7 @@ import com.shushan.thomework101.entity.request.LeaveRequest;
 import com.shushan.thomework101.entity.request.RevenueIncomeRequest;
 import com.shushan.thomework101.entity.request.SetCounsellingTimeRequest;
 import com.shushan.thomework101.entity.request.StudentChangeRequest;
+import com.shushan.thomework101.entity.request.SystemMsgRequest;
 import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.request.UploadImage;
 import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
@@ -124,5 +125,17 @@ public class MineModel {
         return mMineApi.onRequestStudentChange(new Gson().toJson(request)).map(mTransform::transformListType);
     }
 
+    /**
+     * 请求系统消息
+     */
+    public Observable<ResponseData> onRequestSystemMsg(SystemMsgRequest request) {
+        return mMineApi.onRequestSystemMsg(new Gson().toJson(request)).map(mTransform::transformListType);
+    }
+    /**
+     * 清空系统消息
+     */
+    public Observable<ResponseData> onRequestDeleteMsg(TokenRequest request) {
+        return mMineApi.onRequestDeleteMsg(new Gson().toJson(request)).map(mTransform::transformListType);
+    }
 
 }

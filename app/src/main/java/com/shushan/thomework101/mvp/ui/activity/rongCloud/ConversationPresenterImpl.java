@@ -3,7 +3,9 @@ package com.shushan.thomework101.mvp.ui.activity.rongCloud;
 import android.content.Context;
 
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.FeedbackIdRequest;
 import com.shushan.thomework101.entity.request.UserInfoByRidRequest;
+import com.shushan.thomework101.entity.response.FeedbackIdResponse;
 import com.shushan.thomework101.entity.response.UserInfoByRidResponse;
 import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.ResponseData;
@@ -55,7 +57,31 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
             mConversationView.showToast(responseData.errorMsg);
         }
     }
-    
+    /**
+     * 学生结束辅导，老师去反馈，查询反馈id
+     */
+    @Override
+    public void onRequestFeedBackId(FeedbackIdRequest feedbackIdRequest) {
+        mConversationView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mStudentModel.onRequestFeedBackId(feedbackIdRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestFeedbackIdSuccess, throwable -> mConversationView.showErrMessage(throwable),
+                        () -> mConversationView.dismissLoading());
+        mConversationView.addSubscription(disposable);
+    }
+
+
+    private void requestFeedbackIdSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(FeedbackIdResponse.class);
+            if (responseData.parsedData != null) {
+                FeedbackIdResponse response = (FeedbackIdResponse) responseData.parsedData;
+                mConversationView.getFeedBackIdSuccess(response);
+            }
+        } else {
+            mConversationView.showToast(responseData.errorMsg);
+        }
+    }
+
     @Override
     public void onCreate() {
     }

@@ -35,13 +35,13 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
-    @BindView(R.id.expected_income_tv)
-    TextView mExpectedIncomeTv;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    TextView mExpectedIncomeTv;
     ExpectedIncomeAdapter mExpectedIncomeAdapter;
     List<ExpectedIncomeResponse.ListBean> expectedIncomeResponseList = new ArrayList<>();
     private View mEmptyView;
+    private View mHeaderView;
     private User mUser;
     private int page = 1;
     private int pageSize = 10;
@@ -57,12 +57,14 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
 
     @Override
     public void initView() {
-        initEmptyView();
         mCommonTitleTv.setText("预计收益");
+        initEmptyView();
+        initHeadView();
         mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mExpectedIncomeAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        mExpectedIncomeAdapter.setOnLoadMoreListener(ExpectedTotalIncomeActivity.this, mRecyclerView);
         mRecyclerView.setAdapter(mExpectedIncomeAdapter);
+        mExpectedIncomeAdapter.addHeaderView(mHeaderView);
     }
 
     @Override
@@ -76,6 +78,15 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
         TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         emptyIv.setImageResource(R.mipmap.empty_money);
         emptyTv.setText(getResources().getString(R.string.empty_money));
+    }
+
+    /**
+     * NestedScrollView 与 RecyclerView 加载更多起冲突 采用addHeaderView方法处理
+     * 参考：https://www.jianshu.com/p/23e979f06a4d
+     */
+    private void initHeadView() {
+        mHeaderView = LayoutInflater.from(this).inflate(R.layout.activity_total_income_head, (ViewGroup) mRecyclerView.getParent(), false);
+        mExpectedIncomeTv = mHeaderView.findViewById(R.id.expected_income_tv);
     }
 
     private void onRequestTotalIncome() {

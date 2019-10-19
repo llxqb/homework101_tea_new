@@ -23,12 +23,10 @@ import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.entity.user.User;
-import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.adapter.TodayFeedBackAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.utils.LogUtils;
-import com.shushan.thomework101.mvp.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,16 +81,12 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         mTodayFeedBackAdapter = new TodayFeedBackAdapter(todayFeedBackResponseList, mImageLoaderHelper);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mTodayFeedBackAdapter);
+        mTodayFeedBackAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 FeedBackResponse.DataBean dataBean = (FeedBackResponse.DataBean) adapter.getItem(position);
                 switch (view.getId()) {
-                    case R.id.student_avatar_iv:
-                        if (dataBean != null) {
-                            StudentDetailActivity.start(getActivity(), UserUtil.feedBackTranStudentDetail(dataBean));
-                        }
-                        break;
                     case R.id.look_counselling_content_tv:
                         //启动单聊页面
                         if (dataBean != null) {
@@ -120,24 +114,6 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         onRequestFeedbackInfo();
     }
 
-    @Override
-    public void onLoadMoreRequested() {
-        LogUtils.e("onLoadMoreRequested()");
-        if (!todayFeedBackResponseList.isEmpty()) {
-            if (page == 1 && todayFeedBackResponseList.size() < pageSize) {
-                mTodayFeedBackAdapter.loadMoreEnd(true);
-            } else {
-                if (todayFeedBackResponseList.size() < pageSize) {
-                    mTodayFeedBackAdapter.loadMoreEnd();
-                } else {
-                    page++;
-                    onRequestFeedbackInfo();
-                }
-            }
-        } else {
-            mTodayFeedBackAdapter.loadMoreEnd(true);
-        }
-    }
 
     /**
      * 请求辅导反馈数据
@@ -170,6 +146,25 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         }
     }
 
+    @Override
+    public void onLoadMoreRequested() {
+        if (!todayFeedBackResponseList.isEmpty()) {
+            if (page == 1 && todayFeedBackResponseList.size() < pageSize) {
+                mTodayFeedBackAdapter.loadMoreEnd(true);
+            } else {
+                if (todayFeedBackResponseList.size() < pageSize) {
+                    mTodayFeedBackAdapter.loadMoreEnd();
+                } else {
+                    //等于10条
+                    page++;
+                    mTodayFeedBackAdapter.loadMoreComplete();
+                    onRequestFeedbackInfo();
+                }
+            }
+        } else {
+            mTodayFeedBackAdapter.loadMoreEnd();
+        }
+    }
 
     private void initEmptyView() {
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);

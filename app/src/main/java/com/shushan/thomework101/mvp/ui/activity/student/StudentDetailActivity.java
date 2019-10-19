@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentDetailComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -21,6 +22,7 @@ import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.EditLabelDialog;
 import com.shushan.thomework101.mvp.utils.DateUtil;
+import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.views.CircleImageView;
 
 import javax.inject.Inject;
@@ -78,19 +80,22 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
         mRemarkEt.addTextChangedListener(edit_text_OnChange);
         if (getIntent() != null) {
             dataBean = getIntent().getParcelableExtra("dataBean");
-            mImageLoaderHelper.displayImage(this, dataBean.getCover(), mStudentAvatarIv, Constant.LOADING_AVATOR);
-            mStudentNameTv.setText(dataBean.getName());
-            mCounsellingTypeTv.setText(dataBean.getStatus());
-            mEndDateTv.setText(DateUtil.getStrTime(dataBean.getEnd_time(), DateUtil.TIME_YYMMDD));
-            if (dataBean.getStatus().equals("未付费")) {
-                mEndDateTv.setVisibility(View.GONE);
-            }
-            if (!TextUtils.isEmpty(dataBean.getVersion())) {
-                mTextbookVersionTv.setText(dataBean.getVersion());
-            }
-            if (!TextUtils.isEmpty(dataBean.getRemark())) {
-                mRemarkEt.setText(dataBean.getRemark());
-                mTextQuantityTv.setText(dataBean.getRemark().length() + "/100");
+            LogUtils.e("dataBean:" + new Gson().toJson(dataBean));
+            if (dataBean != null) {
+                mImageLoaderHelper.displayImage(this, dataBean.getCover(), mStudentAvatarIv, Constant.LOADING_AVATOR);
+                mStudentNameTv.setText(dataBean.getName());
+                mCounsellingTypeTv.setText(dataBean.getStatus());
+                mEndDateTv.setText(DateUtil.getStrTime(dataBean.getEnd_time(), DateUtil.TIME_YYMMDD));
+//                if (dataBean.getStatus().equals("未付费")) {
+//                    mEndDateTv.setVisibility(View.GONE);
+//                }
+                if (!TextUtils.isEmpty(dataBean.getVersion())) {
+                    mTextbookVersionTv.setText(dataBean.getVersion());
+                }
+                if (!TextUtils.isEmpty(dataBean.getRemark())) {
+                    mRemarkEt.setText(dataBean.getRemark());
+                    mTextQuantityTv.setText(dataBean.getRemark().length() + "/100");
+                }
             }
         }
     }
@@ -129,6 +134,7 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
     @Override
     public void saveStudentInfoSuccess() {
         showToast("保存成功");
+        finish();
     }
 
 

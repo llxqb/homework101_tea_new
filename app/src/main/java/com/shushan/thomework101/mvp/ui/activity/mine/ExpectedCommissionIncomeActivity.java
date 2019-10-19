@@ -37,15 +37,15 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
-    @BindView(R.id.expected_income_tv)
-    TextView mExpectedIncomeTv;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    TextView mExpectedIncomeTv;
     ExpectedIncomeAdapter mExpectedIncomeAdapter;
     List<ExpectedIncomeResponse.ListBean> expectedIncomeResponseList = new ArrayList<>();
     private View mEmptyView;
+    private View mHeaderView;
     private User mUser;
-    private int page =1 ;
+    private int page = 1;
     private int pageSize = 10;
     @Inject
     ExpectedIncomeControl.PresenterExpectedIncome mPresenter;
@@ -66,14 +66,17 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
     @Override
     public void initView() {
         initEmptyView();
+        initHeadView();
         mCommonTitleTv.setText("预计提成收益");
         if (getIntent() != null) {
             String expectedIncome = getIntent().getStringExtra("expectedIncome");
             mExpectedIncomeTv.setText(expectedIncome);
         }
         mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
+        mExpectedIncomeAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mExpectedIncomeAdapter);
+        mExpectedIncomeAdapter.addHeaderView(mHeaderView);
     }
 
     @Override
@@ -88,6 +91,15 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
         TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         emptyIv.setImageResource(R.mipmap.empty_money);
         emptyTv.setText(getResources().getString(R.string.empty_money));
+    }
+
+    /**
+     * NestedScrollView 与 RecyclerView 加载更多起冲突 采用addHeaderView方法处理
+     * 参考：https://www.jianshu.com/p/23e979f06a4d
+     */
+    private void initHeadView() {
+        mHeaderView = LayoutInflater.from(this).inflate(R.layout.activity_expected_income_head, (ViewGroup) mRecyclerView.getParent(), false);
+        mExpectedIncomeTv = mHeaderView.findViewById(R.id.expected_income_tv);
     }
 
     @OnClick(R.id.common_left_iv)
@@ -125,6 +137,7 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
                 } else {
                     //等于10条
                     page++;
+                    mExpectedIncomeAdapter.loadMoreComplete();
                     onRequestExpectedIncome();
                 }
             }

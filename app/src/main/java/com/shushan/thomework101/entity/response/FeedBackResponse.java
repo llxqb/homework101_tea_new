@@ -1,13 +1,17 @@
 package com.shushan.thomework101.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class FeedBackResponse {
 
+
     /**
      * error : 0
      * msg : 成功
-     * data : [{"id":52,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571387131,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571387043,"status":0},{"id":53,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571396685,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571396676,"status":0},{"id":54,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571396760,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571396733,"status":0},{"id":55,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571397848,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571397843,"status":0}]
+     * data : [{"id":56,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571450734,"grade":"五年级","feedback_time":1571456802,"third_id":"zuoye10122","start_time":1571450726,"status":1},{"id":57,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571455418,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571455399,"status":0},{"id":58,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571469150,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571469132,"status":0},{"id":59,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571469483,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571469471,"status":0},{"id":60,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571469891,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571469881,"status":0},{"id":61,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571469948,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571469940,"status":0},{"id":62,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571470018,"grade":"五年级","feedback_time":0,"third_id":"zuoye10122","start_time":1571470007,"status":0},{"id":63,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","name":"学生111","version":"","coupon_id":0,"s_id":22,"end_time":1571470143,"grade":"五年级","feedback_time":1571470189,"third_id":"zuoye10122","start_time":1571470135,"status":1}]
      */
 
     private int error;
@@ -38,20 +42,20 @@ public class FeedBackResponse {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
-         * id : 52
+         * id : 56
          * cover : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png
          * name : 学生111
          * version :
          * coupon_id : 0
          * s_id : 22
-         * end_time : 1571387131
+         * end_time : 1571450734
          * grade : 五年级
-         * feedback_time : 0
+         * feedback_time : 1571456802
          * third_id : zuoye10122
-         * start_time : 1571387043
-         * status : 0
+         * start_time : 1571450726
+         * status : 1
          */
 
         private int id;
@@ -66,6 +70,33 @@ public class FeedBackResponse {
         private String third_id;
         private int start_time;
         private int status;
+
+        protected DataBean(Parcel in) {
+            id = in.readInt();
+            cover = in.readString();
+            name = in.readString();
+            version = in.readString();
+            coupon_id = in.readInt();
+            s_id = in.readInt();
+            end_time = in.readInt();
+            grade = in.readString();
+            feedback_time = in.readInt();
+            third_id = in.readString();
+            start_time = in.readInt();
+            status = in.readInt();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel in) {
+                return new DataBean(in);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
 
         public int getId() {
             return id;
@@ -161,6 +192,27 @@ public class FeedBackResponse {
 
         public void setStatus(int status) {
             this.status = status;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(id);
+            dest.writeString(cover);
+            dest.writeString(name);
+            dest.writeString(version);
+            dest.writeInt(coupon_id);
+            dest.writeInt(s_id);
+            dest.writeInt(end_time);
+            dest.writeString(grade);
+            dest.writeInt(feedback_time);
+            dest.writeString(third_id);
+            dest.writeInt(start_time);
+            dest.writeInt(status);
         }
     }
 }

@@ -12,7 +12,7 @@ public class MineStudentResponse {
     /**
      * error : 0
      * msg : 成功
-     * data : [{"id":12,"t_id":4,"s_id":12,"version":"","remark":"","grade_id":5,"create_time":1570707023,"name":"zy7053","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":13,"t_id":4,"s_id":18,"version":"","remark":"","grade_id":7,"create_time":1570845600,"name":"zy3732","grade":"初一","cover":"","status":"未付费","end_time":0}]
+     * data : [{"id":12,"t_id":4,"s_id":12,"version":"人教版","remark":"刚刚更换花好几万块的话哈哈镜个","grade_id":5,"create_time":1570707023,"name":"zy7053","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":13,"t_id":4,"s_id":18,"version":"","remark":"","grade_id":7,"create_time":1570845600,"name":"zy啊啊啊","grade":"初一","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da5ba9aec501.png","status":"未付费","end_time":0},{"id":22,"t_id":4,"s_id":19,"version":"","remark":"","grade_id":2,"create_time":1570858345,"name":"zy3492","grade":"二年级","cover":"","status":"未付费","end_time":0},{"id":25,"t_id":4,"s_id":20,"version":"","remark":"","grade_id":2,"create_time":1570858737,"name":"子非鱼","grade":"二年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191012/5da17d598da54.png","status":"未付费","end_time":0},{"id":27,"t_id":4,"s_id":21,"version":"","remark":"","grade_id":5,"create_time":1571106146,"name":"charis","grade":"五年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da53e0551da7.png","status":"未付费","end_time":0},{"id":30,"t_id":4,"s_id":21,"version":"","remark":"","grade_id":2,"create_time":1571106213,"name":"charis","grade":"二年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da53e0551da7.png","status":"未付费","end_time":0},{"id":33,"t_id":4,"s_id":22,"version":"","remark":"","grade_id":5,"create_time":1571110237,"name":"学生111","grade":"五年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png","status":"月辅导","end_time":1573876119},{"id":38,"t_id":4,"s_id":23,"version":"","remark":"","grade_id":7,"create_time":1571138137,"name":"zy7055","grade":"初一","cover":"","status":"未付费","end_time":0},{"id":42,"t_id":4,"s_id":24,"version":"","remark":"","grade_id":5,"create_time":1571190300,"name":"孙楠","grade":"五年级","cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191016/5da6769f7d1c0.png","status":"未付费","end_time":0},{"id":45,"t_id":4,"s_id":25,"version":"","remark":"","grade_id":5,"create_time":1571215716,"name":"zy8390","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":49,"t_id":4,"s_id":26,"version":"","remark":"","grade_id":5,"create_time":1571217342,"name":"zy8399","grade":"五年级","cover":"","status":"未付费","end_time":0},{"id":53,"t_id":4,"s_id":27,"version":"","remark":"","grade_id":5,"create_time":1571217756,"name":"zy8398","grade":"五年级","cover":"","status":"未付费","end_time":0}]
      */
 
     private int error;
@@ -51,8 +51,8 @@ public class MineStudentResponse {
          * id : 12
          * t_id : 4
          * s_id : 12
-         * version :
-         * remark :
+         * version : 人教版
+         * remark : 刚刚更换花好几万块的话哈哈镜个
          * grade_id : 5
          * create_time : 1570707023
          * name : zy7053

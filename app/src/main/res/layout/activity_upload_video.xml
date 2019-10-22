@@ -134,7 +134,7 @@
                     android:paddingTop="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_20"
                     android:paddingBottom="@dimen/dp_10"
-                    android:text="点击上传试讲视频"
+                    android:text="点击重新上传试讲视频"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     android:visibility="gone" />

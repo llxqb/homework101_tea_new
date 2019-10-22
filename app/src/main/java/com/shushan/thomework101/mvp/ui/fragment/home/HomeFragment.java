@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerHomeFragmentComponent;
@@ -185,7 +183,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void initEmptyView() {
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.unsuccessful_student_enpty_layout, (ViewGroup) mUnsuccessfulStudentRecyclerView.getParent(), false);
-        ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
         TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         if (mUser.checkPass) {
             emptyTv.setText("暂无学生信息");
@@ -264,7 +261,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         userBean = homeResponse.getUser();
         //更新User
         mUser = LoginUtils.updateLoginUser(userBean, mUser, mBuProcessor);
-        Log.e("ddd", "mUser" + new Gson().toJson(mUser));
+//        Log.e("ddd", "mUser" + new Gson().toJson(mUser));
         setCheckProcess();
         setIncomeData(homeResponse.getIncome());
         setMineStudentData(homeResponse.getStudent());

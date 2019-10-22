@@ -103,8 +103,7 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
     public void initData() {
         if (getIntent() != null) {
             withdrawMoney = getIntent().getStringExtra("withdrawMoney");
-            String withdrawMoneyValue = "可提现金额：¥" + withdrawMoney;
-            mCanWithdrawMoneyTv.setText(withdrawMoneyValue);
+            mCanWithdrawMoneyTv.setText(!TextUtils.isEmpty(withdrawMoney) ? "可提现金额：¥" + withdrawMoney : "可提现金额：¥");
         }
         onRequestDefaultCard();
     }
@@ -126,7 +125,11 @@ public class WithdrawActivity extends BaseActivity implements WithdrawControl.Wi
                 startActivityForResult(intent, 101);
                 break;
             case R.id.withdraw_all_money_tv:
-                mWithdrawMoneyEt.setText(withdrawMoney);
+                if (!TextUtils.isEmpty(withdrawMoney) && Double.parseDouble(withdrawMoney) > 0) {
+                    mWithdrawMoneyEt.setText(withdrawMoney);
+                } else {
+                    showToast("提现金额必须大于0");
+                }
                 break;
             case R.id.sure_tv:
                 if (verify()) {

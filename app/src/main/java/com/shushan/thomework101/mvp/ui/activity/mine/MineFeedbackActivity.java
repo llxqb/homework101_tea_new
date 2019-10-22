@@ -20,7 +20,6 @@ import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.student.FeedbackControl;
-import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.adapter.TodayFeedBackAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -37,6 +36,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * 我的辅导反馈
@@ -89,15 +89,18 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
         mFeedbackRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                FeedBackResponse.DataBean dataBean = (FeedBackResponse.DataBean) adapter.getItem(position);
                 switch (view.getId()) {
-                    case R.id.student_avatar_iv:
-                        startActivitys(StudentDetailActivity.class);
-                        break;
                     case R.id.look_counselling_content_tv:
-                        showToast("查看辅导内容");
+                        //启动单聊页面
+                        if (dataBean != null) {
+                            RongIM.getInstance().startPrivateChat(MineFeedbackActivity.this, dataBean.getThird_id(), dataBean.getName());
+                        }
                         break;
                     case R.id.edit_counselling_content_tv:
-                        startActivitys(SubmitFeedbackContentActivity.class);
+                        if (dataBean != null && dataBean.getStatus() != 1) {
+                            SubmitFeedbackContentActivity.start(MineFeedbackActivity.this, String.valueOf(dataBean.getId()), dataBean.getName());
+                        }
                         break;
                 }
             }

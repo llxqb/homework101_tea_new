@@ -13,33 +13,33 @@ public class LoginResponse {
 
     /**
      * tid : 4
-     * name :
-     * cover :
+     * name : 李白
+     * cover : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191011/5da04f4796072.png
      * subject : 英语
      * grade_id : [2,5,7]
-     * guide_time : {}
-     * label : []
-     * experience :
-     * style :
-     * idea :
-     * state : 0
+     * guide_time : {"workday":"1,2,3,4,5","work_time":"16:00-23:59","off_day":"6","off_time":"00:00-23:59"}
+     * label : ["幽默","风趣"]
+     * experience : 啊啊a
+     * style : bbbb
+     * idea : 就是考试开始就是抗生素男男生男生女石家庄计算机视觉设计设计师设计开始年终奖怎么做看着看着
+     * state : 1
      * third_id : teacher1014
      * third_token : nSqzcfm6Ii/770mQDXXwLDXyKZnCDTW2UeEfJg0cj19I1IERdRco7JRiVcpgdHMi6PQtFlz45kz+u9BQ1+nyH1s9ZRj8rQqb
-     * login_num : 3
+     * login_num : 26
      * wrong_login_num : 0
      * wrong_time : 0
-     * card_front :
-     * card_reverse :
-     * license :
+     * card_front : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cb5a930f.png
+     * card_reverse : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cdcb0dba.png
+     * license : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191010/5d9f1cf144401.png
      * evaluation :
-     * video :
-     * card_state : 0
-     * video_state : 0
-     * train_state : 0
+     * video : http://newzuoye101.oss-cn-beijing.aliyuncs.com/teacher/video/20191011/caa9e4ac401c1675e108a1aa7bc897
+     * card_state : 2
+     * video_state : 2
+     * train_state : 2
      * grade : ["二年级","五年级","初一"]
      * money : 0.00
-     * logid : 55
-     * token : fd74758f71934c000ec0eca316aa4ef5
+     * logid : 154
+     * token : 9d3c3b0bb50a90619d6049339142473d
      * first : 0
      */
 
@@ -306,5 +306,48 @@ public class LoginResponse {
     }
 
     public static class GuideTimeBean {
+        /**
+         * workday : 1,2,3,4,5
+         * work_time : 16:00-23:59
+         * off_day : 6
+         * off_time : 00:00-23:59
+         */
+
+        private String workday;
+        private String work_time;
+        private String off_day;
+        private String off_time;
+
+        public String getWorkday() {
+            return workday;
+        }
+
+        public void setWorkday(String workday) {
+            this.workday = workday;
+        }
+
+        public String getWork_time() {
+            return work_time;
+        }
+
+        public void setWork_time(String work_time) {
+            this.work_time = work_time;
+        }
+
+        public String getOff_day() {
+            return off_day;
+        }
+
+        public void setOff_day(String off_day) {
+            this.off_day = off_day;
+        }
+
+        public String getOff_time() {
+            return off_time;
+        }
+
+        public void setOff_time(String off_time) {
+            this.off_time = off_time;
+        }
     }
 }

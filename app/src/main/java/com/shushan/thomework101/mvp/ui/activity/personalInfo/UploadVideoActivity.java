@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerUploadVideoComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -23,7 +22,6 @@ import com.shushan.thomework101.entity.response.TopicResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.PicUtils;
 import com.shushan.thomework101.mvp.utils.UserUtil;
 import com.shushan.thomework101.mvp.views.NoFullScreenJzvdStd;
@@ -132,7 +130,6 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
 
     @Override
     public void getTopicInfoSuccess(TopicResponse topicResponse) {
-        LogUtils.e("topicResponse:" + new Gson().toJson(topicResponse));
         String gradeValue = UserUtil.gradeIntToString(topicResponse.getGrade()) + "试讲题";
         mQuestionGradeTv.setText(gradeValue);
         mQuestionContentTv.setText(topicResponse.getQuestion());
@@ -141,7 +138,6 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
 
     @Override
     public void getUploadVideoSuccess(String videoUrl) {
-        LogUtils.e("videoUrl:" + videoUrl);
         mVideoUrl = videoUrl;
         mJzVideo.setUp(videoUrl, "");
         mJzVideo.setVisibility(View.VISIBLE);

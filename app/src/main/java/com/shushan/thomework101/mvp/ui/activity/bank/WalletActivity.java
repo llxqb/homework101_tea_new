@@ -65,11 +65,11 @@ public class WalletActivity extends BaseActivity implements WithdrawControl.With
                 finish();
                 break;
             case R.id.money_detailed_tv://已到手金额明细
-                RevenueIncomeActivity.start(this, String.valueOf(mWalletResponse.getMoney()));
+                RevenueIncomeActivity.start(this, mWalletResponse.getMoney());
                 break;
             case R.id.withdraw_tv://提现
                 if (mWalletResponse != null) {
-                    WithdrawActivity.start(this, String.valueOf(mWalletResponse.getWithdraw_money()));
+                    WithdrawActivity.start(this, mWalletResponse.getWithdraw_money());
                 }
                 break;
             case R.id.total_income_rl://预计总收益

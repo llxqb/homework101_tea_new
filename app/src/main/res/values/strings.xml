@@ -17,7 +17,7 @@
     <string name="empty_coaching">您还未通过作业101教师审核\n暂无辅导列表</string>
     <string name="empty_feedback">您还未通过作业101教师审核\n暂无反馈列表</string>
     <string name="empty_message">暂时没有消息哟~</string>
-    <string name="empty_student_change">暂无学生变动哟~</string>
+    <string name="empty_student_change">暂无学生变动信息~</string>
     <string name="empty_student_change_in_record">暂无学生转入</string>
     <string name="empty_student_change_out_record">暂无学生转出</string>
     <string name="empty_mine_feedback">暂无辅导反馈哟~</string>

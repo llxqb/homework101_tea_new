@@ -16,6 +16,8 @@ import com.shushan.thomework101.di.components.DaggerMainComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.entity.request.DeviceInfoRequest;
+import com.shushan.thomework101.entity.request.VersionUpdateRequest;
+import com.shushan.thomework101.entity.response.VersionUpdateResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
@@ -26,6 +28,7 @@ import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragment;
 import com.shushan.thomework101.mvp.ui.fragment.student.StudentFragment;
 import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
+import com.shushan.thomework101.mvp.utils.UpdateManager;
 import com.shushan.thomework101.mvp.views.MyNoScrollViewPager;
 import com.umeng.analytics.AnalyticsConfig;
 
@@ -85,9 +88,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setOffscreenPageLimit(fragments.size());
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
+        onRequestVersionUpdate();
         uploadDeviceInfo();
     }
 
+    /**
+     * 上传设备信息
+     */
     private void uploadDeviceInfo() {
         DeviceInfoRequest deviceInfoRequest = new DeviceInfoRequest();
         deviceInfoRequest.version = SystemUtils.getVersionName(this);
@@ -97,6 +104,24 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         deviceInfoRequest.sysVer = SystemUtils.getSystemVersion();
         mPresenter.uploadDeviceInfo(deviceInfoRequest);
     }
+
+    /**
+     * 版本更新
+     */
+    private void onRequestVersionUpdate() {
+        VersionUpdateRequest versionUpdateRequest = new VersionUpdateRequest();
+        versionUpdateRequest.version = SystemUtils.getVersionName(this);
+        mPresenter.onRequestVersionUpdate(versionUpdateRequest);
+    }
+
+    @Override
+    public void getVersionUpdateSuccess(VersionUpdateResponse versionUpdateResponse) {
+        if (versionUpdateResponse != null) {
+            UpdateManager mUpdateManager = new UpdateManager(this, versionUpdateResponse);
+            mUpdateManager.checkUpdateInfo();
+        }
+    }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -218,5 +243,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 .mainModule(new MainModule(MainActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 }

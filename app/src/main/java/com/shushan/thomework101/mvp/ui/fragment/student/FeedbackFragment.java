@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.ui.fragment.student;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,13 +22,13 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerFeedbackFragmentComponent;
 import com.shushan.thomework101.di.modules.FeedbackFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.adapter.TodayFeedBackAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,19 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         return view;
     }
 
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_FEEDBACK_LIST)) {
+            onRefresh();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_FEEDBACK_LIST);
+    }
 
     @Override
     public void initView() {
@@ -128,13 +143,13 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
 
     @Override
     public void getFeedbackInfoSuccess(FeedBackResponse response) {
-        LogUtils.e("getFeedbackInfoSuccess()");
         todayFeedBackResponseList = response.getData();
         if (mSwipeLy.isRefreshing()) {
             mSwipeLy.setRefreshing(false);
             if (!response.getData().isEmpty()) {
                 mTodayFeedBackAdapter.setNewData(response.getData());
             } else {
+                mTodayFeedBackAdapter.setNewData(null);
                 mTodayFeedBackAdapter.setEmptyView(mEmptyView);
             }
         } else {

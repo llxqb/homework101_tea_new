@@ -16,4 +16,12 @@ public class ActivityConstant {
      * 小灰条提示通知消息
      */
     public static final String SHOW_NOTIFICATION_MESSAGE = "show_notification_message";
+    /**
+     * 学生详情改变更新我的学生列表
+     */
+    public static final String CHANGE_STUDENT_LIST = "change_student_list";
+    /**
+     * 辅导反馈结束刷新今日反馈
+     */
+    public static final String UPDATE_FEEDBACK_LIST = "update_feedback_list";
 }

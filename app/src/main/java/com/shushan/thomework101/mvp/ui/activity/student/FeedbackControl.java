@@ -1,7 +1,9 @@
 package com.shushan.thomework101.mvp.ui.activity.student;
 
 
+import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -12,6 +14,7 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 public class FeedbackControl {
     public interface FeedbackView extends LoadDataView {
         void submitFeedbackInfoSuccess();
+        void getFeedbackInfoSuccess(FeedBackResponse response);
     }
 
     public interface PresenterFeedback extends Presenter<FeedbackView> {
@@ -20,6 +23,10 @@ public class FeedbackControl {
          * 辅导反馈提交
          */
         void submitFeedbackInfo(SubmitFeedbackRequest submitFeedbackRequest);
+        /**
+         * 请求辅导反馈数据
+         */
+        void onRequestFeedbackInfo(FeedbackRequest feedbackRequest);
     }
 
 }

@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.mine.IntroductionActivity"></activity>
+        <activity android:name=".mvp.ui.activity.mine.IntroductionActivity"/>
         <activity
             android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"
             android:screenOrientation="portrait" />

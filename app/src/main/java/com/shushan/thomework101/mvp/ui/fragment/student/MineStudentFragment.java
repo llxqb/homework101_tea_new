@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.ui.fragment.student;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineStudentFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.MineStudentFragmentModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.request.MineStudentListRequest;
 import com.shushan.thomework101.entity.response.MineStudentResponse;
 import com.shushan.thomework101.entity.user.User;
@@ -68,6 +71,11 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
     private int paidType;
     private View mEmptyView;
     private User mUser;
+    /**
+     * 标签类型
+     */
+    private String mLabel;
+
     @Inject
     MineStudentFragmentControl.MineStudentFragmentPresenter mPresenter;
 
@@ -83,6 +91,20 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
     }
 
     @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.CHANGE_STUDENT_LIST)) {
+            onRequestMineStudentInfo();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.CHANGE_STUDENT_LIST);
+    }
+
+    @Override
     public void initView() {
         mUser = mBuProcessor.getUser();
         initEmptyView();
@@ -94,7 +116,9 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
             switch (view.getId()) {
                 case R.id.student_avatar_iv:
                     //跳到学生详情
-                    StudentDetailActivity.start(getActivity(), dataBean);
+                    if (dataBean != null) {
+                        StudentDetailActivity.start(getActivity(), String.valueOf(dataBean.getS_id()));
+                    }
                     break;
                 case R.id.item_mine_student_layout:
                     //启动单聊页面
@@ -118,16 +142,17 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
 
     @Override
     public void initData() {
-        onRequestMineStudentInfo("");
+        onRequestMineStudentInfo();
     }
 
     @OnClick({R.id.all_tv, R.id.paid_layout, R.id.unpaid_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.all_tv:
+                mLabel = "0";
                 initTitleColor();
                 mAllTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
-                onRequestMineStudentInfo("");
+                onRequestMineStudentInfo();
                 break;
             case R.id.paid_layout:
                 paidType = 1;
@@ -158,18 +183,19 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         }
         String studentType = StudentUtil.studentTypeIntToString(paidType, type);
         mPaidTv.setText(studentType);
-        onRequestMineStudentInfo(String.valueOf(StudentUtil.labelStringToInt(studentType)));
+        mLabel = String.valueOf(StudentUtil.labelStringToInt(studentType));
+        onRequestMineStudentInfo();
     }
 
 
     /**
      * 请求我的学生列表
      */
-    private void onRequestMineStudentInfo(String label) {
+    private void onRequestMineStudentInfo() {
         MineStudentListRequest request = new MineStudentListRequest();
         request.token = mUser.token;
-        if (!TextUtils.isEmpty(label)) {
-            request.label = label;
+        if (!TextUtils.isEmpty(mLabel)) {
+            request.label = mLabel;
         }
         mPresenter.onRequestMineStudentInfo(request);
     }

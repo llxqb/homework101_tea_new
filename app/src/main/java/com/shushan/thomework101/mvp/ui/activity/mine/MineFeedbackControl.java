@@ -1,6 +1,8 @@
 package com.shushan.thomework101.mvp.ui.activity.mine;
 
 
+import com.shushan.thomework101.entity.request.FeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -10,21 +12,14 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 
 public class MineFeedbackControl {
     public interface MineFeedbackView extends LoadDataView {
-//        void getMineFeedbackSuccess(String token);
-//        void getVerifyCodeSuccess(String code);
+        void getFeedbackInfoSuccess(FeedBackResponse response);
     }
 
     public interface PresenterMineFeedback extends Presenter<MineFeedbackView> {
-
-//        /**
-//         * 登录
-//         */
-//        void onRequestMineFeedback(RegisterRequest MineFeedbackRequest);
-//        /**
-//         * 获取验证码
-//         * 验证类型(注册：100001，重置密码：100002,登录：100003)
-//         */
-//        void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest);
+        /**
+         * 请求辅导反馈数据
+         */
+        void onRequestFeedbackInfo(FeedbackRequest feedbackRequest);
     }
 
 }

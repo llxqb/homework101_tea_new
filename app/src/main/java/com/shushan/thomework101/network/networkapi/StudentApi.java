@@ -11,15 +11,15 @@ import retrofit2.http.POST;
 
 public interface StudentApi {
     /**
+     * 查询学生信息
+     */
+    @POST("teacher/student/detail")
+    Observable<String> onRequestStudentInfo(@Body String request);
+    /**
      * 保存学生信息
      */
     @POST("teacher/student/student_detail")
     Observable<String> saveStudentInfo(@Body String request);
-    /**
-     * 提交辅导反馈
-     */
-    @POST("teacher/student/student_feedback")
-    Observable<String> submitFeedbackInfo(@Body String request);
     /**
      * 根据融云第三方id获取用户头像和昵称
      */

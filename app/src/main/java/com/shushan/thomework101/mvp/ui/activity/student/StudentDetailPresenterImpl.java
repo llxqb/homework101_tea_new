@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
+import com.shushan.thomework101.entity.request.StudentDetailInfoRequest;
+import com.shushan.thomework101.entity.response.StudentDetailInfoResponse;
 import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.ResponseData;
 import com.shushan.thomework101.mvp.model.StudentModel;
@@ -28,6 +30,32 @@ public class StudentDetailPresenterImpl implements StudentDetailControl.Presente
         mContext = context;
         mStudentModel = model;
         mStudentDetailView = studentDetailView;
+    }
+
+    /**
+     * 查询学生信息
+     */
+    @Override
+    public void onRequestStudentInfo(StudentDetailInfoRequest studentDetailInfoRequest) {
+        mStudentDetailView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mStudentModel.onRequestStudentInfo(studentDetailInfoRequest).compose(mStudentDetailView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestStudentInfoSuccess, throwable -> mStudentDetailView.showErrMessage(throwable),
+                        () -> mStudentDetailView.dismissLoading());
+        mStudentDetailView.addSubscription(disposable);
+    }
+
+
+    private void requestStudentInfoSuccess(ResponseData responseData) {
+        mStudentDetailView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            responseData.parseData(StudentDetailInfoResponse.class);
+            if (responseData.parsedData != null) {
+                StudentDetailInfoResponse response = (StudentDetailInfoResponse) responseData.parsedData;
+                mStudentDetailView.getStudentInfoSuccess(response);
+            }
+        } else {
+            mStudentDetailView.showToast(responseData.errorMsg);
+        }
     }
 
     /**

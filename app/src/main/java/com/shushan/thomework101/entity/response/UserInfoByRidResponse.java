@@ -4,24 +4,25 @@ public class UserInfoByRidResponse {
 
 
     /**
-     * s_id : 18
-     * mobile : 13262253732
-     * name : zy啊啊啊
-     * cover : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191015/5da5ba9aec501.png
-     * grade : 初一
+     * s_id : 22
+     * mobile : 13262253733
+     * name : 学生111
+     * cover : http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png
+     * grade : 五年级
      * money : 0.00
-     * province :
-     * city :
-     * third_id : zuoye10118
-     * third_token : zRgSJtnyvEJJG0eDWRPpieBPYAUDpRACpN8vhan+BNQH9PIIo723XgECHCrviYaur2MNg1F01zi3RxoynGeuVkv3/nkImP3p
+     * province : 湖南省
+     * city : 株洲市
+     * third_id : zuoye10122
+     * third_token : TEYGT5eNNwko5RIQmgVC+h7r7BbfoaG/+OxXYyAJy0pKaACU8sfawsyNuNb0tvLKNkv3c9G5gJyhO+KZxMjZbbkuQLHbLOuv
      * wrong_login_num : 0
      * wrong_time : 0
      * platform : android
-     * grade_id : 7
-     * version : 3.0.0
-     * guide_status : 1
-     * user_pay : 0
-     * coupon_id : 6
+     * grade_id : 5
+     * version : 普通版
+     * guide_status : 0
+     * user_pay : null
+     * coupon_id : 0
+     * remark : 认真学习上课专心
      */
 
     private int s_id;
@@ -42,6 +43,7 @@ public class UserInfoByRidResponse {
     private int guide_status;
     private int user_pay;
     private int coupon_id;
+    private String remark;
 
     public int getS_id() {
         return s_id;
@@ -185,5 +187,13 @@ public class UserInfoByRidResponse {
 
     public void setCoupon_id(int coupon_id) {
         this.coupon_id = coupon_id;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

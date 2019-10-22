@@ -2,6 +2,7 @@ package com.shushan.thomework101.mvp.ui.activity.student;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -9,20 +10,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentDetailComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.StudentDetailModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
-import com.shushan.thomework101.entity.response.MineStudentResponse;
+import com.shushan.thomework101.entity.request.StudentDetailInfoRequest;
+import com.shushan.thomework101.entity.response.StudentDetailInfoResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.EditLabelDialog;
 import com.shushan.thomework101.mvp.utils.DateUtil;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.views.CircleImageView;
 
 import javax.inject.Inject;
@@ -52,13 +53,20 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
     @BindView(R.id.remark_et)
     EditText mRemarkEt;
     private User mUser;
-    MineStudentResponse.DataBean dataBean;
+    /**
+     * 学生id
+     */
+    private String sId;
+    /**
+     * 学生列表id,更新时候使用
+     */
+    private String id;
     @Inject
     StudentDetailControl.PresenterStudentDetail mPresenter;
 
-    public static void start(Context context, MineStudentResponse.DataBean dataBean) {
+    public static void start(Context context, String sId) {
         Intent intent = new Intent(context, StudentDetailActivity.class);
-        intent.putExtra("dataBean", dataBean);
+        intent.putExtra("sId", sId);
         context.startActivity(intent);
 
     }
@@ -79,24 +87,8 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
     public void initData() {
         mRemarkEt.addTextChangedListener(edit_text_OnChange);
         if (getIntent() != null) {
-            dataBean = getIntent().getParcelableExtra("dataBean");
-            LogUtils.e("dataBean:" + new Gson().toJson(dataBean));
-            if (dataBean != null) {
-                mImageLoaderHelper.displayImage(this, dataBean.getCover(), mStudentAvatarIv, Constant.LOADING_AVATOR);
-                mStudentNameTv.setText(dataBean.getName());
-                mCounsellingTypeTv.setText(dataBean.getStatus());
-                mEndDateTv.setText(DateUtil.getStrTime(dataBean.getEnd_time(), DateUtil.TIME_YYMMDD));
-//                if (dataBean.getStatus().equals("未付费")) {
-//                    mEndDateTv.setVisibility(View.GONE);
-//                }
-                if (!TextUtils.isEmpty(dataBean.getVersion())) {
-                    mTextbookVersionTv.setText(dataBean.getVersion());
-                }
-                if (!TextUtils.isEmpty(dataBean.getRemark())) {
-                    mRemarkEt.setText(dataBean.getRemark());
-                    mTextQuantityTv.setText(dataBean.getRemark().length() + "/100");
-                }
-            }
+            sId = getIntent().getStringExtra("sId");//学生id
+            onRequestStudentInfo();
         }
     }
 
@@ -116,6 +108,32 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
         }
     }
 
+    private void onRequestStudentInfo() {
+        StudentDetailInfoRequest request = new StudentDetailInfoRequest();
+        request.token = mBuProcessor.getToken();
+        request.s_id = sId;
+        mPresenter.onRequestStudentInfo(request);
+    }
+
+    @Override
+    public void getStudentInfoSuccess(StudentDetailInfoResponse studentDetailInfoResponse) {
+        mImageLoaderHelper.displayImage(this, studentDetailInfoResponse.getCover(), mStudentAvatarIv, Constant.LOADING_AVATOR);
+        mStudentNameTv.setText(studentDetailInfoResponse.getName());
+        mCounsellingTypeTv.setText(studentDetailInfoResponse.getStatus());
+        mEndDateTv.setText(DateUtil.getStrTime(studentDetailInfoResponse.getEnd_time(), DateUtil.TIME_YYMMDD));
+        id = String.valueOf(studentDetailInfoResponse.getId());
+        if (studentDetailInfoResponse.getStatus().equals("未付费")) {
+            mEndDateTv.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(studentDetailInfoResponse.getVersion())) {
+            mTextbookVersionTv.setText(studentDetailInfoResponse.getVersion());
+        }
+        if (!TextUtils.isEmpty(studentDetailInfoResponse.getRemark())) {
+            mRemarkEt.setText(studentDetailInfoResponse.getRemark());
+            String remarkValue = studentDetailInfoResponse.getRemark().length() + "/100";
+            mTextQuantityTv.setText(remarkValue);
+        }
+    }
 
     /**
      * 保存学生信息
@@ -124,16 +142,16 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
         SaveStudentInfoRequest request = new SaveStudentInfoRequest();
         request.token = mUser.token;
         request.version = mTextbookVersionTv.getText().toString();
-        if (dataBean != null) {
-            request.id = String.valueOf(dataBean.getId());
-        }
+        request.id = id;
         request.remark = mRemarkEt.getText().toString();
         mPresenter.saveStudentInfo(request);
     }
 
+
     @Override
     public void saveStudentInfoSuccess() {
         showToast("保存成功");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.CHANGE_STUDENT_LIST));
         finish();
     }
 

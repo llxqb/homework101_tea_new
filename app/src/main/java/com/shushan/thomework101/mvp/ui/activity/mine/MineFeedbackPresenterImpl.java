@@ -2,9 +2,17 @@ package com.shushan.thomework101.mvp.ui.activity.mine;
 
 import android.content.Context;
 
-import com.shushan.thomework101.mvp.model.MineModel;
+import com.google.gson.Gson;
+import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.FeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
+import com.shushan.thomework101.help.RetryWithDelay;
+import com.shushan.thomework101.mvp.model.MainModel;
+import com.shushan.thomework101.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -14,43 +22,40 @@ import javax.inject.Inject;
 public class MineFeedbackPresenterImpl implements MineFeedbackControl.PresenterMineFeedback {
 
     private MineFeedbackControl.MineFeedbackView mMineFeedbackView;
-    private final MineModel mMineModel;
+    private final MainModel mMainModel;
     private final Context mContext;
 
     @Inject
-    public MineFeedbackPresenterImpl(Context context, MineModel model, MineFeedbackControl.MineFeedbackView MineFeedbackView) {
+    public MineFeedbackPresenterImpl(Context context, MainModel model, MineFeedbackControl.MineFeedbackView MineFeedbackView) {
         mContext = context;
-        mMineModel = model;
+        mMainModel = model;
         mMineFeedbackView = MineFeedbackView;
     }
 
+    /**
+     * 请求辅导反馈数据
+     */
+    @Override
+    public void onRequestFeedbackInfo(FeedbackRequest feedbackRequest) {
+        mMineFeedbackView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMainModel.onRequestFeedbackInfo(feedbackRequest).compose(mMineFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestFeedbackInfoSuccess, throwable -> mMineFeedbackView.showErrMessage(throwable),
+                        () -> mMineFeedbackView.dismissLoading());
+        mMineFeedbackView.addSubscription(disposable);
+    }
 
-//    /**
-//     * 获取验证码
-//     */
-//    @Override
-//    public void onRequestVerifyCode(VerifyCodeRequest verifyCodeRequest) {
-//        mMineFeedbackView.showLoading(mContext.getResources().getString(R.string.loading));
-//        Disposable disposable = mMineFeedbackModel.onRequestVerifyCode(verifyCodeRequest).compose(mMineFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-//                .subscribe(this::requestVerifyCodeSuccess, throwable -> mMineFeedbackView.showErrMessage(throwable),
-//                        () -> mMineFeedbackView.dismissLoading());
-//        mMineFeedbackView.addSubscription(disposable);
-//    }
-//
-//
-//    private void requestVerifyCodeSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            mMineFeedbackView.getVerifyCodeSuccess(responseData.verifyCode);
-////            responseData.parseData(ForgetPwdResponse.class);
-////            if (responseData.parsedData != null) {
-////                ForgetPwdResponse response = (ForgetPwdResponse) responseData.parsedData;
-////                mMineFeedbackView.getForgetPwdSuccess(response);
-////            }
-//        } else {
-//            mMineFeedbackView.showToast(responseData.errorMsg);
-//        }
-//    }
-    
+    /**
+     * 请求辅导反馈数据成功
+     */
+    private void requestFeedbackInfoSuccess(ResponseData responseData) {
+        mMineFeedbackView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            FeedBackResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), FeedBackResponse.class);
+            mMineFeedbackView.getFeedbackInfoSuccess(response);
+        } else {
+            mMineFeedbackView.showToast(responseData.errorMsg);
+        }
+    }
     
     @Override
     public void onCreate() {

@@ -2,6 +2,7 @@ package com.shushan.thomework101.mvp.ui.activity.student;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,7 +13,9 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerFeedbackComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.FeedbackModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 
@@ -105,7 +108,12 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
     @Override
     public void submitFeedbackInfoSuccess() {
         showToast("反馈成功");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_FEEDBACK_LIST));
         finish();
+    }
+
+    @Override
+    public void getFeedbackInfoSuccess(FeedBackResponse response) {
     }
 
 

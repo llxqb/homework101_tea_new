@@ -78,6 +78,7 @@ public class ChatMorePopupWindow {
                         }
                         break;
                 }
+                mCustomPopWindow.dissmiss();
             }
         });
         cancelTv.setOnClickListener(v -> mCustomPopWindow.dissmiss());

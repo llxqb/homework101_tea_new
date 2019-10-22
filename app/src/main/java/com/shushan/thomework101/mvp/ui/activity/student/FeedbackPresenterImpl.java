@@ -2,11 +2,14 @@ package com.shushan.thomework101.mvp.ui.activity.student;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.help.RetryWithDelay;
+import com.shushan.thomework101.mvp.model.MainModel;
 import com.shushan.thomework101.mvp.model.ResponseData;
-import com.shushan.thomework101.mvp.model.StudentModel;
 
 import javax.inject.Inject;
 
@@ -20,16 +23,15 @@ import io.reactivex.disposables.Disposable;
 public class FeedbackPresenterImpl implements FeedbackControl.PresenterFeedback {
 
     private FeedbackControl.FeedbackView mFeedbackView;
-    private final StudentModel mStudentModel;
+    private final MainModel mMainModel;
     private final Context mContext;
 
     @Inject
-    public FeedbackPresenterImpl(Context context, StudentModel model, FeedbackControl.FeedbackView FeedbackView) {
+    public FeedbackPresenterImpl(Context context, MainModel model, FeedbackControl.FeedbackView FeedbackView) {
         mContext = context;
-        mStudentModel = model;
+        mMainModel = model;
         mFeedbackView = FeedbackView;
     }
-
 
     /**
      * 提交辅导反馈
@@ -37,7 +39,7 @@ public class FeedbackPresenterImpl implements FeedbackControl.PresenterFeedback 
     @Override
     public void submitFeedbackInfo(SubmitFeedbackRequest submitFeedbackRequest) {
         mFeedbackView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mStudentModel.submitFeedbackInfo(submitFeedbackRequest).compose(mFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+        Disposable disposable = mMainModel.submitFeedbackInfo(submitFeedbackRequest).compose(mFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::submitFeedbackInfoSuccess, throwable -> mFeedbackView.showErrMessage(throwable),
                         () -> mFeedbackView.dismissLoading());
         mFeedbackView.addSubscription(disposable);
@@ -53,6 +55,30 @@ public class FeedbackPresenterImpl implements FeedbackControl.PresenterFeedback 
         }
     }
 
+    /**
+     * 请求辅导反馈数据
+     */
+    @Override
+    public void onRequestFeedbackInfo(FeedbackRequest feedbackRequest) {
+        mFeedbackView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMainModel.onRequestFeedbackInfo(feedbackRequest).compose(mFeedbackView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestFeedbackInfoSuccess, throwable -> mFeedbackView.showErrMessage(throwable),
+                        () -> mFeedbackView.dismissLoading());
+        mFeedbackView.addSubscription(disposable);
+    }
+
+    /**
+     * 请求辅导反馈数据成功
+     */
+    private void requestFeedbackInfoSuccess(ResponseData responseData) {
+        mFeedbackView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            FeedBackResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), FeedBackResponse.class);
+            mFeedbackView.getFeedbackInfoSuccess(response);
+        } else {
+            mFeedbackView.showToast(responseData.errorMsg);
+        }
+    }
 
     @Override
     public void onCreate() {

@@ -209,7 +209,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void paymentInvitationBtnListener() {
-        showToast("发送付款邀请");
+        //老师邀请学生购买
+        ConversationUtil.SendInformationNotificationMessage(mTargetId, mConversationType, "老师发送购买邀请", "msg_invite_buy");
     }
 
     /**
@@ -217,7 +218,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void addNotesBtnListener() {
-        showToast("添加备注");
+        StudentDetailActivity.start(this,String.valueOf(mUserInfoByRidResponse.getS_id()));
     }
 
     /**
@@ -225,7 +226,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void setVersionBtnListener() {
-        showToast("设置版本");
+        StudentDetailActivity.start(this,String.valueOf(mUserInfoByRidResponse.getS_id()));
     }
 
     /**
@@ -233,7 +234,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void studentDetailBtnListener() {
-        startActivitys(StudentDetailActivity.class);
+        StudentDetailActivity.start(this,String.valueOf(mUserInfoByRidResponse.getS_id()));
     }
 
     private void initInjectData() {

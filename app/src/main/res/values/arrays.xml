@@ -75,5 +75,12 @@
         <item>三日新增</item>
         <item>七日新增</item>
     </string-array>
+    <string-array name="student_type">
+        <item>全部</item>
+        <item>免费体验学生</item>
+        <item>月辅导学生</item>
+        <item>季辅导学生</item>
+        <item>年辅导学生</item>
+    </string-array>
 
 </resources>

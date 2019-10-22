@@ -5,6 +5,8 @@ import com.shushan.thomework101.entity.request.DeviceInfoRequest;
 import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.request.MineStudentListRequest;
+import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.request.VersionUpdateRequest;
 import com.shushan.thomework101.network.networkapi.MainApi;
 
 import javax.inject.Inject;
@@ -29,6 +31,12 @@ public class MainModel {
     }
 
     /**
+     * 检查版本更新
+     */
+    public Observable<ResponseData> onRequestVersionUpdate(VersionUpdateRequest request) {
+        return mMainApi.onRequestVersionUpdate(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
      * 上传设备信息
      */
     public Observable<ResponseData> uploadDeviceInfo(DeviceInfoRequest request) {
@@ -47,6 +55,14 @@ public class MainModel {
     public Observable<ResponseData> onRequestMineStudentInfo(MineStudentListRequest request) {
         return mMainApi.onRequestMineStudentInfo(mGson.toJson(request)).map(mTransform::transformListType);
     }
+
+    /**
+     * 提交辅导反馈
+     */
+    public Observable<ResponseData> submitFeedbackInfo(SubmitFeedbackRequest request) {
+        return mMainApi.submitFeedbackInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+
 
     /**
      * 请求辅导反馈

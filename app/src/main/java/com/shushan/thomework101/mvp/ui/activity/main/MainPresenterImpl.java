@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.entity.request.DeviceInfoRequest;
-import com.shushan.thomework101.entity.response.HomeResponse;
+import com.shushan.thomework101.entity.request.VersionUpdateRequest;
+import com.shushan.thomework101.entity.response.VersionUpdateResponse;
 import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MainModel;
 import com.shushan.thomework101.mvp.model.ResponseData;
@@ -30,6 +31,34 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         mContext = context;
         mMainModel = model;
         mMainView = mainView;
+    }
+
+    /**
+     * 检查版本更新
+     */
+    @Override
+    public void onRequestVersionUpdate(VersionUpdateRequest versionUpdateRequest) {
+        mMainView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMainModel.onRequestVersionUpdate(versionUpdateRequest).compose(mMainView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestVersionUpdateSuccess, throwable -> mMainView.showErrMessage(throwable),
+                        () -> mMainView.dismissLoading());
+        mMainView.addSubscription(disposable);
+    }
+
+    /**
+     * 检查版本更新 成功
+     */
+    private void requestVersionUpdateSuccess(ResponseData responseData) {
+        mMainView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            responseData.parseData(VersionUpdateResponse.class);
+            if (responseData.parsedData != null) {
+                VersionUpdateResponse response = (VersionUpdateResponse) responseData.parsedData;
+                mMainView.getVersionUpdateSuccess(response);
+            }
+        } else {
+//            mMainView.showToast(responseData.errorMsg);
+        }
     }
 
     /**
@@ -59,8 +88,8 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
             mMainView.showToast(responseData.errorMsg);
         }
     }
-    
-    
+
+
     @Override
     public void onCreate() {
     }
@@ -69,5 +98,5 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
     public void onDestroy() {
     }
 
-   
+
 }

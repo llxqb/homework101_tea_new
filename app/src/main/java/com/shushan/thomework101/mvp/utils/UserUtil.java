@@ -2,9 +2,6 @@ package com.shushan.thomework101.mvp.utils;
 
 import android.text.TextUtils;
 
-import com.shushan.thomework101.entity.response.FeedBackResponse;
-import com.shushan.thomework101.entity.response.MineStudentResponse;
-
 /**
  * 用户util
  */
@@ -209,7 +206,7 @@ public class UserUtil {
      * 1->周一
      */
     public static String dayArrayToString(String day) {
-        if(day==null) return "";
+        if (day == null) return "";
         StringBuffer stringBuffer = new StringBuffer();
         if (day.contains("1,2,3,4,5")) {
             return "周一 至 周五";
@@ -255,17 +252,30 @@ public class UserUtil {
 //    }
 
 
-    public static MineStudentResponse.DataBean feedBackTranStudentDetail(FeedBackResponse.DataBean dataBean){
-        MineStudentResponse.DataBean dataBean1 = new MineStudentResponse.DataBean();
-        dataBean1.setId(dataBean.getId());
-        dataBean1.setS_id(dataBean.getS_id());
-        dataBean1.setVersion(dataBean.getVersion());
-        dataBean1.setCreate_time(dataBean.getStart_time());
-        dataBean1.setName(dataBean.getName());
-        dataBean1.setGrade(dataBean.getGrade());
-        dataBean1.setCover(dataBean.getCover());
-        dataBean1.setStatus("已付费");
-        dataBean1.setEnd_time(dataBean.getEnd_time());
-        return dataBean1;
+    /**
+     * @return studentTypeInt: 0全部 1免费体验学生 2月辅导 3季辅导 4年辅导  不传默认全部
+     */
+    public static int studentTypeToInt(String studentType) {
+        int studentTypeInt = 0;
+        switch (studentType) {
+            case "全部":
+                studentTypeInt = 0;
+                break;
+            case "免费体验学生":
+                studentTypeInt = 1;
+                break;
+            case "月辅导学生":
+                studentTypeInt = 2;
+                break;
+            case "季辅导学生":
+                studentTypeInt = 3;
+                break;
+            case "年辅导学生":
+                studentTypeInt = 4;
+                break;
+        }
+        return studentTypeInt;
     }
+
+
 }

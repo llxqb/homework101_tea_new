@@ -4,7 +4,7 @@ package com.shushan.thomework101.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.thomework101.entity.request.FeedbackIdRequest;
 import com.shushan.thomework101.entity.request.SaveStudentInfoRequest;
-import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.request.StudentDetailInfoRequest;
 import com.shushan.thomework101.entity.request.UserInfoByRidRequest;
 import com.shushan.thomework101.network.networkapi.StudentApi;
 
@@ -30,16 +30,17 @@ public class StudentModel {
     }
 
     /**
+     * 查询学生信息
+     */
+    public Observable<ResponseData> onRequestStudentInfo(StudentDetailInfoRequest request) {
+        return mStudentApi.onRequestStudentInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
      * 保存学生信息
      */
     public Observable<ResponseData> saveStudentInfo(SaveStudentInfoRequest request) {
         return mStudentApi.saveStudentInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
-    }
-    /**
-     * 提交辅导反馈
-     */
-    public Observable<ResponseData> submitFeedbackInfo(SubmitFeedbackRequest request) {
-        return mStudentApi.submitFeedbackInfo(new Gson().toJson(request)).map(mTransform::transformCommon);
     }
 
     /**
@@ -48,6 +49,7 @@ public class StudentModel {
     public Observable<ResponseData> onRequestUserInfoByRid(UserInfoByRidRequest request) {
         return mStudentApi.onRequestUserInfoByRid(mGson.toJson(request)).map(mTransform::transformCommon);
     }
+
     /**
      * 学生结束辅导，老师去反馈，查询反馈id
      */

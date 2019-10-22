@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.FeedbackModule;
 import com.shushan.thomework101.di.scopes.PerActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.MineFeedbackActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 
 import dagger.Component;
@@ -18,8 +19,9 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {FeedbackModule.class, ActivityModule.class})
 public interface FeedbackComponent extends ActivityComponent {
-    //对LoginActivity进行依赖注入
     void inject(SubmitFeedbackContentActivity activity);
+
+    void inject(MineFeedbackActivity activity);
 
     AppCompatActivity activity();
 

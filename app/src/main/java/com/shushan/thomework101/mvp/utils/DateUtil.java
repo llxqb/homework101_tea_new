@@ -17,6 +17,7 @@ public class DateUtil {
 
     public static final String TIME_YYMMDD_HHMMSS = "yyyy-MM-dd HH:mm:ss";
     public static final String TIME_YYMMDD = "yyyy-MM-dd";
+    public static final String TIME_YYMMDD_CHINA = "yyyy年MM月dd日";
     public static final String TIME_YYMM = "yyyy-MM";
     public static final String TIME_YYMMDD_T_HHMMSS = "yyyy-MM-dd'T'HH:mm:ss";
 
@@ -103,7 +104,7 @@ public class DateUtil {
             d = sdf.parse(user_time);
             long l = d.getTime();
             String str = String.valueOf(l);
-            re_time = str.substring(0, 9);
+            re_time = str.substring(0, 10);
         } catch (ParseException ignored) {
         }
         return re_time;

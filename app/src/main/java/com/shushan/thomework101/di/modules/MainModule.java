@@ -14,8 +14,6 @@ import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentControl;
 import com.shushan.thomework101.mvp.ui.fragment.home.HomeFragmentPresenterImpl;
 import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.thomework101.mvp.ui.fragment.mine.MineFragmentPresenterImpl;
-import com.shushan.thomework101.mvp.ui.fragment.student.CoachingFragmentControl;
-import com.shushan.thomework101.mvp.ui.fragment.student.CoachingFragmentPresenterImpl;
 import com.shushan.thomework101.mvp.ui.fragment.student.FeedbackFragmentControl;
 import com.shushan.thomework101.mvp.ui.fragment.student.FeedbackFragmentPresenterImpl;
 import com.shushan.thomework101.mvp.ui.fragment.student.MineStudentFragmentControl;
@@ -96,13 +94,6 @@ public class MainModule {
     @PerActivity
     MineFragmentControl.MineFragmentPresenter providePresenterMineFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
         return mineFragmentPresenter;
-    }
-
-    //学生---辅导
-    @Provides
-    @PerActivity
-    CoachingFragmentControl.CoachingFragmentPresenter providePresenterCoachingFragment(CoachingFragmentPresenterImpl coachingFragmentPresenter) {
-        return coachingFragmentPresenter;
     }
 
     //学生---我的学生列表

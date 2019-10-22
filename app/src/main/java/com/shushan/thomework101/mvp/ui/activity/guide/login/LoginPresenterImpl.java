@@ -63,19 +63,20 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
 
 
     /**
-     * 登录
+     * 注册 和 登录 , int type
      */
     @Override
     public void onRequestLogin(LoginRequest loginRequest) {
         mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mGuideModel.onRequestLogin(loginRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestLoginSuccess, throwable -> mLoginView.showErrMessage(throwable),
+                .subscribe(responseData -> requestLoginSuccess(responseData), throwable -> mLoginView.showErrMessage(throwable),
                         () -> mLoginView.dismissLoading());
         mLoginView.addSubscription(disposable);
     }
 
     /**
      * 登录成功
+     * type : 1 注册 2 登录
      */
     private void requestLoginSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
@@ -88,7 +89,6 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
             mLoginView.showToast(responseData.errorMsg);
         }
     }
-
 
 
     @Override

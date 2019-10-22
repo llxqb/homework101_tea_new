@@ -16,7 +16,6 @@ import com.shushan.thomework101.entity.request.LeaveRequest;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.DateUtil;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.SelectDialogUtil;
 
 import java.util.Date;
@@ -111,7 +110,6 @@ public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveVie
     }
 
     private boolean valid() {
-        LogUtils.e("mStartTimeTv:" + mStartTimeTv.getText().toString());
         if (TextUtils.isEmpty(mStartTimeTv.getText().toString())) {
             showToast("开始时间不能为空");
             return false;

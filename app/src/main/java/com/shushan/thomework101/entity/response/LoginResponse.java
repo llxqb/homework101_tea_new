@@ -72,6 +72,16 @@ public class LoginResponse {
     private int first;
     private List<String> label;
     private List<String> grade;
+    //注册
+    private String mobile;
+    private String last_login_ip;
+    private int last_login_time;
+    private int create_time;
+    private String platform;
+    private String deviceId;
+    private String userport;
+    private String t_id;
+
 
     public int getTid() {
         return tid;
@@ -305,6 +315,71 @@ public class LoginResponse {
         this.grade = grade;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getLast_login_ip() {
+        return last_login_ip;
+    }
+
+    public void setLast_login_ip(String last_login_ip) {
+        this.last_login_ip = last_login_ip;
+    }
+
+    public int getLast_login_time() {
+        return last_login_time;
+    }
+
+    public void setLast_login_time(int last_login_time) {
+        this.last_login_time = last_login_time;
+    }
+
+    public int getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(int create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getUserport() {
+        return userport;
+    }
+
+    public void setUserport(String userport) {
+        this.userport = userport;
+    }
+
+    public String getT_id() {
+        return t_id;
+    }
+
+    public void setT_id(String t_id) {
+        this.t_id = t_id;
+    }
+
+
     public static class GuideTimeBean {
         /**
          * workday : 1,2,3,4,5
@@ -349,5 +424,8 @@ public class LoginResponse {
         public void setOff_time(String off_time) {
             this.off_time = off_time;
         }
+
+
+
     }
 }

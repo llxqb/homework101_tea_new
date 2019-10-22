@@ -135,7 +135,6 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
                 e.printStackTrace();
             }
         }else {
-            showToast("退出成功");
             exitLogin();
         }
     }
@@ -145,7 +144,14 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
      * 退出登录
      */
     public void exitLogin() {
+        String grades = mBuProcessor.getUser().grades;
+        int subject = mBuProcessor.getUser().subject;
         mSharePreferenceUtil.clearData();
+        User user = new User();
+        user.grades = grades;
+        user.subject = subject;
+        mBuProcessor.setLoginUser(user);//记住grade 退出登录不清除已选择的年级和科目
+
         RongIM.getInstance().logout();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity

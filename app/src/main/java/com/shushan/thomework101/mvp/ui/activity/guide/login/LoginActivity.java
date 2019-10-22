@@ -19,6 +19,7 @@ import com.shushan.thomework101.di.modules.LoginModule;
 import com.shushan.thomework101.entity.request.LoginRequest;
 import com.shushan.thomework101.entity.request.VerifyCodeRequest;
 import com.shushan.thomework101.entity.response.LoginResponse;
+import com.shushan.thomework101.entity.response.RegisterResponse;
 import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
@@ -127,8 +128,9 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         mVerificationCodeEt.setText(verifyCodeResponse.getCode() + "");
     }
 
+
     /**
-     * 登录
+     * 注册 与 登录
      */
     private void reqLoginInfo() {
         LoginRequest loginRequest = new LoginRequest();
@@ -136,19 +138,35 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         loginRequest.code = mVerificationCodeEt.getText().toString();
         loginRequest.deviceId = SystemUtils.getUUID(this, mSharePreferenceUtil);
         mPresenter.onRequestLogin(loginRequest);
+//        if (!mBuProcessor.isFinishFirstWrite()) {//是注册
+//        } else {
+//            //是登录
+//            mPresenter.onRequestLogin(loginRequest, 2);
+//        }
     }
 
+    @Override
+    public void getRegisterSuccess(RegisterResponse registerResponse) {
+
+    }
 
     @Override
     public void getLoginSuccess(LoginResponse loginResponse) {
-        User mUser = LoginUtils.saveLoginUser(loginResponse);
-        mBuProcessor.setLoginUser(mUser);
-        if (!mBuProcessor.isFinishFirstWrite()) {
-            startActivitys(SubjectSelectActivity.class);
-        } else {
-            startActivitys(MainActivity.class);
+        //如果是注册 ，执行登录
+        if(!TextUtils.isEmpty(loginResponse.getMobile())){
+            //注册   进行登录
+            reqLoginInfo();
+        }else {
+            //登录
+            User mUser = LoginUtils.saveLoginUser(loginResponse);
+            mBuProcessor.setLoginUser(mUser);
+            if (!mBuProcessor.isFinishFirstWrite()) {
+                startActivitys(SubjectSelectActivity.class);
+            } else {
+                startActivitys(MainActivity.class);
+            }
+            finish();
         }
-        finish();
     }
 
 

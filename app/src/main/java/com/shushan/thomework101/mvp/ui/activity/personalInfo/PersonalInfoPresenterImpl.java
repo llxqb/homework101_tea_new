@@ -45,6 +45,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
 
     private void requestUploadImageSuccess(ResponseData responseData) {
+        mPersonalInfoView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             mPersonalInfoView.getUploadImageSuccess(responseData.result);
         } else {

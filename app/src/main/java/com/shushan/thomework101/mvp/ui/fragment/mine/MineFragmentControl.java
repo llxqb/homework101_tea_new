@@ -13,6 +13,7 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 public class MineFragmentControl {
     public interface MineView extends LoadDataView {
         void getHomeInfoSuccess(HomeResponse homeResponse);
+        void getHomeInfoFail();
 
     }
 

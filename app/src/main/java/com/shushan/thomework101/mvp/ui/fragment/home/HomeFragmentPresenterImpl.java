@@ -56,6 +56,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
                 mHomeView.getHomeInfoSuccess(response);
             }
         } else {
+            mHomeView.getHomeInfoFail();
             mHomeView.showToast(responseData.errorMsg);
         }
     }

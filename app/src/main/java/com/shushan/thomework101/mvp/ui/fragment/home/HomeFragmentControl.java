@@ -14,6 +14,8 @@ public class HomeFragmentControl {
     public interface HomeView extends LoadDataView {
         void getHomeInfoSuccess(HomeResponse homeResponse);
 
+        void getHomeInfoFail();
+
     }
 
     public interface homeFragmentPresenter extends Presenter<HomeView> {

@@ -75,6 +75,7 @@ public class UploadVideoPresenterImpl implements UploadVideoControl.PresenterUpl
 
 
     private void requestUploadVideoSuccess(ResponseData responseData) {
+        mUploadVideoView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             mUploadVideoView.getUploadVideoSuccess(responseData.result);
         } else {

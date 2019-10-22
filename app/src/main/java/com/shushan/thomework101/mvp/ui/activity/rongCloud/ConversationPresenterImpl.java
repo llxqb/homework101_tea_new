@@ -47,6 +47,7 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
 
 
     private void requestUserInfoByRidSuccess(ResponseData responseData) {
+        mConversationView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             responseData.parseData(UserInfoByRidResponse.class);
             if (responseData.parsedData != null) {
@@ -71,6 +72,7 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
 
 
     private void requestFeedbackIdSuccess(ResponseData responseData) {
+        mConversationView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             responseData.parseData(FeedbackIdResponse.class);
             if (responseData.parsedData != null) {

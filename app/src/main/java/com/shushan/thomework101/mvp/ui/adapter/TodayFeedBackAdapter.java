@@ -1,5 +1,6 @@
 package com.shushan.thomework101.mvp.ui.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -34,10 +35,14 @@ public class TodayFeedBackAdapter extends BaseQuickAdapter<FeedBackResponse.Data
         String gradeVersionValue = item.getGrade() + " " + item.getVersion();
         helper.setText(R.id.student_name_tv, item.getName()).setText(R.id.textbook_version_tv, gradeVersionValue);
         //0未填写反馈1已填写
-        if(item.getStatus()==1){
-            helper.setText(R.id.edit_counselling_content_tv,"已填写");
-        }else {
-            helper.setText(R.id.edit_counselling_content_tv,"填写辅导反馈");
+        if (item.getStatus() == 1) {
+            helper.setText(R.id.edit_counselling_content_tv, "已提交反馈");
+            helper.setBackgroundRes(R.id.edit_counselling_content_tv, R.drawable.bg_ripple_round_solid_30);
+            helper.setTextColor(R.id.edit_counselling_content_tv, mContext.getResources().getColor(R.color.color999));
+        } else {
+            helper.setText(R.id.edit_counselling_content_tv, "填写辅导反馈");
+            helper.setBackgroundRes(R.id.edit_counselling_content_tv, R.drawable.selector_right_bg);
+            helper.setTextColor(R.id.edit_counselling_content_tv, Color.parseColor("#FF5353"));
         }
 
     }

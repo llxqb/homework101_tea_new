@@ -48,6 +48,7 @@ public class SystemMsgPresenterImpl implements SystemMsgControl.PresenterSystemM
 
 
     private void requestCoachingPriceListSuccess(ResponseData responseData) {
+        mSystemMsgView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             SystemMsgResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), SystemMsgResponse.class);
             mSystemMsgView.getSystemMsgSuccess(response);
@@ -69,6 +70,7 @@ public class SystemMsgPresenterImpl implements SystemMsgControl.PresenterSystemM
 
 
     private void requestDeleteMsgListSuccess(ResponseData responseData) {
+        mSystemMsgView.judgeToken(responseData.resultCode);
         if (responseData.resultCode == 0) {
             mSystemMsgView.getDeleteMsgSuccess();
         } else {

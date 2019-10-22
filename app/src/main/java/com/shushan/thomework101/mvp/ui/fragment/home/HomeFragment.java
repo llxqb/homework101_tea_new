@@ -274,6 +274,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
     }
 
+    @Override
+    public void getHomeInfoFail() {
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+        }
+    }
+
     /**
      * 设置审核流程
      */

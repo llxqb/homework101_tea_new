@@ -20,7 +20,7 @@ import com.shushan.thomework101.di.components.AppComponent;
 import com.shushan.thomework101.entity.user.BuProcessor;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.help.ImageLoaderHelper;
-import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
+import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.utils.SharePreferenceUtil;
 import com.shushan.thomework101.mvp.utils.StatusBarUtil;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
@@ -37,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongIM;
 
 /**
  * Created by li.liu on 17/12/20.
@@ -128,7 +129,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (code == 2) {
             showToast("登入过期,请重新登入");
             mSharePreferenceUtil.clearData();
-            startActivitys(LoginActivity.class);
+            RongIM.getInstance().logout();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
+            intent.putExtra("exitLogin", true);
+            startActivity(intent);
+            finish();
         }
     }
 

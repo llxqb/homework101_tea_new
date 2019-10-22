@@ -203,6 +203,13 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mEstimatedMoneyTv.setText(String.valueOf(earningsBean.getPredict_money()));
     }
 
+    @Override
+    public void getHomeInfoFail() {
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+        }
+    }
+
 
     private void initializeInjector() {
         DaggerMineFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())

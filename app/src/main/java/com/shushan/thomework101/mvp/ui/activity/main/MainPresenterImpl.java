@@ -78,13 +78,7 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
      */
     private void uploadDeviceInfoSuccess(ResponseData responseData) {
         mMainView.judgeToken(responseData.resultCode);
-        if (responseData.resultCode == 0) {
-//            responseData.parseData(HomeResponse.class);
-//            if (responseData.parsedData != null) {
-//                HomeResponse response = (HomeResponse) responseData.parsedData;
-//                mMainView.getHomeInfoSuccess(response);
-//            }
-        } else {
+        if (responseData.resultCode != 0) {
             mMainView.showToast(responseData.errorMsg);
         }
     }

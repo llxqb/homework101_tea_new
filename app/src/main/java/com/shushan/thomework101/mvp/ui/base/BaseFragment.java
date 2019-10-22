@@ -11,12 +11,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
-
 import com.bumptech.glide.load.HttpException;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.entity.user.BuProcessor;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.help.ImageLoaderHelper;
+import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.utils.SharePreferenceUtil;
 import com.shushan.thomework101.mvp.utils.ToastUtils;
 
@@ -33,6 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongIM;
 
 /**
  * BaseFragment
@@ -115,9 +116,16 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void judgeToken(Integer code) {
-        if (code == 100401 || code == 100107) {
+        if (code == 2) {
             showToast("登入过期,请重新登入");
-            clearSwitchToLogin();
+            mSharePreferenceUtil.clearData();
+            RongIM.getInstance().logout();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
+            intent.putExtra("exitLogin", true);
+            startActivity(intent);
+            Objects.requireNonNull(getActivity()).finish();
         }
     }
 

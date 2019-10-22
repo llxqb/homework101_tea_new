@@ -57,6 +57,7 @@ public class MineFragmentPresenterImpl implements MineFragmentControl.MineFragme
                 mMineView.getHomeInfoSuccess(response);
             }
         } else {
+            mMineView.getHomeInfoFail();
             mMineView.showToast(responseData.errorMsg);
         }
     }

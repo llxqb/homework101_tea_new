@@ -5,9 +5,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.di.components.DaggerSettingComponent;
+import com.shushan.thomework101.di.modules.ActivityModule;
+import com.shushan.thomework101.di.modules.SettingModule;
 import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.request.VersionUpdateRequest;
+import com.shushan.thomework101.entity.response.VersionUpdateResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
@@ -15,6 +19,9 @@ import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
 import com.shushan.thomework101.mvp.utils.DataCleanManager;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
+import com.shushan.thomework101.mvp.utils.UpdateManager;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +30,7 @@ import io.rong.imkit.RongIM;
 /**
  * 设置
  */
-public class SettingActivity extends BaseActivity implements CommonDialog.CommonDialogListener {
+public class SettingActivity extends BaseActivity implements CommonDialog.CommonDialogListener ,SettingControl.SettingView{
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -48,11 +55,13 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
      * 退出登录 2
      */
     private int commonDialogClickType;
+    @Inject
+    SettingControl.PresenterSetting mPresenter;
 
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_setting);
-        ((HomeworkApplication) getApplication()).getAppComponent().inject(this);
+        initInjectData();
     }
 
     @Override
@@ -69,7 +78,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
 
     @Override
     public void initData() {
-        mVersionNameTv.setText(SystemUtils.getVersionName(this));
+        mVersionNameTv.setText("V"+SystemUtils.getVersionName(this));
         try {
             mCacheTv.setText(DataCleanManager.getTotalCacheSize(this));
         } catch (Exception e) {
@@ -77,7 +86,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
         }
     }
 
-    @OnClick({R.id.common_left_iv, R.id.message_notification_iv, R.id.version_name_tv, R.id.clear_cache_tv, R.id.about_us_tv, R.id.exit_tv})
+    @OnClick({R.id.common_left_iv, R.id.message_notification_iv, R.id.update_tv, R.id.clear_cache_tv, R.id.about_us_tv, R.id.exit_tv})
     public void onViewClicked(View view) {
         mMessageNotification = mSharePreferenceUtil.getBooleanData("message_notification", true);
         switch (view.getId()) {
@@ -99,7 +108,8 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
                     RongIM.getInstance().removeNotificationQuietHours(null);
                 }
                 break;
-            case R.id.version_name_tv:
+            case R.id.update_tv:
+                onRequestVersionUpdate();
                 break;
             case R.id.clear_cache_tv:
                 commonDialogClickType = 1;
@@ -111,6 +121,23 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
                 commonDialogClickType = 2;
                 showExitLoginDialog();
                 break;
+        }
+    }
+
+    /**
+     * 版本更新
+     */
+    private void onRequestVersionUpdate() {
+        VersionUpdateRequest versionUpdateRequest = new VersionUpdateRequest();
+        versionUpdateRequest.version = SystemUtils.getVersionName(this);
+        mPresenter.onRequestVersionUpdate(versionUpdateRequest);
+    }
+
+    @Override
+    public void getVersionUpdateSuccess(VersionUpdateResponse versionUpdateResponse) {
+        if (versionUpdateResponse != null) {
+            UpdateManager mUpdateManager = new UpdateManager(this, versionUpdateResponse);
+            mUpdateManager.checkUpdateInfo();
         }
     }
 
@@ -144,14 +171,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
      * 退出登录
      */
     public void exitLogin() {
-        String grades = mBuProcessor.getUser().grades;
-        int subject = mBuProcessor.getUser().subject;
         mSharePreferenceUtil.clearData();
-        User user = new User();
-        user.grades = grades;
-        user.subject = subject;
-        mBuProcessor.setLoginUser(user);//记住grade 退出登录不清除已选择的年级和科目
-
         RongIM.getInstance().logout();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
@@ -160,4 +180,12 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
         startActivity(intent);
         finish();
     }
+
+    private void initInjectData() {
+        DaggerSettingComponent.builder().appComponent(getAppComponent())
+                .settingModule(new SettingModule(this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
+
 }

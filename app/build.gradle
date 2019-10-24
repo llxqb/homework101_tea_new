@@ -61,9 +61,9 @@ android {
                 def file = output.outputFile
                 def fileName
                 if (variant.buildType.name.equals('release')) {
-                    fileName = "homework101_tea_v" + versionName + ".apk"
+                    fileName = "homework101_tea_" + name + "_v" + versionName + ".apk"
                 } else if (variant.buildType.name.equals('debug')) {
-                    fileName = "homework101_tea_v" + versionName + "_debug.apk"
+                    fileName = "homework101_tea_v"+ name + "_v" + versionName + "_debug.apk"
                 }
                 output.outputFileName = fileName
                 //生成的文件名

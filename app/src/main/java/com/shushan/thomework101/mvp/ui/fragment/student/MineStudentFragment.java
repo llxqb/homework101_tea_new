@@ -120,10 +120,10 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
                         StudentDetailActivity.start(getActivity(), String.valueOf(dataBean.getS_id()));
                     }
                     break;
-                case R.id.item_mine_student_layout:
-                    //启动单聊页面
-//                    RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), dataBean.getS_id(), UserUtil.toTeacherName(dataBean.getName()));
-                    break;
+//                case R.id.item_mine_student_layout:
+//                    //启动单聊页面
+////                    RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), dataBean.getS_id(), UserUtil.toTeacherName(dataBean.getName()));
+//                    break;
             }
         });
     }

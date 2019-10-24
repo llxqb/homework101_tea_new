@@ -19,7 +19,9 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.StudentFragmentModule;
-import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
+import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.constants.ServerConstant;
+import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.activity.rongCloud.ConversationListFragment;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 
@@ -31,6 +33,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * TeacherFragment
@@ -46,6 +50,7 @@ public class StudentFragment extends BaseFragment implements StudentFragmentCont
     @BindView(R.id.viewpager)
     ViewPager mViewpager;
     Unbinder unbinder;
+    private User mUser;
     private String[] titles = new String[]{"辅导", "我的学生", "今日反馈"};
 
     @Nullable
@@ -62,6 +67,7 @@ public class StudentFragment extends BaseFragment implements StudentFragmentCont
 
     @Override
     public void initView() {
+        mUser = mBuProcessor.getUser();
         mViewpager.setOffscreenPageLimit(3);
         mViewpager.setAdapter(new MyPageAdapter(getChildFragmentManager()));
         mXTabLayout.setupWithViewPager(mViewpager);
@@ -73,9 +79,23 @@ public class StudentFragment extends BaseFragment implements StudentFragmentCont
 
     @OnClick(R.id.customer_service_iv)
     public void onViewClicked() {
-        startActivitys(CustomerServiceActivity.class);
+        contactCustomer();
     }
 
+    /**
+     * 联系客服
+     */
+    private void contactCustomer() {
+        //进入客服
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName(mUser.name)
+                .name(mUser.name)
+                .referrer(Constant.CUSTOMER_NUM)
+                .build();
+        RongIM.getInstance().startCustomerServiceChat(getActivity(), ServerConstant.RY_CUSTOMER_ID, "在线客服", csInfo);
+        mSharePreferenceUtil.setData("chatType", 1);//在线客服
+    }
 
     private class MyPageAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments = new ArrayList<Fragment>();

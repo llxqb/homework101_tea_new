@@ -26,13 +26,13 @@ import com.shushan.thomework101.di.modules.HomeFragmentModule;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.constants.ServerConstant;
 import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.response.HomeIncomeResponse;
 import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgActivity;
-import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.SetCounsellingTimeActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadCardActivity;
@@ -56,6 +56,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * MessageFragment
@@ -171,7 +173,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mMimeStudentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mMimeStudentRecyclerView.setAdapter(mHomeStudentAdapter);
         //未成单学生
-        mHomeUnsuccessfulStudentAdapter = new HomeUnsuccessfulStudentAdapter(unSuccessfulStudentResponseList,mImageLoaderHelper);
+        mHomeUnsuccessfulStudentAdapter = new HomeUnsuccessfulStudentAdapter(unSuccessfulStudentResponseList, mImageLoaderHelper);
         mUnsuccessfulStudentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUnsuccessfulStudentRecyclerView.setAdapter(mHomeUnsuccessfulStudentAdapter);
     }
@@ -196,7 +198,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 startActivitys(SystemMsgActivity.class);
                 break;
             case R.id.customer_service_iv:
-                startActivitys(CustomerServiceActivity.class);
+                contactCustomer();
                 break;
             case R.id.verify_state_tv: //上传身份证、教师资格证
                 if (userBean.getCard_state() == 0 || userBean.getCard_state() == 3) {
@@ -240,9 +242,25 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     /**
+     * 联系客服
+     */
+    private void contactCustomer() {
+        //进入客服
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName(mUser.name)
+                .name(mUser.name)
+                .referrer(Constant.CUSTOMER_NUM)
+                .build();
+        RongIM.getInstance().startCustomerServiceChat(getActivity(), ServerConstant.RY_CUSTOMER_ID, "在线客服", csInfo);
+        mSharePreferenceUtil.setData("chatType", 1);//在线客服
+    }
+
+
+    /**
      * 请求首页数据
      */
-    private void  onRequestHomeInfo() {
+    private void onRequestHomeInfo() {
         HomeRequest homeRequest = new HomeRequest();
         homeRequest.token = mUser.token;
         mPresenter.onRequestHomeInfo(homeRequest);

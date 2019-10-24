@@ -8,4 +8,6 @@ public class ServerConstant {
      * 微信appId /AppSecret
      */
     public static final String QQ_APP_ID = "1108003226";
+    //融云生产环境客服id
+    public static final String RY_CUSTOMER_ID="service";
 }

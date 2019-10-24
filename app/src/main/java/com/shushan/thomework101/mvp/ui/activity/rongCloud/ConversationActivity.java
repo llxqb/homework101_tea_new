@@ -77,6 +77,10 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      * 辅导结束 辅导id
      */
     String feedbackId = null;
+    /**
+     * 聊天类型 1 客服
+     */
+    private int chatType;
 
     @Inject
     ConversationControl.PresenterConversation mPresenter;
@@ -86,11 +90,12 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         setContentView(R.layout.activity_conversation);
         initInjectData();
         mUser = mBuProcessor.getUser();
+        chatType = mSharePreferenceUtil.getIntData("chatType");//在线客服
     }
 
     @Override
     public void onReceivePro(Context context, Intent intent) {
-        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.SHOW_NOTIFICATION_MESSAGE)) {
+        if (chatType != 1 && intent.getAction() != null && intent.getAction().equals(ActivityConstant.SHOW_NOTIFICATION_MESSAGE)) {
             String extra = intent.getStringExtra("extra");
             LogUtils.e("extra:" + extra);
             if (extra.equals("start_coach")) {
@@ -118,15 +123,21 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     @Override
     public void initView() {
-        mCommonRightIv.setVisibility(View.VISIBLE);
-        mCommonRightIv.setImageResource(R.mipmap.tutor_chat_more);
         if (getIntent() != null) {
             mTargetId = Objects.requireNonNull(getIntent().getData()).getQueryParameter("targetId");
             String username = getIntent().getData().getQueryParameter("title");
             mCommonTitleTv.setText(username);
             mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
-            onRequestUserReleate();
+            if (chatType != 1) {//不是与客服聊天
+                mCommonRightIv.setVisibility(View.VISIBLE);
+                mCommonRightIv.setImageResource(R.mipmap.tutor_chat_more);
+                onRequestUserReleate();
+            } else {
+                mCommonRightIv.setVisibility(View.GONE);
+                mEndCounsellingLayoutRl.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override
@@ -218,7 +229,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void addNotesBtnListener() {
-        StudentDetailActivity.start(this,String.valueOf(mUserInfoByRidResponse.getS_id()));
+        StudentDetailActivity.start(this, String.valueOf(mUserInfoByRidResponse.getS_id()));
     }
 
     /**
@@ -226,7 +237,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void setVersionBtnListener() {
-        StudentDetailActivity.start(this,String.valueOf(mUserInfoByRidResponse.getS_id()));
+        StudentDetailActivity.start(this, String.valueOf(mUserInfoByRidResponse.getS_id()));
     }
 
     /**
@@ -234,7 +245,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
      */
     @Override
     public void studentDetailBtnListener() {
-        StudentDetailActivity.start(this,String.valueOf(mUserInfoByRidResponse.getS_id()));
+        StudentDetailActivity.start(this, String.valueOf(mUserInfoByRidResponse.getS_id()));
     }
 
     private void initInjectData() {
@@ -243,5 +254,9 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSharePreferenceUtil.setData("chatType", 0);//设为默认聊天类型
+    }
 }

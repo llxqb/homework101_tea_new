@@ -83,4 +83,9 @@ public class Constant {
     public  static final String LABEL_PSBC_NAME ="中国邮政储蓄银行";
     public  static final String LABEL_PSBC ="PSBC";
 
+
+    /**
+     * 融云客服渠道号
+     */
+    public static final String CUSTOMER_NUM = "10002";
 }

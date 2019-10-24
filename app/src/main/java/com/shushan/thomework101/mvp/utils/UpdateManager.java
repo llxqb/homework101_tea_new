@@ -158,7 +158,7 @@ public class UpdateManager {
     private void showUpdateDialog() {
         final Dialog updateDialog = new Dialog(mContext, R.style.Dialog_Translucent_Background);
         updateDialog.setContentView(R.layout.update_no_psw_dialog);
-        updateDialog.setCancelable(false);
+        updateDialog.setCancelable(false);//按返回键和空白处不消失
 
         mProgress = updateDialog.findViewById(R.id.progress);
         TextView versionText = updateDialog.findViewById(R.id.update_dialog_version_tv);
@@ -168,7 +168,14 @@ public class UpdateManager {
         descText.setText(getVersionDes(mVersionUpdateResponse));
 
         Button btnCancel = updateDialog.findViewById(R.id.update_dialog_cancel_btn);
-        btnCancel.setOnClickListener(v -> updateDialog.dismiss());
+        btnCancel.setOnClickListener(v -> {
+            if (mVersionUpdateResponse.getLabel() == 1) {
+                updateDialog.dismiss();
+            } else if (mVersionUpdateResponse.getLabel() == 2) {
+                //强制更新
+                ToastUtils.showShort(mContext, "请更新");
+            }
+        });
 
         Button btnUpdate = updateDialog.findViewById(R.id.update_dialog_update_btn);
         btnUpdate.setOnClickListener(v -> {

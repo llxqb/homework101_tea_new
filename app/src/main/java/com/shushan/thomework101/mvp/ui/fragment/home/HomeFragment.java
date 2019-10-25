@@ -287,7 +287,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (!homeResponse.getOrder().isEmpty()) {
             mHomeUnsuccessfulStudentAdapter.setNewData(homeResponse.getOrder());
         } else {
-//            mHomeUnsuccessfulStudentAdapter.setNewData(null);
+            mHomeUnsuccessfulStudentAdapter.setNewData(null);
             mHomeUnsuccessfulStudentAdapter.setEmptyView(mEmptyView);//如果没有审核通过和没有分配学生显示emptyView
         }
     }

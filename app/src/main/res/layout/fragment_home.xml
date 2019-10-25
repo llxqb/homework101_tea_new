@@ -1,64 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_ly"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_app_gradient">
 
-    <TextView
-        android:id="@+id/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/app_name"
-        android:textColor="@color/color_30"
-        android:textSize="@dimen/sp_19"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/system_msg_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_8"
-        android:background="@drawable/selector_back_img_bg"
-        android:padding="@dimen/dp_10"
-        android:src="@mipmap/tutor_message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/customer_service_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/selector_back_img_bg"
-        android:padding="@dimen/dp_10"
-        android:src="@mipmap/tutor_service"
-        app:layout_constraintEnd_toStartOf="@id/system_msg_iv"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_ly"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_name">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="@string/app_name"
+            android:textColor="@color/color_30"
+            android:textSize="@dimen/sp_19"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/system_msg_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:background="@drawable/selector_back_img_bg"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/tutor_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/customer_service_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/selector_back_img_bg"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/tutor_service"
+            app:layout_constraintEnd_toStartOf="@id/system_msg_iv"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_name">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_20"
-                android:focusableInTouchMode="true">
+                android:layout_marginBottom="@dimen/dp_20">
 
                 <LinearLayout
                     android:id="@+id/certification_process_layout"
@@ -152,10 +149,10 @@
                             android:layout_height="@dimen/dp_72"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/dp_10"
-                            android:visibility="invisible"
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_marginEnd="@dimen/dp_10"
-                            android:background="@mipmap/home_authentication_process_1">
+                            android:background="@mipmap/home_authentication_process_1"
+                            android:visibility="invisible">
 
                             <TextView
                                 android:id="@+id/upload_card_hint_tv"
@@ -536,20 +533,25 @@
                     app:layout_constraintTop_toBottomOf="@id/mime_student_recycler_view" />
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/unsuccessful_student_recycler_view"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_marginBottom="@dimen/dp_20"
-                    app:layout_constraintTop_toBottomOf="@id/unsuccessful_student" />
+                    app:layout_constraintTop_toBottomOf="@id/unsuccessful_student">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/unsuccessful_student_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
 
             </android.support.constraint.ConstraintLayout>
 
 
         </android.support.v4.widget.NestedScrollView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

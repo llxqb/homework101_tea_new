@@ -153,7 +153,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
             case R.id.end_counselling:
                 if (counsellingEndState) { //去反馈
                     if (mUserInfoByRidResponse != null && feedbackId != null) {
-                        SubmitFeedbackContentActivity.start(this, feedbackId, mUserInfoByRidResponse.getName());
+                        SubmitFeedbackContentActivity.start(this, feedbackId, mUserInfoByRidResponse.getName(), 0);
                     }
                 } else {
                     DialogFactory.showCommonDialog(ConversationActivity.this, "结束辅导", "你确定要结束辅导~", "继续辅导", "确定结束", Constant.COMMON_DIALOG_STYLE_1);

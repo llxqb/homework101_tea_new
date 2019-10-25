@@ -110,7 +110,7 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
                         break;
                     case R.id.edit_counselling_content_tv://填写辅导反馈
                         if (dataBean != null && dataBean.getStatus() != 1) {
-                            SubmitFeedbackContentActivity.start(getActivity(), String.valueOf(dataBean.getId()), dataBean.getName());
+                            SubmitFeedbackContentActivity.start(getActivity(), String.valueOf(dataBean.getId()), dataBean.getName(),dataBean.getFeedback_time());
                         }
                         break;
                 }

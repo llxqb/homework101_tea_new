@@ -18,6 +18,7 @@ import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
 import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
+import com.shushan.thomework101.mvp.utils.DateUtil;
 
 import javax.inject.Inject;
 
@@ -49,10 +50,11 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
     @Inject
     FeedbackControl.PresenterFeedback mPresenter;
 
-    public static void start(Context context, String feedbackId, String stuName) {
+    public static void start(Context context, String feedbackId, String stuName, int feedbackDate) {
         Intent intent = new Intent(context, SubmitFeedbackContentActivity.class);
         intent.putExtra("feedbackId", feedbackId);
         intent.putExtra("stuName", stuName);
+        intent.putExtra("feedbackDate", feedbackDate);
         context.startActivity(intent);
     }
 
@@ -74,8 +76,14 @@ public class SubmitFeedbackContentActivity extends BaseActivity implements Feedb
         if (getIntent() != null) {
             feedbackId = getIntent().getStringExtra("feedbackId");
             String stuName = getIntent().getStringExtra("stuName");
+            int feedbackDate = getIntent().getIntExtra("feedbackDate", 0);
             String title = stuName + "-辅导反馈";
             mCommonTitleTv.setText(title);
+            if (feedbackDate == 0) {
+                mFeedbackDateTv.setText(DateUtil.getTimeByPattern( DateUtil.TIME_YYMMDD));
+            } else {
+                mFeedbackDateTv.setText(DateUtil.getStrTime(feedbackDate, DateUtil.TIME_YYMMDD));
+            }
         }
     }
 

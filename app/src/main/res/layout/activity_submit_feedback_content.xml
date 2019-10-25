@@ -26,7 +26,6 @@
                 android:layout_marginTop="@dimen/dp_24"
                 android:drawableStart="@mipmap/tutor_feedback_time"
                 android:drawablePadding="@dimen/dp_6"
-                android:text="2018-08-08"
                 android:textColor="#FF8B00"
                 android:textSize="@dimen/sp_18"
                 app:layout_constraintStart_toStartOf="parent"

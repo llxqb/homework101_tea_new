@@ -1,6 +1,7 @@
 package com.shushan.thomework101.mvp.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -30,6 +31,7 @@ public class MineStudentAdapter extends BaseQuickAdapter<MineStudentResponse.Dat
         mImageLoaderHelper.displayImage(mContext, item.getCover(), circleImageView, Constant.LOADING_AVATOR);
         String versionValue = item.getGrade() + " " + item.getVersion();
         helper.setText(R.id.student_name_tv, item.getName()).setText(R.id.textbook_version_tv, versionValue);
-        helper.setText(R.id.counselling_type_tv, item.getStatus()).setText(R.id.studengt_remarks_tv, item.getRemark());
+        helper.setText(R.id.counselling_type_tv, item.getStatus());
+        helper.setText(R.id.studengt_remarks_tv, !TextUtils.isEmpty(item.getRemark()) ? "备注：" + item.getRemark() : "");
     }
 }

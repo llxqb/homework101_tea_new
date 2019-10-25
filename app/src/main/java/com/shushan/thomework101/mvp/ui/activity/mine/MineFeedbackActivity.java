@@ -99,7 +99,7 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
                         break;
                     case R.id.edit_counselling_content_tv:
                         if (dataBean != null && dataBean.getStatus() != 1) {
-                            SubmitFeedbackContentActivity.start(MineFeedbackActivity.this, String.valueOf(dataBean.getId()), dataBean.getName());
+                            SubmitFeedbackContentActivity.start(MineFeedbackActivity.this, String.valueOf(dataBean.getId()), dataBean.getName(),dataBean.getFeedback_time());
                         }
                         break;
                 }

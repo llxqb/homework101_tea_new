@@ -113,17 +113,10 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         mMineStudentRecyclerView.setAdapter(mMineStudentAdapter);
         mMineStudentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             MineStudentResponse.DataBean dataBean = (MineStudentResponse.DataBean) adapter.getItem(position);
-            switch (view.getId()) {
-                case R.id.student_avatar_iv:
-                    //跳到学生详情
-                    if (dataBean != null) {
-                        StudentDetailActivity.start(getActivity(), String.valueOf(dataBean.getS_id()));
-                    }
-                    break;
-//                case R.id.item_mine_student_layout:
-//                    //启动单聊页面
-////                    RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), dataBean.getS_id(), UserUtil.toTeacherName(dataBean.getName()));
-//                    break;
+            if (view.getId() == R.id.student_avatar_iv) {//跳到学生详情
+                if (dataBean != null) {
+                    StudentDetailActivity.start(getActivity(), String.valueOf(dataBean.getS_id()));
+                }
             }
         });
     }
@@ -176,14 +169,15 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
     @Override
     public void studentTypeBtnListener(int type) {
         initTitleColor();
+        String studentType = StudentUtil.studentTypeIntToString(paidType, type);
+        mLabel = String.valueOf(StudentUtil.labelStringToInt(studentType));
         if (paidType == 1) {
             mPaidTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
+            mPaidTv.setText(studentType);
         } else {
             mUnpaidTv.setTextColor(Objects.requireNonNull(getActivity()).getResources().getColor(R.color.student_title_check_color));
+            mUnpaidTv.setText(studentType);
         }
-        String studentType = StudentUtil.studentTypeIntToString(paidType, type);
-        mPaidTv.setText(studentType);
-        mLabel = String.valueOf(StudentUtil.labelStringToInt(studentType));
         onRequestMineStudentInfo();
     }
 

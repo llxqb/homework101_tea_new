@@ -3,6 +3,7 @@ package com.shushan.thomework101.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.thomework101.entity.request.LoginRequest;
+import com.shushan.thomework101.entity.request.LogoutRequest;
 import com.shushan.thomework101.entity.request.VerifyCodeRequest;
 import com.shushan.thomework101.network.networkapi.GuideApi;
 
@@ -40,5 +41,11 @@ public class GuideModel {
      */
     public Observable<ResponseData> onRequestLogin(LoginRequest request) {
         return mGuideApi.onRequestLogin(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 注销账号
+     */
+    public Observable<ResponseData> onRequestLogout(LogoutRequest request) {
+        return mGuideApi.onRequestLogout(new Gson().toJson(request)).map(mTransform::transformCommon);
     }
 }

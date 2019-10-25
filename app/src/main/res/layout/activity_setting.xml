@@ -159,6 +159,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/about_us_tv" />
 
+    <TextView
+        android:id="@+id/logout_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_write_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_20"
+        android:text="注销账号"
+        android:textStyle="bold"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_15"
+        app:layout_constraintTop_toBottomOf="@id/line5" />
+
+    <View
+        android:id="@+id/line6"
+        style="@style/line_height_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logout_tv" />
 
     <TextView
         android:id="@+id/exit_tv"

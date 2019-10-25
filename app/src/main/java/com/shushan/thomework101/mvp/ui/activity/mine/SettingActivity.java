@@ -14,6 +14,7 @@ import com.shushan.thomework101.entity.request.VersionUpdateRequest;
 import com.shushan.thomework101.entity.response.VersionUpdateResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
+import com.shushan.thomework101.mvp.ui.activity.logout.LogoutActivity;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
@@ -30,7 +31,7 @@ import io.rong.imkit.RongIM;
 /**
  * 设置
  */
-public class SettingActivity extends BaseActivity implements CommonDialog.CommonDialogListener ,SettingControl.SettingView{
+public class SettingActivity extends BaseActivity implements CommonDialog.CommonDialogListener, SettingControl.SettingView {
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -78,7 +79,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
 
     @Override
     public void initData() {
-        mVersionNameTv.setText("V"+SystemUtils.getVersionName(this));
+        mVersionNameTv.setText("V" + SystemUtils.getVersionName(this));
         try {
             mCacheTv.setText(DataCleanManager.getTotalCacheSize(this));
         } catch (Exception e) {
@@ -86,7 +87,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
         }
     }
 
-    @OnClick({R.id.common_left_iv, R.id.message_notification_iv, R.id.update_tv, R.id.clear_cache_tv, R.id.about_us_tv, R.id.exit_tv})
+    @OnClick({R.id.common_left_iv, R.id.message_notification_iv, R.id.update_tv, R.id.clear_cache_tv, R.id.about_us_tv, R.id.logout_tv, R.id.exit_tv})
     public void onViewClicked(View view) {
         mMessageNotification = mSharePreferenceUtil.getBooleanData("message_notification", true);
         switch (view.getId()) {
@@ -116,6 +117,9 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
                 showClearCacheDialog();
                 break;
             case R.id.about_us_tv:
+                break;
+            case R.id.logout_tv://注销登录
+                startActivitys(LogoutActivity.class);
                 break;
             case R.id.exit_tv:
                 commonDialogClickType = 2;
@@ -161,7 +165,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             exitLogin();
         }
     }

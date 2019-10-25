@@ -93,11 +93,10 @@
 
                         <ImageView
                             android:id="@+id/circle_iv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dp_270"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/dp_10"
-                            android:scaleType="centerCrop"
                             android:src="@mipmap/circle1" />
 
                         <LinearLayout
@@ -153,9 +152,9 @@
                             android:layout_height="@dimen/dp_72"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/dp_10"
+                            android:visibility="invisible"
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_marginEnd="@dimen/dp_10"
-                            android:visibility="invisible"
                             android:background="@mipmap/home_authentication_process_1">
 
                             <TextView

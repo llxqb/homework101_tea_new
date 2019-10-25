@@ -16,15 +16,18 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLoginComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.LoginModule;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.request.LoginRequest;
 import com.shushan.thomework101.entity.request.VerifyCodeRequest;
 import com.shushan.thomework101.entity.response.LoginResponse;
 import com.shushan.thomework101.entity.response.RegisterResponse;
 import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.entity.user.User;
+import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
+import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
 import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.LoginUtils;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
@@ -40,7 +43,7 @@ import butterknife.OnClick;
 /**
  * 登录
  */
-public class LoginActivity extends BaseActivity implements LoginControl.LoginView {
+public class LoginActivity extends BaseActivity implements LoginControl.LoginView, CommonDialog.CommonDialogListener {
     @BindView(R.id.phone_et)
     EditText mPhoneEt;
     @BindView(R.id.verification_code_et)
@@ -152,23 +155,31 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void getLoginSuccess(LoginResponse loginResponse) {
-        //如果是注册 ，执行登录
-        if(!TextUtils.isEmpty(loginResponse.getMobile())){
-            //注册   进行登录
-            reqLoginInfo();
-        }else {
-            //登录
-            User mUser = LoginUtils.saveLoginUser(loginResponse);
-            mBuProcessor.setLoginUser(mUser);
-            if (!mBuProcessor.isFinishFirstWrite()) {
-                startActivitys(SubjectSelectActivity.class);
+        if (loginResponse.getStatus() == 0) {
+            if (!TextUtils.isEmpty(loginResponse.getMobile())) {
+                //如果是注册 ，执行登录,我用手机号为空做判断
+                //注册   进行登录
+                reqLoginInfo();
             } else {
-                startActivitys(MainActivity.class);
+                //登录
+                User mUser = LoginUtils.saveLoginUser(loginResponse);
+                mBuProcessor.setLoginUser(mUser);
+                if (!mBuProcessor.isFinishFirstWrite()) {
+                    startActivitys(SubjectSelectActivity.class);
+                } else {
+                    startActivitys(MainActivity.class);
+                }
+                finish();
             }
-            finish();
+        } else {
+            DialogFactory.showCommonDialog(this, "账号已注销", "改账号已经注销，7天内如需找回，请联系客服，电话号码：" + Constant.CS_PHONE, "", "", Constant.COMMON_DIALOG_STYLE_2);
         }
     }
 
+    @Override
+    public void commonDialogBtnOkListener() {
+        finish();
+    }
 
     /**
      * 验证输入文字

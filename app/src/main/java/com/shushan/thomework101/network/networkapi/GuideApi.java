@@ -21,4 +21,10 @@ public interface GuideApi {
      */
     @POST("teacher/user/login")
     Observable<String> onRequestLogin(@Body String request);
+
+    /**
+     * 注销账号
+     */
+    @POST("teacher/user/logout")
+    Observable<String> onRequestLogout(@Body String request);
 }

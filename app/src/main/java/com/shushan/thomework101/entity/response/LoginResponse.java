@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class LoginResponse {
 
-
     /**
      * tid : 4
      * name : 李白
@@ -41,6 +40,7 @@ public class LoginResponse {
      * logid : 154
      * token : 9d3c3b0bb50a90619d6049339142473d
      * first : 0
+     * status:0可用1注销
      */
 
     private int tid;
@@ -81,6 +81,7 @@ public class LoginResponse {
     private String deviceId;
     private String userport;
     private String t_id;
+    private int status;
 
 
     public int getTid() {
@@ -379,6 +380,13 @@ public class LoginResponse {
         this.t_id = t_id;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public static class GuideTimeBean {
         /**

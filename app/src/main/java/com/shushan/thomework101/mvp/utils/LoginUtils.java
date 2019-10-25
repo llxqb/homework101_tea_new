@@ -20,6 +20,7 @@ public class LoginUtils {
         user.rToken = loginResponse.getThird_token();
         user.subject = UserUtil.subjectStringToInt(loginResponse.getSubject());
         user.grades = loginResponse.getGrade_id();
+        user.isReadProtocol = true;
         return user;
     }
 

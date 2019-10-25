@@ -24,9 +24,16 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.logout.LogoutSuccessActivity"></activity>
-        <activity android:name=".mvp.ui.activity.logout.LogoutActivity" />
-        <activity android:name=".mvp.ui.activity.mine.IntroductionActivity" />
+        <activity android:name=".mvp.ui.activity.guide.LoginProtocolActivity"></activity>
+        <activity
+            android:name=".mvp.ui.activity.logout.LogoutSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.logout.LogoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.mine.IntroductionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.mine.RevenueIncomeActivity"
             android:screenOrientation="portrait" />

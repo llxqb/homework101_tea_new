@@ -20,10 +20,10 @@ import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.request.LoginRequest;
 import com.shushan.thomework101.entity.request.VerifyCodeRequest;
 import com.shushan.thomework101.entity.response.LoginResponse;
-import com.shushan.thomework101.entity.response.RegisterResponse;
 import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
+import com.shushan.thomework101.mvp.ui.activity.guide.LoginProtocolActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -54,8 +54,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     ImageView mStartLoginIv;
     @BindView(R.id.checkbox)
     CheckBox mCheckbox;
-    @BindView(R.id.service_agreement_tv)
-    TextView mServiceAgreementTv;
     @BindView(R.id.privacy_agreement_tv)
     TextView mPrivacyAgreementTv;
     private User mUser;
@@ -77,14 +75,17 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void initData() {
-        verificationCheckBox = mCheckbox.isChecked();
+        if (mUser != null) {
+            verificationCheckBox = mUser.isReadProtocol;
+            mCheckbox.setChecked(verificationCheckBox);
+        }
         mCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             verificationCheckBox = isChecked;
             isNextRed();
         });
     }
 
-    @OnClick({R.id.code_bt, R.id.start_login_iv, R.id.service_agreement_tv, R.id.privacy_agreement_tv})
+    @OnClick({R.id.code_bt, R.id.start_login_iv, R.id.privacy_agreement_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.code_bt:
@@ -107,9 +108,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                     checkPermissions();
                 }
                 break;
-            case R.id.service_agreement_tv:
-                break;
             case R.id.privacy_agreement_tv:
+                startActivitys(LoginProtocolActivity.class);
                 break;
         }
     }
@@ -141,16 +141,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         loginRequest.code = mVerificationCodeEt.getText().toString();
         loginRequest.deviceId = SystemUtils.getUUID(this, mSharePreferenceUtil);
         mPresenter.onRequestLogin(loginRequest);
-//        if (!mBuProcessor.isFinishFirstWrite()) {//是注册
-//        } else {
-//            //是登录
-//            mPresenter.onRequestLogin(loginRequest, 2);
-//        }
-    }
-
-    @Override
-    public void getRegisterSuccess(RegisterResponse registerResponse) {
-
     }
 
     @Override
@@ -200,7 +190,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             return false;
         }
         if (!mCheckbox.isChecked()) {
-            showToast("请阅读协议");
+            showToast("请阅读隐私权协议");
             return false;
         }
         return true;

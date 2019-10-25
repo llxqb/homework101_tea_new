@@ -4,7 +4,6 @@ package com.shushan.thomework101.mvp.ui.activity.guide.login;
 import com.shushan.thomework101.entity.request.LoginRequest;
 import com.shushan.thomework101.entity.request.VerifyCodeRequest;
 import com.shushan.thomework101.entity.response.LoginResponse;
-import com.shushan.thomework101.entity.response.RegisterResponse;
 import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
@@ -16,8 +15,6 @@ import com.shushan.thomework101.mvp.presenter.Presenter;
 public class LoginControl {
     public interface LoginView extends LoadDataView {
         void getVerifyCodeSuccess(VerifyCodeResponse verifyCodeResponse);
-
-        void getRegisterSuccess(RegisterResponse registerResponse);
 
         void getLoginSuccess(LoginResponse loginResponse);
     }

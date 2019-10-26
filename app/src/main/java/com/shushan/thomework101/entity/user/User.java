@@ -10,14 +10,9 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     public User() {
-        isReadProtocol = false;
     }
 
     public String token;
-    /**
-     * 是否阅读了注册协议
-     */
-    public boolean isReadProtocol;
     /**
      * 融云id
      */

@@ -75,10 +75,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void initData() {
-        if (mUser != null) {
-            verificationCheckBox = mUser.isReadProtocol;
-            mCheckbox.setChecked(verificationCheckBox);
-        }
+        verificationCheckBox = mCheckbox.isChecked();
         mCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             verificationCheckBox = isChecked;
             isNextRed();

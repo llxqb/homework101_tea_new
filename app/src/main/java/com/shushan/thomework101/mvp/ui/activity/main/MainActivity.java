@@ -127,10 +127,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getBooleanExtra("exitLogin", false)) {
-            //退出登录 558388
-            User user = new User();
-            user.isReadProtocol = true;
-            mBuProcessor.setLoginUser(user);
             startActivitys(LoginActivity.class);
             finish();
         }

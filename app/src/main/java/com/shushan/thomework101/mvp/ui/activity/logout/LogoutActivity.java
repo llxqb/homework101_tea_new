@@ -6,7 +6,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLogoutComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -18,7 +17,6 @@ import com.shushan.thomework101.entity.response.VerifyCodeResponse;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
-import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.ValueUtil;
 import com.shushan.thomework101.mvp.views.TimeButton;
 
@@ -99,8 +97,6 @@ public class LogoutActivity extends BaseActivity implements LogoutControl.Logout
 
     @Override
     public void getVerifyCodeSuccess(VerifyCodeResponse verifyCodeResponse) {
-        LogUtils.e("verifyCodeResponse:" + new Gson().toJson(verifyCodeResponse));
-        mVerificationCodeEt.setText(verifyCodeResponse.getCode() + "");
     }
 
     @Override

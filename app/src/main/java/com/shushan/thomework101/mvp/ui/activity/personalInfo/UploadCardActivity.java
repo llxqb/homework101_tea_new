@@ -292,7 +292,7 @@ public class UploadCardActivity extends BaseActivity implements PersonalInfoCont
             takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
         }
         //设置压缩规则，最大500kb
-        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(800).create(), true);
+        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(800).create(), false);
         return takePhoto;
     }
 

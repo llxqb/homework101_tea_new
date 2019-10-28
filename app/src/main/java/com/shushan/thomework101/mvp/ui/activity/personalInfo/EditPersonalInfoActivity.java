@@ -22,12 +22,12 @@ import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.PersonalInfoModule;
 import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
+import com.shushan.thomework101.entity.constants.ServerConstant;
 import com.shushan.thomework101.entity.request.UploadImage;
 import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
 import com.shushan.thomework101.entity.response.HomeResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
-import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.AvatarPopupWindow;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
@@ -55,6 +55,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * 编辑个人信息
@@ -90,6 +92,10 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     TextView mLabel2Tv;
     @BindView(R.id.upload_photo_iv)
     ImageView mUploadPhotoIv;
+    @BindView(R.id.upload_photo_btn_layout)
+    LinearLayout mUploadPhotoBtnLayout;
+    @BindView(R.id.upload_photo_icon_ll)
+    LinearLayout mUploadPhotoIconLl;
     @BindView(R.id.teaching_experience_content_tv)
     TextView mTeachingExperienceContentTv;
     @BindView(R.id.teaching_style_content_tv)
@@ -156,14 +162,17 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         mCommonRightIv.setVisibility(View.VISIBLE);
         if (getIntent() != null) {
             type = getIntent().getIntExtra("type", 0);
-            if (type == 1) {
+            if (type == 1) {//注册流程
                 mCommonTitleTv.setText("个人资料");
                 mMinePersonalShowLayout.setVisibility(View.GONE);
                 mSureTv.setVisibility(View.VISIBLE);
+                mUploadPhotoBtnLayout.setVisibility(View.GONE);
             } else {
                 mCommonTitleTv.setText("我的资料");
                 mMinePersonalShowLayout.setVisibility(View.VISIBLE);
                 mSureTv.setVisibility(View.GONE);
+                mUploadPhotoBtnLayout.setVisibility(View.VISIBLE);
+                mUploadPhotoIconLl.setVisibility(View.GONE);
             }
         }
     }
@@ -196,7 +205,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
                 mLabel1Tv.setText(mUser.labels);
             }
         }
-        mImageLoaderHelper.displayCircularImage(this, mUser.cover, mUploadPhotoIv, R.mipmap.id_photo);
+        mImageLoaderHelper.displayCircularImage(this, mUser.cover, mUploadPhotoIv, 0);
         mTeachingExperienceContentTv.setText(mUser.teachingExperience);
         mTeachingStyleContentTv.setText(mUser.teachingStyle);
         mTeachingPhilosophyContentTv.setText(mUser.teachingPhilosophy);
@@ -204,15 +213,16 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
     Intent intent;
 
-    @OnClick({R.id.common_left_iv, R.id.common_right_iv, R.id.username_tv, R.id.label1_tv, R.id.label2_tv,
-            R.id.upload_photo_btn_layout, R.id.teaching_experience_tv_edit_tv, R.id.teaching_style_tv_edit_tv, R.id.teaching_philosophy_tv_edit_tv, R.id.sure_tv})
+    @OnClick({R.id.common_left_iv, R.id.common_right_iv, R.id.username_tv, R.id.label1_tv, R.id.label2_tv, R.id.upload_photo_icon_iv, R.id.upload_photo_btn_layout,
+            R.id.teaching_experience_tv_edit_tv, R.id.teaching_experience_content_tv, R.id.teaching_style_tv_edit_tv, R.id.teaching_style_content_tv,
+            R.id.teaching_philosophy_tv_edit_tv, R.id.teaching_philosophy_content_tv, R.id.sure_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_left_iv:
                 finish();
                 break;
             case R.id.common_right_iv:
-                startActivitys(CustomerServiceActivity.class);
+                contactCustomer();
                 break;
             case R.id.username_tv:
                 //我的姓名
@@ -228,22 +238,28 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
                 labelType = 2;
                 editLabelDialog("我的标签", "请输入你的标签", mLabel2Tv.getText().toString());
                 break;
+            case R.id.upload_photo_icon_iv:
+                new AvatarPopupWindow(this, this).initPopWindow(mEditPersonalInfoLayout);
+                break;
             case R.id.upload_photo_btn_layout:
                 new AvatarPopupWindow(this, this).initPopWindow(mEditPersonalInfoLayout);
                 break;
             case R.id.teaching_experience_tv_edit_tv://教学经历
+            case R.id.teaching_experience_content_tv://教学经历
                 intent = new Intent(this, EditTextInfoActivity.class);
                 intent.putExtra("title", "教学经历");
                 intent.putExtra("editContent", mTeachingExperienceContentTv.getText().toString());
                 startActivityForResult(intent, 1);
                 break;
-            case R.id.teaching_style_tv_edit_tv:
+            case R.id.teaching_style_tv_edit_tv://教学风格
+            case R.id.teaching_style_content_tv://教学风格
                 intent = new Intent(this, EditTextInfoActivity.class);
                 intent.putExtra("title", "教学风格");
                 intent.putExtra("editContent", mTeachingStyleContentTv.getText().toString());
                 startActivityForResult(intent, 2);
                 break;
-            case R.id.teaching_philosophy_tv_edit_tv:
+            case R.id.teaching_philosophy_tv_edit_tv://教育理念
+            case R.id.teaching_philosophy_content_tv://教育理念
                 intent = new Intent(this, EditTextInfoActivity.class);
                 intent.putExtra("title", "教育理念");
                 intent.putExtra("editContent", mTeachingPhilosophyContentTv.getText().toString());
@@ -276,7 +292,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         } else if (labelType == 1) {
             mLabel1Tv.setText(labelValue);
             if (type == 2) {
-                updatePersonalInfo(null, null, stringToList(labelValue + "," + mLabel1Tv.getText().toString()).toString(), null, null, null);
+                updatePersonalInfo(null, null, stringToList(labelValue + "," + mLabel2Tv.getText().toString()).toString(), null, null, null);
             }
         } else {
             mLabel2Tv.setText(labelValue);
@@ -324,6 +340,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         if (type == 2) {
             updatePersonalInfo(null, avatarUrl, null, null, null, null);
         }
+        mUploadPhotoBtnLayout.setVisibility(View.VISIBLE);
+        mUploadPhotoIconLl.setVisibility(View.GONE);
     }
 
 
@@ -486,7 +504,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
         }
         //设置压缩规则，最大500kb
-        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(800).create(), true);
+        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(800).create(), false);
         return takePhoto;
     }
 
@@ -520,6 +538,21 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             return false;
         }
         return true;
+    }
+
+    /**
+     * 联系客服
+     */
+    private void contactCustomer() {
+        //进入客服
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName(mUser.name)
+                .name(mUser.name)
+                .referrer(Constant.CUSTOMER_NUM)
+                .build();
+        RongIM.getInstance().startCustomerServiceChat(this, ServerConstant.RY_CUSTOMER_ID, "在线客服", csInfo);
+        mSharePreferenceUtil.setData("chatType", 1);//在线客服
     }
 
     private void initInjectData() {

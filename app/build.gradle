@@ -135,7 +135,7 @@ dependencies {
 //    //banner
 //    implementation project(':mzbanner')
     //融云
-    implementation project(':IMKit')
+    implementation project(':CallKit')
     //时间日期选择控件
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
     //友盟

@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.ui.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,6 +18,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerFeedbackComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.FeedbackModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.response.FeedBackResponse;
 import com.shushan.thomework101.entity.user.User;
@@ -79,6 +82,21 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
     }
 
     @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_FEEDBACK_LIST)) {
+            page = 1;
+            onRequestFeedbackInfo();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_FEEDBACK_LIST);
+    }
+
+    @Override
     public void initView() {
         initEmptyView();
         mCommonTitleTv.setText("辅导反馈");
@@ -99,7 +117,7 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
                         break;
                     case R.id.edit_counselling_content_tv:
                         if (dataBean != null && dataBean.getStatus() != 1) {
-                            SubmitFeedbackContentActivity.start(MineFeedbackActivity.this, String.valueOf(dataBean.getId()), dataBean.getName(),dataBean.getFeedback_time());
+                            SubmitFeedbackContentActivity.start(MineFeedbackActivity.this, String.valueOf(dataBean.getId()), dataBean.getName(), dataBean.getFeedback_time());
                         }
                         break;
                 }

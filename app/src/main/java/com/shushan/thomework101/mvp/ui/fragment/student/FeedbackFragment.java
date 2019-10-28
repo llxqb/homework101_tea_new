@@ -110,7 +110,7 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
                         break;
                     case R.id.edit_counselling_content_tv://填写辅导反馈
                         if (dataBean != null && dataBean.getStatus() != 1) {
-                            SubmitFeedbackContentActivity.start(getActivity(), String.valueOf(dataBean.getId()), dataBean.getName(),dataBean.getFeedback_time());
+                            SubmitFeedbackContentActivity.start(getActivity(), String.valueOf(dataBean.getId()), dataBean.getName(), dataBean.getFeedback_time());
                         }
                         break;
                 }
@@ -154,7 +154,11 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
             }
         } else {
             if (!response.getData().isEmpty()) {
-                mTodayFeedBackAdapter.addData(response.getData());
+                if (page == 1) {
+                    mTodayFeedBackAdapter.setNewData(response.getData());
+                } else {
+                    mTodayFeedBackAdapter.addData(response.getData());
+                }
             } else {
                 mTodayFeedBackAdapter.setEmptyView(mEmptyView);
             }

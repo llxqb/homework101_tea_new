@@ -3,6 +3,8 @@ package com.shushan.thomework101.mvp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.rong.callkit.AudioPlugin;
+import io.rong.callkit.VideoPlugin;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.IPluginModule;
@@ -23,8 +25,8 @@ public class SealExtensionModule extends DefaultExtensionModule {
         List<IPluginModule> pluginModuleList = new ArrayList<>();
         IPluginModule image = new ImagePlugin();
 //        IPluginModule location = new DefaultLocationPlugin();
-//        IPluginModule audio = new AudioPlugin();
-//        IPluginModule video = new VideoPlugin();
+        IPluginModule audio = new AudioPlugin();
+        IPluginModule video = new VideoPlugin();
         IPluginModule file = new FilePlugin();
 
         if (conversationType.equals(Conversation.ConversationType.GROUP) ||
@@ -32,8 +34,8 @@ public class SealExtensionModule extends DefaultExtensionModule {
                 conversationType.equals(Conversation.ConversationType.PRIVATE)) {
             pluginModuleList.add(image);
 //            pluginModuleList.add(location);
-//            pluginModuleList.add(audio);
-//            pluginModuleList.add(video);
+            pluginModuleList.add(audio);
+            pluginModuleList.add(video);
             pluginModuleList.add(file);
         } else {
             pluginModuleList.add(image);

@@ -3,6 +3,7 @@ package com.shushan.thomework101.mvp.ui.activity.rongCloud;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -108,6 +109,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                 mEndCounsellingLayoutRl.setVisibility(View.VISIBLE);
                 mEndCounsellingMessageTv.setText("辅导已完成");
                 mEndCounselling.setText("去反馈");
+                //更新今日反馈
+                LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_FEEDBACK_LIST));
                 onRequestFeedBackId();
             }
         }

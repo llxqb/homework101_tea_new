@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:hint="请输入登录手机号"
+        android:hint="请输入注销手机号"
         android:inputType="number"
         android:maxLength="11"
         android:paddingStart="@dimen/dp_40"

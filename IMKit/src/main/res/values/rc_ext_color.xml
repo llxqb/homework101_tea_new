@@ -19,6 +19,11 @@
     <color name="rc_divider_line">#ababad</color>
 
     <!-- Extension -->
+    <color name="rc_common_phrases_bg_color">#f2f2f2</color>
+    <color name="rc_common_phrases_list_item_color">#333333</color>
+    <color name="rc_common_phrases_stroke_color">#979797</color>
+    <color name="rc_common_phrases_title_color">#666666</color>
+    <color name="rc_common_phrases_divider_color">#B4B6BA</color>
     <color name="rc_divider_color">#d9d9d9</color>
     <color name="rc_emoji_grid_item_bg">#ebebeb</color>
 
@@ -30,4 +35,10 @@
     <color name="rc_popup_dialog_prompt_cancel_color">#999999</color>
     <color name="rc_popup_dialog_prompt_clear_color">#f43530</color>
     <color name="rc_popup_dialog_text_color">#353535</color>
+    <color name="rc_ext_root_menu_item_text_color">#353535</color>
+    <color name="rc_ext_sub_menu_item_text_color">#828282</color>
+    <color name="rc_map_list_divider_color">#e5e5e5</color>
+    <color name="rc_map_list_text_color">#262626</color>
+    <color name="rc_map_list_text_grey_color">#939393</color>
+    <color name="rc_map_search_highlight_color">#0099ff</color>
 </resources>

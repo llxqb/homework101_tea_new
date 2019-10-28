@@ -10,7 +10,7 @@
         layout="@layout/rc_fr_messagelist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rc_extension" />
+        android:layout_above="@+id/end_counselling_layout_rl" />
 
     <io.rong.imkit.RongExtension
         android:id="@+id/rc_extension"
@@ -20,39 +20,43 @@
         app:RCStyle="SCE" />
 
     <RelativeLayout
-        android:id="@+id/start_counselling_layout_rl"
+        android:id="@+id/end_counselling_layout_rl"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="62dp"
         android:layout_above="@+id/rc_extension"
-        android:background="#cfd8dc"
-        android:gravity="center_vertical">
+        android:background="#EAECF9">
 
         <TextView
-            android:id="@+id/start_counselling"
+            android:id="@+id/end_counselling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/bg_red_round_solid_5"
-            android:padding="10dp"
-            android:text="开始辅导"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/bg_start_conselling_solid_5"
+            android:paddingStart="10dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="4dp"
+            android:text="结束辅导"
             android:textColor="#ffffff"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/start_counselling_message_tv"
+            android:id="@+id/end_counselling_message_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="14dp"
-            android:layout_toStartOf="@id/start_counselling"
+            android:layout_toStartOf="@id/end_counselling"
             android:gravity="start"
             android:maxLines="2"
             android:paddingStart="10dp"
-            android:paddingTop="5dp"
             android:paddingEnd="5dp"
-            android:text="请点击开始辅导按钮!\n开始辅导后，学习顾问李老师将会全程监控哦~"
-            android:textColor="#666666"
-            android:textSize="14sp" />
+            android:text="辅导结束后，请主动点击结束辅导。\n结束辅导后，将上传辅导记录。"
+            android:textColor="#9495A0"
+            android:textSize="13sp" />
     </RelativeLayout>
 </RelativeLayout>

@@ -83,6 +83,10 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     List<MineFunctionResponse> mineFunctionResponseList = new ArrayList<>();
     Integer[] mineFunctionIcon = {R.mipmap.my_tutor_feedback, R.mipmap.my_student_changes, R.mipmap.my_ervice_center, R.mipmap.my_rules, R.mipmap.my_operation};
     private User mUser;
+    /**
+     * true：审核通过
+     */
+    private boolean mCheckPass;
     @Inject
     MineFragmentControl.MineFragmentPresenter mPresenter;
 
@@ -148,7 +152,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(SettingActivity.class);
                 break;
             case R.id.avatar_iv://去我的资料
-                if (mUser.checkPass) {
+                if (mCheckPass) {
                     EditPersonalInfoActivity.start(getActivity(), 2);
                 }
                 break;
@@ -184,14 +188,15 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         if (mSwipeLy.isRefreshing()) {
             mSwipeLy.setRefreshing(false);
         }
-
         HomeResponse.UserBean userBean = homeResponse.getUser();
         //更新融云信息
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(userBean.getThird_id(), userBean.getName(), Uri.parse(userBean.getCover())));
-        if (userBean.getState()==1) {//审核通过后显示请假按钮
+        if (userBean.getState() == 1) {//审核通过后显示请假按钮
             mTeacherStateTv.setVisibility(View.VISIBLE);
+            mCheckPass = true;
         } else {
             mTeacherStateTv.setVisibility(View.GONE);
+            mCheckPass = false;
         }
         mImageLoaderHelper.displayImage(getActivity(), userBean.getCover(), mAvatarIv, Constant.LOADING_AVATOR);
         mUsernameTv.setText(userBean.getName());

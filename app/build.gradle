@@ -41,6 +41,7 @@ android {
             aaptOptions.cruncherEnabled = false
             aaptOptions.useNewCruncher = false
             buildConfigField 'String', 'WORK_TEA_BASE_URL', RELEASE_WORK_TEA_BASE_URL
+            buildConfigField "String", "ALIAS_HEAD", RELEASE_ALIAS_HEAD
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -51,6 +52,7 @@ android {
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
             buildConfigField 'String', 'WORK_TEA_BASE_URL', DEBUG_WORK_TEA_BASE_URL
+            buildConfigField "String", "ALIAS_HEAD", DEBUG_ALIAS_HEAD
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

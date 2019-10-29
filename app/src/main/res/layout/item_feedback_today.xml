@@ -38,13 +38,15 @@
 
         <TextView
             android:id="@+id/textbook_version_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_8"
             android:textColor="@color/color_6d"
             android:textSize="@dimen/sp_13"
+            android:singleLine="true"
             app:layout_constraintStart_toEndOf="@id/student_avatar_iv"
+            app:layout_constraintEnd_toStartOf="@id/look_counselling_content_tv"
             app:layout_constraintTop_toBottomOf="@id/student_name_tv" />
 
 

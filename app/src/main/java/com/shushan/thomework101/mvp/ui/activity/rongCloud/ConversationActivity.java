@@ -22,7 +22,6 @@ import com.shushan.thomework101.entity.response.FeedbackIdResponse;
 import com.shushan.thomework101.entity.response.UserInfoByRidResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
-import com.shushan.thomework101.help.IExtensionClickListenerHelper;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -149,7 +148,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     @Override
     public void initData() {
-        mRcExtension.setExtensionClickListener(new IExtensionClickListenerHelper());
+//        mRcExtension.setExtensionClickListener(new IExtensionClickListenerHelper());
+        ConversationSaFragment conversationSaFragment =  new ConversationSaFragment();
     }
 
     @OnClick({R.id.common_left_iv, R.id.end_counselling, R.id.common_right_iv})

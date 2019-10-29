@@ -159,7 +159,7 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
         if (!TextUtils.isEmpty(state)) {
             feedbackRequest.state = state;
         }
-        feedbackRequest.page = page + "";
+        feedbackRequest.page = String.valueOf(page);
         feedbackRequest.pagesize = String.valueOf(pageSize);
         mPresenter.onRequestFeedbackInfo(feedbackRequest);
     }
@@ -187,6 +187,7 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
     @Override
     public void getFeedbackInfoSuccess(FeedBackResponse response) {
         todayFeedBackResponseList = response.getData();
+        //加载更多这样设置
         if (!response.getData().isEmpty()) {
             if (page == 1) {
                 mTodayFeedBackAdapter.setNewData(response.getData());
@@ -194,8 +195,10 @@ public class MineFeedbackActivity extends BaseActivity implements FeedbackContro
                 mTodayFeedBackAdapter.addData(response.getData());
             }
         } else {
-            mTodayFeedBackAdapter.setNewData(null);
-            mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+            if (page == 1) {
+                mTodayFeedBackAdapter.setNewData(null);
+                mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 

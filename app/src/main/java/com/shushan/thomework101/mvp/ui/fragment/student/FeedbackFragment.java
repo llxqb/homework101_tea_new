@@ -160,7 +160,10 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
                     mTodayFeedBackAdapter.addData(response.getData());
                 }
             } else {
-                mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+                if (page == 1) {
+                    mTodayFeedBackAdapter.setNewData(null);
+                    mTodayFeedBackAdapter.setEmptyView(mEmptyView);
+                }
             }
         }
     }

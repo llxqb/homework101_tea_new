@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLoginComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
@@ -34,6 +35,7 @@ import com.shushan.thomework101.mvp.utils.SystemUtils;
 import com.shushan.thomework101.mvp.utils.ValueUtil;
 import com.shushan.thomework101.mvp.views.TimeButton;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.message.PushAgent;
 
 import javax.inject.Inject;
 
@@ -151,6 +153,10 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 //登录
                 User mUser = LoginUtils.saveLoginUser(loginResponse);
                 mBuProcessor.setLoginUser(mUser);
+                //"别名ID", "自定义类型"  + loginResponse.getT_id()
+                PushAgent mPushAgent = PushAgent.getInstance(this);
+                LogUtils.e("tid:" + loginResponse.getTid());
+                mPushAgent.setAlias(BuildConfig.ALIAS_HEAD + loginResponse.getTid(), "teacher", (isSuccess, message) -> LogUtils.e("isSuccess=" + isSuccess + " message=" + message));
                 if (!mBuProcessor.isFinishFirstWrite()) {
                     startActivitys(SubjectSelectActivity.class);
                 } else {

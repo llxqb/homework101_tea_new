@@ -24,19 +24,19 @@ public class SealExtensionModule extends DefaultExtensionModule {
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModuleList = new ArrayList<>();
         IPluginModule image = new ImagePlugin();
+        IPluginModule file = new FilePlugin();
 //        IPluginModule location = new DefaultLocationPlugin();
         IPluginModule audio = new AudioPlugin();
         IPluginModule video = new VideoPlugin();
-        IPluginModule file = new FilePlugin();
 
         if (conversationType.equals(Conversation.ConversationType.GROUP) ||
                 conversationType.equals(Conversation.ConversationType.DISCUSSION) ||
                 conversationType.equals(Conversation.ConversationType.PRIVATE)) {
             pluginModuleList.add(image);
+            pluginModuleList.add(file);
 //            pluginModuleList.add(location);
             pluginModuleList.add(audio);
             pluginModuleList.add(video);
-            pluginModuleList.add(file);
         } else {
             pluginModuleList.add(image);
         }

@@ -238,7 +238,7 @@
                                 android:layout_marginStart="@dimen/dp_10"
                                 android:layout_marginTop="@dimen/dp_13"
                                 android:singleLine="true"
-                                android:text="请添加您的专业培训师微信号：作业1001获取培训资料"
+                                android:text="请添加您的专业培训师微信号：zuoye1001获取培训资料"
                                 android:textColor="#85513E"
                                 android:textSize="@dimen/sp_12" />
 

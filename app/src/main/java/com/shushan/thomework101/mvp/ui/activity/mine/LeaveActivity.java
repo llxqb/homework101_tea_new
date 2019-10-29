@@ -107,6 +107,7 @@ public class LeaveActivity extends BaseActivity implements LeaveControl.LeaveVie
     @Override
     public void getLeaveSuccess() {
         showToast("申请成功，请等待审核");
+        finish();
     }
 
     private boolean valid() {

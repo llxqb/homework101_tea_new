@@ -117,6 +117,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
                 showClearCacheDialog();
                 break;
             case R.id.about_us_tv:
+                startActivitys(AboutUsActivity.class);
                 break;
             case R.id.logout_tv://注销登录
                 startActivitys(LogoutActivity.class);

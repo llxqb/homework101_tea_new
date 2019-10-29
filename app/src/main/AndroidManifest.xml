@@ -24,8 +24,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.guide.LoginProtocolActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.activity.mine.AboutUsActivity"></activity>
+        <activity
+            android:name=".mvp.ui.activity.guide.LoginProtocolActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.logout.LogoutSuccessActivity"
             android:screenOrientation="portrait" />

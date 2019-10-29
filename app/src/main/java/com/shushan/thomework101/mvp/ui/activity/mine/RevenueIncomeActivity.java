@@ -47,12 +47,15 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
     private User mUser;
     private int page = 1;
     private int pageSize = 10;
+    String withDrawMoney;//可提现金额
+
     @Inject
     ExpectedIncomeControl.PresenterExpectedIncome mPresenter;
 
-    public static void start(Context context, String revenueIncome) {
+    public static void start(Context context, String revenueIncome, String withDrawMoney) {
         Intent intent = new Intent(context, RevenueIncomeActivity.class);
         intent.putExtra("revenueIncome", revenueIncome);
+        intent.putExtra("withDrawMoney", withDrawMoney);
         context.startActivity(intent);
     }
 
@@ -73,10 +76,12 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
         mRevenueIncomeAdapter.setOnLoadMoreListener(this, mRecyclerView);
     }
 
+
     @Override
     public void initData() {
         if (getIntent() != null) {
-            String revenueIncome = getIntent().getStringExtra("revenueIncome");
+            String revenueIncome = getIntent().getStringExtra("revenueIncome");//已到手金额
+            withDrawMoney = getIntent().getStringExtra("withDrawMoney");
             mExpectedIncomeTv.setText(revenueIncome);
         }
         onRequestRevenueIncome();
@@ -98,7 +103,7 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
                 break;
             case R.id.withdraw_tv:
                 //提现
-                startActivitys(WithdrawActivity.class);
+                WithdrawActivity.start(this, withDrawMoney);
                 break;
         }
     }

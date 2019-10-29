@@ -22,6 +22,7 @@ import com.shushan.thomework101.entity.response.FeedbackIdResponse;
 import com.shushan.thomework101.entity.response.UserInfoByRidResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
+import com.shushan.thomework101.help.IExtensionClickListenerHelper;
 import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.student.SubmitFeedbackContentActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -36,6 +37,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
@@ -57,6 +59,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     TextView mEndCounselling;
     @BindView(R.id.end_counselling_message_tv)
     TextView mEndCounsellingMessageTv;
+    @BindView(R.id.rc_extension)
+    RongExtension mRcExtension;
     private User mUser;
     /**
      * true:辅导结束
@@ -145,6 +149,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     @Override
     public void initData() {
+        mRcExtension.setExtensionClickListener(new IExtensionClickListenerHelper());
     }
 
     @OnClick({R.id.common_left_iv, R.id.end_counselling, R.id.common_right_iv})

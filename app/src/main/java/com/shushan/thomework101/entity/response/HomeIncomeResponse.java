@@ -13,6 +13,10 @@ public class HomeIncomeResponse {
      */
     public double money;
     /**
+     * 我的学生 学生人数
+     */
+    public int num;
+    /**
      * 背景图片
      */
     public int bgIcon;

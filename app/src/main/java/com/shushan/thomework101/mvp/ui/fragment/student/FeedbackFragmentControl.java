@@ -17,6 +17,7 @@ public class FeedbackFragmentControl {
     public interface FeedbackFragmentView extends LoadDataView {
         void getFeedbackInfoSuccess(FeedBackResponse response);
 
+        void getFeedbackInfoFail();
     }
 
     public interface FeedbackFragmentPresenter extends Presenter<FeedbackFragmentView> {

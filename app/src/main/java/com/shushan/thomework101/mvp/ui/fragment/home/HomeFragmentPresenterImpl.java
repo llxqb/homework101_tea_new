@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.entity.request.HomeRequest;
+import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.response.HomeResponse;
+import com.shushan.thomework101.entity.response.UnReadNewsResponse;
 import com.shushan.thomework101.help.RetryWithDelay;
 import com.shushan.thomework101.mvp.model.MainModel;
 import com.shushan.thomework101.mvp.model.ResponseData;
@@ -61,6 +63,34 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
         }
     }
 
+
+    /**
+     * 查看是否有未读消息
+     */
+    @Override
+    public void onRequestUnReadInfo(TokenRequest tokenRequest) {
+        mHomeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mHomeFragmentModel.onRequestUnReadInfo(tokenRequest).compose(mHomeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUnReadInfoSuccess, throwable -> mHomeView.showErrMessage(throwable),
+                        () -> mHomeView.dismissLoading());
+        mHomeView.addSubscription(disposable);
+    }
+
+    /**
+     * 查看是否有未读消息成功
+     */
+    private void requestUnReadInfoSuccess(ResponseData responseData) {
+        mHomeView.judgeToken(responseData.resultCode);
+        if (responseData.resultCode == 0) {
+            responseData.parseData(UnReadNewsResponse.class);
+            if (responseData.parsedData != null) {
+                UnReadNewsResponse response = (UnReadNewsResponse) responseData.parsedData;
+                mHomeView.getUnReadInfoSuccess(response);
+            }
+        } else {
+            mHomeView.showToast(responseData.errorMsg);
+        }
+    }
     @Override
     public void onCreate() {
 

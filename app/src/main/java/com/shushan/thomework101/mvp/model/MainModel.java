@@ -6,6 +6,7 @@ import com.shushan.thomework101.entity.request.FeedbackRequest;
 import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.request.MineStudentListRequest;
 import com.shushan.thomework101.entity.request.SubmitFeedbackRequest;
+import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.request.VersionUpdateRequest;
 import com.shushan.thomework101.network.networkapi.MainApi;
 
@@ -71,5 +72,11 @@ public class MainModel {
         return mMainApi.onRequestFeedbackInfo(mGson.toJson(request)).map(mTransform::transformListType);
     }
 
+    /**
+     * 查看是否有未读消息
+     */
+    public Observable<ResponseData> onRequestUnReadInfo(TokenRequest request) {
+        return mMainApi.onRequestUnReadInfo(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
 
 }

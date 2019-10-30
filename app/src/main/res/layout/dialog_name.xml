@@ -42,6 +42,7 @@
             android:layout_marginEnd="@dimen/dp_13"
             android:background="@drawable/dialog_edit_bg"
             android:gravity="start|center_vertical"
+            android:maxLength="10"
             android:hint="请输入内容"
             android:lineSpacingExtra="@dimen/dp_3"
             android:paddingStart="@dimen/dp_10"

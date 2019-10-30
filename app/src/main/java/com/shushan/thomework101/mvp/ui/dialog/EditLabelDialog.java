@@ -71,6 +71,7 @@ public class EditLabelDialog extends BaseDialogFragment {
             mNameEt.setHint(mHintText);
         }
         mNameHintTv.setText(mTitle);
+//        mNameEt.addTextChangedListener(edit_text_OnChange);
     }
 
 
@@ -82,7 +83,7 @@ public class EditLabelDialog extends BaseDialogFragment {
                 break;
             case R.id.sure:
                 String nameValue = mNameEt.getText().toString();
-                if (!TextUtils.isEmpty(nameValue)) {
+                if (!TextUtils.isEmpty(nameValue) || mTitle.equals("教材版本")) {
                     if (ValueUtil.containsEmoji(nameValue)) {
                         showToast("不支持输入Emoji表情符号");
                         return;
@@ -108,6 +109,25 @@ public class EditLabelDialog extends BaseDialogFragment {
             DialogFactory.dismissDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), TAG);
         }
     }
+
+//    public TextWatcher edit_text_OnChange = new TextWatcher() {
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        }
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//            if (s.length() > 10) {
+//                showToast("请小于10个字符");
+//            }
+//        }
+//    };
+
 
     @Override
     public void onDestroyView() {

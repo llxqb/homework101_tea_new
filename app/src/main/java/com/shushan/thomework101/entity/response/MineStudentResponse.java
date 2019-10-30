@@ -74,6 +74,7 @@ public class MineStudentResponse {
         private String cover;
         private String status;
         private int end_time;
+        private String third_id;
 
         protected DataBean(Parcel in) {
             id = in.readInt();
@@ -88,6 +89,7 @@ public class MineStudentResponse {
             cover = in.readString();
             status = in.readString();
             end_time = in.readInt();
+            third_id = in.readString();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -101,6 +103,14 @@ public class MineStudentResponse {
                 return new DataBean[size];
             }
         };
+
+        public String getThird_id() {
+            return third_id;
+        }
+
+        public void setThird_id(String third_id) {
+            this.third_id = third_id;
+        }
 
         public int getId() {
             return id;
@@ -217,6 +227,7 @@ public class MineStudentResponse {
             dest.writeString(cover);
             dest.writeString(status);
             dest.writeInt(end_time);
+            dest.writeString(third_id);
         }
     }
 }

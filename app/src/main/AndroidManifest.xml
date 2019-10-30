@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <!--android:largeHeap="true" 可以使用的最大内存值-->
     <application
         android:name=".HomeworkApplication"
         android:allowBackup="false"
@@ -22,9 +22,11 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:largeHeap="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.mine.AboutUsActivity"></activity>
+        <activity android:name=".mvp.ui.activity.mine.AboutUsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".mvp.ui.activity.guide.LoginProtocolActivity"
             android:screenOrientation="portrait" />
@@ -81,6 +83,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.mine.LeaveActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.mine.SettingActivity"
@@ -111,6 +114,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.guide.login.LoginActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.main.MainActivity"

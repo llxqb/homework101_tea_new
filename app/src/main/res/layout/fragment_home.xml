@@ -23,17 +23,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/system_msg_iv"
+        <LinearLayout
+            android:id="@+id/system_msg_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:background="@drawable/selector_back_img_bg"
+            android:orientation="horizontal"
             android:padding="@dimen/dp_10"
-            android:src="@mipmap/tutor_message"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/system_msg_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_back_img_bg"
+                android:src="@mipmap/tutor_message" />
+
+            <TextView
+                android:id="@+id/system_msg_read_tv"
+                android:layout_width="@dimen/dp_6"
+                android:layout_height="@dimen/dp_6"
+                android:background="@drawable/bg_round_red_360" />
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/customer_service_iv"
@@ -41,9 +55,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/selector_back_img_bg"
-            android:padding="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_10"
             android:src="@mipmap/tutor_service"
-            app:layout_constraintEnd_toStartOf="@id/system_msg_iv"
+            app:layout_constraintEnd_toStartOf="@id/system_msg_ll"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v4.widget.NestedScrollView
@@ -55,7 +72,8 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_20">
+                android:layout_marginBottom="@dimen/dp_20"
+                android:focusableInTouchMode="true">
 
                 <LinearLayout
                     android:id="@+id/certification_process_layout"
@@ -74,7 +92,8 @@
                         android:layout_marginTop="@dimen/dp_30"
                         android:layout_marginEnd="@dimen/dp_20"
                         android:background="@mipmap/home_authentication_process_background"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
 
                         <TextView
@@ -217,8 +236,7 @@
                             android:layout_height="@dimen/dp_72"
                             android:layout_gravity="center"
                             android:background="@mipmap/home_authentication_process_2"
-                            android:visibility="gone"
-                            >
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/pre_job_training_hint_tv"

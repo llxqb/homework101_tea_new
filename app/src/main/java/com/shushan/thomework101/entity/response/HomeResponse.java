@@ -605,6 +605,15 @@ public class HomeResponse {
         private String cover;
         private String status;
         private int end_time;
+        private String third_id;
+
+        public String getThird_id() {
+            return third_id;
+        }
+
+        public void setThird_id(String third_id) {
+            this.third_id = third_id;
+        }
 
         public int getId() {
             return id;

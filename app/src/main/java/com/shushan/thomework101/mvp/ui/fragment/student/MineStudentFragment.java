@@ -42,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
 
 /**
  * 学生页面 -- 我的学生fragment
@@ -116,6 +117,11 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
             if (view.getId() == R.id.student_avatar_iv) {//跳到学生详情
                 if (dataBean != null) {
                     StudentDetailActivity.start(getActivity(), String.valueOf(dataBean.getS_id()));
+                }
+            } else if (view.getId() == R.id.item_mine_student_layout) {
+                if (dataBean != null) {
+                    //启动单聊页面
+                    RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), dataBean.getThird_id(), dataBean.getName());
                 }
             }
         });

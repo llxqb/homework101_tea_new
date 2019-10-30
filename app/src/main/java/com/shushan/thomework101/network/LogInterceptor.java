@@ -57,7 +57,6 @@ public class LogInterceptor implements Interceptor {
         Log.d(TAG, String.format("发送请求\nmethod：%s\nurl：%s\nheaders: %s\nbody：%s",
                 mContext+ " "+request.method(), request.url(), request.headers(), reqBody));
 
-
         // 打印返回报文
         // 先执行请求，才能够获取报文
         long startTime = System.currentTimeMillis();

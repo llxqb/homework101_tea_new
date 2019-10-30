@@ -1,5 +1,6 @@
 package com.shushan.thomework101.mvp.ui.fragment.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,8 +29,10 @@ import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.constants.ServerConstant;
 import com.shushan.thomework101.entity.request.HomeRequest;
+import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.response.HomeIncomeResponse;
 import com.shushan.thomework101.entity.response.HomeResponse;
+import com.shushan.thomework101.entity.response.UnReadNewsResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
 import com.shushan.thomework101.mvp.ui.activity.main.SystemMsgActivity;
@@ -38,6 +41,7 @@ import com.shushan.thomework101.mvp.ui.activity.personalInfo.SetCounsellingTimeA
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadCardActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.UploadVideoActivity;
 import com.shushan.thomework101.mvp.ui.adapter.HomeIncomeAdapter;
+import com.shushan.thomework101.mvp.ui.adapter.HomeStudentAdapter;
 import com.shushan.thomework101.mvp.ui.adapter.HomeUnsuccessfulStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
@@ -68,6 +72,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @BindView(R.id.swipe_ly)
     SwipeRefreshLayout mSwipeLy;
+    @BindView(R.id.system_msg_read_tv)
+    TextView mSystemMsgReadTv;
     //认证流程 未认证
     @BindView(R.id.not_certified_layout)
     LinearLayout mNotCertifiedLayout;
@@ -116,7 +122,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     Unbinder unbinder;
 
     HomeIncomeAdapter mHomeIncomeAdapter;
-    HomeIncomeAdapter mHomeStudentAdapter;
+    HomeStudentAdapter mHomeStudentAdapter;
     HomeUnsuccessfulStudentAdapter mHomeUnsuccessfulStudentAdapter;
     List<HomeIncomeResponse> homeIncomeResponseList = new ArrayList<>();
     List<HomeIncomeResponse> homeStudentResponseList = new ArrayList<>();
@@ -169,18 +175,26 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mMineIncomeRecyclerView.setAdapter(mHomeIncomeAdapter);
         mMineIncomeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         //我的学生
-        mHomeStudentAdapter = new HomeIncomeAdapter(homeStudentResponseList);
+        mHomeStudentAdapter = new HomeStudentAdapter(homeStudentResponseList);
         mMimeStudentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mMimeStudentRecyclerView.setAdapter(mHomeStudentAdapter);
         //未成单学生
         mHomeUnsuccessfulStudentAdapter = new HomeUnsuccessfulStudentAdapter(unSuccessfulStudentResponseList, mImageLoaderHelper);
         mUnsuccessfulStudentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUnsuccessfulStudentRecyclerView.setAdapter(mHomeUnsuccessfulStudentAdapter);
+        mHomeUnsuccessfulStudentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            HomeResponse.OrderBean orderBean = (HomeResponse.OrderBean) adapter.getItem(position);
+            if (orderBean != null) {
+                //启动单聊页面
+                RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), orderBean.getThird_id(), orderBean.getName());
+            }
+        });
     }
 
     @Override
     public void initData() {
         onRequestHomeInfo();
+        onRequestUnReadInfo();
     }
 
     private void initEmptyView() {
@@ -195,7 +209,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_iv:
-                startActivitys(SystemMsgActivity.class);
+                Intent intent = new Intent(getActivity(), SystemMsgActivity.class);//系统消息
+                startActivityForResult(intent, 1);
                 break;
             case R.id.customer_service_iv:
                 contactCustomer();
@@ -256,7 +271,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mSharePreferenceUtil.setData("chatType", 1);//在线客服
     }
 
-
     /**
      * 请求首页数据
      */
@@ -265,6 +279,25 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeRequest.token = mUser.token;
         mPresenter.onRequestHomeInfo(homeRequest);
     }
+
+    /**
+     * 查看是否有未读消息
+     */
+    private void onRequestUnReadInfo() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestUnReadInfo(tokenRequest);
+    }
+
+    @Override
+    public void getUnReadInfoSuccess(UnReadNewsResponse unReadNewsResponse) {
+        if (unReadNewsResponse.getState() == 1) {//有未读消息
+            mSystemMsgReadTv.setVisibility(View.VISIBLE);
+        } else {
+            mSystemMsgReadTv.setVisibility(View.GONE);
+        }
+    }
+
 
     @Override
     public void onRefresh() {
@@ -291,6 +324,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             mHomeUnsuccessfulStudentAdapter.setEmptyView(mEmptyView);//如果没有审核通过和没有分配学生显示emptyView
         }
     }
+
 
     @Override
     public void getHomeInfoFail() {
@@ -387,11 +421,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             HomeIncomeResponse homeIncomeResponse = new HomeIncomeResponse();
             homeIncomeResponse.title = homeStudentTitle[i];
             if (i == 0) {
-                homeIncomeResponse.money = studentBean.getAll();
+                homeIncomeResponse.num = studentBean.getAll();
             } else if (i == 1) {
-                homeIncomeResponse.money = studentBean.getPay();
+                homeIncomeResponse.num = studentBean.getPay();
             } else {
-                homeIncomeResponse.money = studentBean.getToday_pay();
+                homeIncomeResponse.num = studentBean.getToday_pay();
             }
             homeIncomeResponse.bgIcon = homeStudentBgIcon[i];
             homeStudentResponseList.add(homeIncomeResponse);
@@ -447,6 +481,16 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void commonDialogBtnOkListener() {
 
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+            onRequestUnReadInfo();
+        }
+    }
+
 
     private void initializeInjector() {
         DaggerHomeFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())

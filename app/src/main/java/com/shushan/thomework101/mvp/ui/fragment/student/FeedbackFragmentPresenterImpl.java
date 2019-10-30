@@ -41,7 +41,7 @@ public class FeedbackFragmentPresenterImpl implements FeedbackFragmentControl.Fe
         mFeedbackFragmentView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMainModel.onRequestFeedbackInfo(feedbackRequest).compose(mFeedbackFragmentView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestFeedbackInfoSuccess, throwable -> mFeedbackFragmentView.showErrMessage(throwable),
-                        () -> mFeedbackFragmentView.dismissLoading());
+                        () -> mFeedbackFragmentView.getFeedbackInfoFail());
         mFeedbackFragmentView.addSubscription(disposable);
     }
 
@@ -57,7 +57,7 @@ public class FeedbackFragmentPresenterImpl implements FeedbackFragmentControl.Fe
             mFeedbackFragmentView.showToast(responseData.errorMsg);
         }
     }
-    
+
     @Override
     public void onCreate() {
 
@@ -69,5 +69,4 @@ public class FeedbackFragmentPresenterImpl implements FeedbackFragmentControl.Fe
     }
 
 
-   
 }

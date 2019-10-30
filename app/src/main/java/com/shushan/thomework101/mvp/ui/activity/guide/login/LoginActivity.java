@@ -155,7 +155,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 mBuProcessor.setLoginUser(mUser);
                 //"别名ID", "自定义类型"  + loginResponse.getT_id()
                 PushAgent mPushAgent = PushAgent.getInstance(this);
-                LogUtils.e("tid:" + loginResponse.getTid());
                 mPushAgent.setAlias(BuildConfig.ALIAS_HEAD + loginResponse.getTid(), "teacher", (isSuccess, message) -> LogUtils.e("isSuccess=" + isSuccess + " message=" + message));
                 if (!mBuProcessor.isFinishFirstWrite()) {
                     startActivitys(SubjectSelectActivity.class);

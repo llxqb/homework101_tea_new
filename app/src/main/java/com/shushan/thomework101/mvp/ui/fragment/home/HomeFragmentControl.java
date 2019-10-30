@@ -2,7 +2,9 @@ package com.shushan.thomework101.mvp.ui.fragment.home;
 
 
 import com.shushan.thomework101.entity.request.HomeRequest;
+import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.response.HomeResponse;
+import com.shushan.thomework101.entity.response.UnReadNewsResponse;
 import com.shushan.thomework101.mvp.presenter.LoadDataView;
 import com.shushan.thomework101.mvp.presenter.Presenter;
 
@@ -14,6 +16,8 @@ public class HomeFragmentControl {
     public interface HomeView extends LoadDataView {
         void getHomeInfoSuccess(HomeResponse homeResponse);
 
+        void getUnReadInfoSuccess(UnReadNewsResponse unReadNewsResponse);
+
         void getHomeInfoFail();
 
     }
@@ -24,6 +28,10 @@ public class HomeFragmentControl {
          */
         void onRequestHomeInfo(HomeRequest homeRequest);
 
+        /**
+         * 查看是否有未读消息
+         */
+        void onRequestUnReadInfo(TokenRequest tokenRequest);
     }
 
 

@@ -169,6 +169,14 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
     }
 
     @Override
+    public void getFeedbackInfoFail() {
+        dismissLoading();
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+        }
+    }
+
+    @Override
     public void onLoadMoreRequested() {
         if (!todayFeedBackResponseList.isEmpty()) {
             if (page == 1 && todayFeedBackResponseList.size() < pageSize) {

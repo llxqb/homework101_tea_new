@@ -75,8 +75,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             finish();
         } else if (!mBuProcessor.isFinishFirstWrite()) {
             startActivitys(SubjectSelectActivity.class);
+        } else {
+            connectRongCloud();
         }
-        connectRongCloud();
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = new HomeFragment();
         StudentFragment studentFragment = new StudentFragment();

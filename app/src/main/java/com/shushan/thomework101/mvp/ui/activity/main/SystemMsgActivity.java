@@ -1,5 +1,6 @@
 package com.shushan.thomework101.mvp.ui.activity.main;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,13 +79,28 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_left_iv:
-                finish();
+                onBackPressed();
                 break;
             case R.id.common_right_tv:
                 clearMessageDialog();
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        onExitMsgActivity();
+        super.onBackPressed();
+    }
+
+    /**
+     * 退出更新首页未读消息接口
+     */
+    private void onExitMsgActivity() {
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+    }
+
 
     private void onRequestSystemMsg() {
         SystemMsgRequest systemMsgRequest = new SystemMsgRequest();

@@ -46,4 +46,10 @@ public interface MainApi {
      */
     @POST("teacher/student/student_feedback")
     Observable<String> submitFeedbackInfo(@Body String request);
+
+    /**
+     * 请求辅导反馈
+     */
+    @POST("teacher/message/check_message")
+    Observable<String> onRequestUnReadInfo(@Body String request);
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_home_income_layout"
+    android:id="@+id/item_home_student_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center">
@@ -12,46 +12,45 @@
         android:background="@drawable/selector_home_incom_bg">
 
         <TextView
-            android:id="@+id/income_title"
+            android:id="@+id/student_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_16"
-            android:text="今日提成"
+            android:text="我的学生"
             android:textColor="#9495A0"
             android:textSize="@dimen/sp_13" />
 
 
-        <TextView
-            android:id="@+id/money_icon_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/income_title"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_20"
-            android:text="￥"
-            android:textColor="#4C5467"
-            android:textSize="@dimen/sp_14" />
-
         <ImageView
-            android:id="@+id/income_bg_icon_iv"
+            android:id="@+id/student_bg_icon_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            />
+            android:layout_alignParentBottom="true" />
 
         <TextView
-            android:id="@+id/money_tv"
+            android:id="@+id/student_num_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/income_title"
+            android:layout_below="@id/student_title"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_toEndOf="@id/money_icon_tv"
             android:text="0"
             android:textColor="#4C5467"
             android:textSize="@dimen/sp_25"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_title"
+            android:layout_marginTop="@dimen/dp_18"
+            android:layout_toEndOf="@id/student_num_tv"
+            android:text="人"
+            android:textColor="#4C5467"
+            android:textSize="@dimen/sp_14" />
 
 
     </RelativeLayout>

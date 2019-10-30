@@ -149,7 +149,6 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     @Override
     public void initData() {
 //        mRcExtension.setExtensionClickListener(new IExtensionClickListenerHelper());
-        ConversationSaFragment conversationSaFragment =  new ConversationSaFragment();
     }
 
     @OnClick({R.id.common_left_iv, R.id.end_counselling, R.id.common_right_iv})

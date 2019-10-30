@@ -19,6 +19,7 @@ import com.shushan.thomework101.entity.request.DeviceInfoRequest;
 import com.shushan.thomework101.entity.request.VersionUpdateRequest;
 import com.shushan.thomework101.entity.response.VersionUpdateResponse;
 import com.shushan.thomework101.entity.user.User;
+import com.shushan.thomework101.mvp.ui.activity.guide.FirstGuideActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.login.LoginActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MyFragmentAdapter;
@@ -70,27 +71,30 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public void initData() {
         mMainBottomNavigation.setItemIconTintList(null);//Menu时不显示彩色图标的问题
         LogUtils.e("user:" + new Gson().toJson(mBuProcessor.getUser()));
-        if (!mBuProcessor.isValidLogin()) {
+        if (!mSharePreferenceUtil.getBooleanData("first_guide")) {
+            startActivitys(FirstGuideActivity.class);
+            finish();
+        } else if (!mBuProcessor.isValidLogin()) {
             startActivitys(LoginActivity.class);
             finish();
         } else if (!mBuProcessor.isFinishFirstWrite()) {
             startActivitys(SubjectSelectActivity.class);
         } else {
             connectRongCloud();
+            List<Fragment> fragments = new ArrayList<>();
+            HomeFragment homeFragment = new HomeFragment();
+            StudentFragment studentFragment = new StudentFragment();
+            MineFragment mineFragment = new MineFragment();
+            fragments.add(homeFragment);
+            fragments.add(studentFragment);
+            fragments.add(mineFragment);
+            MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), fragments);
+            mMainViewpager.setOffscreenPageLimit(fragments.size());
+            mMainViewpager.setAdapter(adapter);
+            mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
+            onRequestVersionUpdate();
+            uploadDeviceInfo();
         }
-        List<Fragment> fragments = new ArrayList<>();
-        HomeFragment homeFragment = new HomeFragment();
-        StudentFragment studentFragment = new StudentFragment();
-        MineFragment mineFragment = new MineFragment();
-        fragments.add(homeFragment);
-        fragments.add(studentFragment);
-        fragments.add(mineFragment);
-        MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), fragments);
-        mMainViewpager.setOffscreenPageLimit(fragments.size());
-        mMainViewpager.setAdapter(adapter);
-        mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
-        onRequestVersionUpdate();
-        uploadDeviceInfo();
     }
 
     /**
@@ -128,6 +132,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getBooleanExtra("exitLogin", false)) {
+            mSharePreferenceUtil.setData("first_guide", true);//设置引导页为true
             startActivitys(LoginActivity.class);
             finish();
         }

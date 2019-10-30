@@ -24,4 +24,11 @@ public class ActivityConstant {
      * 辅导反馈结束刷新今日反馈
      */
     public static final String UPDATE_FEEDBACK_LIST = "update_feedback_list";
+    /**
+     * 友盟推送消息
+     * 更新未读消息
+     * 更新首页
+     * 更新我的
+     */
+    public static final String UM_PUSH_MESSAGE = "um_push_message";
 }

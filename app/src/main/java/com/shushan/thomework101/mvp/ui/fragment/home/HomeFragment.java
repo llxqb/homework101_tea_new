@@ -151,8 +151,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onReceivePro(Context context, Intent intent) {
-        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_CHECK_INFO)) {
-            onRequestHomeInfo();
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(ActivityConstant.UPDATE_USER_CHECK_INFO)) {
+                onRequestHomeInfo();
+            } else if (intent.getAction().equals(ActivityConstant.UM_PUSH_MESSAGE)) {
+                //更新未读消息
+                onRequestUnReadInfo();
+                onRequestHomeInfo();
+            }
         }
         super.onReceivePro(context, intent);
     }
@@ -161,6 +167,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.UPDATE_USER_CHECK_INFO);
+        mFilter.addAction(ActivityConstant.UM_PUSH_MESSAGE);
     }
 
 

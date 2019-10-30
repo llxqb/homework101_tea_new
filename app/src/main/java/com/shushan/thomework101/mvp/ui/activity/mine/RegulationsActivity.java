@@ -16,8 +16,10 @@ import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AboutUsActivity extends BaseActivity {
-
+/**
+ * 规章制度
+ */
+public class RegulationsActivity extends BaseActivity {
 
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
@@ -26,14 +28,15 @@ public class AboutUsActivity extends BaseActivity {
     @BindView(R.id.webView)
     WebView mWebView;
 
+
     @Override
     protected void initContentView() {
-        setContentView(R.layout.activity_about_us);
+        setContentView(R.layout.activity_regulations);
     }
 
     @Override
     public void initView() {
-        mCommonTitleTv.setText("关于我们");
+        mCommonTitleTv.setText("规章制度");
         mProgressbar.setMax(100);
         initWebView();
     }
@@ -65,7 +68,7 @@ public class AboutUsActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             wetSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);//设置图文混排适用
         }
-        String url = ServerConstant.ABOUT_US_URL;
+        String url = ServerConstant.REGULATIONS_URL;
         mWebView.loadUrl(url);
     }
 

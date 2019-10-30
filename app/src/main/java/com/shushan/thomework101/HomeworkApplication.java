@@ -9,11 +9,14 @@ import com.shushan.thomework101.di.components.AppComponent;
 import com.shushan.thomework101.di.components.DaggerAppComponent;
 import com.shushan.thomework101.di.modules.AppModule;
 import com.shushan.thomework101.entity.constants.ServerConstant;
+import com.shushan.thomework101.help.UmengMessageHandlerHelper;
 import com.shushan.thomework101.mvp.ui.activity.rongCloud.MyReceiveMessageListener;
 import com.shushan.thomework101.mvp.utils.ExtensionModulesUtil;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 
 import javax.inject.Inject;
 
@@ -99,6 +102,17 @@ public class HomeworkApplication extends Application {
                 });
             }
         }).start();
+
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+            @Override
+            public void launchApp(Context context, UMessage uMessage) {
+                super.launchApp(context, uMessage);
+                Log.d(TAG, "launchApp : extra = " + uMessage.extra);
+
+            }
+        };
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
+        mPushAgent.setMessageHandler(new UmengMessageHandlerHelper());
 
     }
 

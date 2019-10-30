@@ -97,6 +97,11 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+//    //去重复
+//    packagingOptions {
+////        exclude 'builddef.lst'
+//    }
 }
 
 dependencies {
@@ -149,8 +154,7 @@ dependencies {
     implementation 'com.umeng.umsdk:push:6.0.1'
     //视频加载库
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.4'
-    //压缩视频
-//    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
     //自定义TabLayout
     implementation 'com.androidkun:XTabLayout:1.1.4'
+//    implementation project(':videocompressor')//视频压缩
 }

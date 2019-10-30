@@ -188,6 +188,35 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
             RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
             MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
             mPresenter.uploadVideoRequest(photo);
+//
+//            String destPath = "/storage/emulated/0/tutorshipRecord" + "/new_" + System.currentTimeMillis() + ".mp4";////压缩后新地址
+//            showLoading(getResources().getString(R.string.loading));
+//            VideoCompress.compressVideoLow(videoPath, destPath, new VideoCompress.CompressListener() {
+//                @Override
+//                public void onStart() {
+//                    //Start Compress
+//                }
+//
+//                @Override
+//                public void onSuccess() {
+//                    //Finish successfully
+//                    //上传视频文件
+//                    File file = new File(videoPath);
+//                    RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+//                    MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
+//                    mPresenter.uploadVideoRequest(photo);
+//                }
+//
+//                @Override
+//                public void onFail() {
+//                    //Failed
+//                }
+//
+//                @Override
+//                public void onProgress(float percent) {
+//                    //Progress
+//                }
+//            });
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

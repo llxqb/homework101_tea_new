@@ -1,5 +1,7 @@
 package com.shushan.thomework101.mvp.ui.fragment.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +23,7 @@ import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMineFragmentComponent;
 import com.shushan.thomework101.di.modules.MainModule;
 import com.shushan.thomework101.di.modules.MineFragmentModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.request.HomeRequest;
 import com.shushan.thomework101.entity.response.HomeResponse;
@@ -31,6 +34,7 @@ import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.IntroductionActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.LeaveActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.MineFeedbackActivity;
+import com.shushan.thomework101.mvp.ui.activity.mine.RegulationsActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.SettingActivity;
 import com.shushan.thomework101.mvp.ui.activity.mine.StudentReplacementDetailActivity;
 import com.shushan.thomework101.mvp.ui.activity.personalInfo.EditPersonalInfoActivity;
@@ -101,6 +105,21 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         return view;
     }
 
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(ActivityConstant.UM_PUSH_MESSAGE)) {
+                onRequestHomeInfo();
+            }
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UM_PUSH_MESSAGE);
+    }
 
     @Override
     public void initView() {
@@ -124,6 +143,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                         startActivitys(CustomerServiceActivity.class);
                         break;
                     case 3://规章制度
+                        startActivitys(RegulationsActivity.class);
                         break;
                     case 4://操作介绍
                         startActivitys(IntroductionActivity.class);

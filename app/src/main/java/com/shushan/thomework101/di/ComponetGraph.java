@@ -2,6 +2,7 @@ package com.shushan.thomework101.di;
 
 
 import com.shushan.thomework101.HomeworkApplication;
+import com.shushan.thomework101.mvp.ui.activity.guide.FirstGuideActivity;
 import com.shushan.thomework101.mvp.ui.activity.guide.SubjectSelectActivity;
 import com.shushan.thomework101.mvp.ui.activity.logout.LogoutSuccessActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -21,5 +22,6 @@ public interface ComponetGraph {
     void inject(SubjectSelectActivity subjectSelectActivity);//选择科目
 
     void inject(LogoutSuccessActivity logoutSuccessActivity);//注销账号成功
+    void inject(FirstGuideActivity firstGuideActivity);//引导页
 
 }

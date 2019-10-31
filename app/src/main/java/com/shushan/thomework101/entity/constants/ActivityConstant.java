@@ -31,4 +31,12 @@ public class ActivityConstant {
      * 更新我的
      */
     public static final String UM_PUSH_MESSAGE = "um_push_message";
+    /**
+     * 有融云消息未读
+     */
+    public static final String RC_UNREAD_MSG = "rc_unread_msg";
+    /**
+     * 有融云消息已读
+     */
+    public static final String RC_READ_MSG = "rc_read_msg";
 }

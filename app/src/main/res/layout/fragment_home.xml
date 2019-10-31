@@ -44,6 +44,8 @@
                 android:id="@+id/system_msg_read_tv"
                 android:layout_width="@dimen/dp_6"
                 android:layout_height="@dimen/dp_6"
+                android:layout_marginStart="@dimen/dp_m_1"
+                android:layout_marginBottom="@dimen/dp_m_1"
                 android:background="@drawable/bg_round_red_360" />
 
         </LinearLayout>

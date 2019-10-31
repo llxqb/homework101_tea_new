@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/badge_text"
+        android:layout_width="@dimen/dp_6"
+        android:layout_height="@dimen/dp_6"
+        android:layout_marginStart="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_6"
+        android:visibility="gone"
+        android:background="@drawable/bg_round_red_360" />
+
+</RelativeLayout>

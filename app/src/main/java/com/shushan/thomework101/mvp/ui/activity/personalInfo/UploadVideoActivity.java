@@ -201,10 +201,10 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
 //                public void onSuccess() {
 //                    //Finish successfully
 //                    //上传视频文件
-//                    File file = new File(videoPath);
-//                    RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-//                    MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
-//                    mPresenter.uploadVideoRequest(photo);
+////                    File file = new File(videoPath);
+////                    RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+////                    MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
+////                    mPresenter.uploadVideoRequest(photo);
 //                }
 //
 //                @Override

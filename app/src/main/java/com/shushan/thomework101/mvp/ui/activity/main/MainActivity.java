@@ -1,20 +1,27 @@
 package com.shushan.thomework101.mvp.ui.activity.main;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerMainComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.MainModule;
+import com.shushan.thomework101.entity.constants.ActivityConstant;
 import com.shushan.thomework101.entity.request.DeviceInfoRequest;
 import com.shushan.thomework101.entity.request.VersionUpdateRequest;
 import com.shushan.thomework101.entity.response.VersionUpdateResponse;
@@ -63,6 +70,25 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(ActivityConstant.RC_UNREAD_MSG)) {
+                badgeTv.setVisibility(View.VISIBLE);
+            }else if (intent.getAction().equals(ActivityConstant.RC_READ_MSG)) {
+                badgeTv.setVisibility(View.GONE);
+            }
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.RC_UNREAD_MSG);
+        mFilter.addAction(ActivityConstant.RC_READ_MSG);
+    }
+
+    @Override
     public void initView() {
 
     }
@@ -92,9 +118,28 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             mMainViewpager.setOffscreenPageLimit(fragments.size());
             mMainViewpager.setAdapter(adapter);
             mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
+            addBadge();
             onRequestVersionUpdate();
             uploadDeviceInfo();
         }
+    }
+
+    TextView badgeTv;
+
+    /**
+     * 增加未读消息角标
+     */
+    private void addBadge() {
+        //获取整个的NavigationView
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) mMainBottomNavigation.getChildAt(0);
+        //这里就是获取所添加的每一个Tab(或者叫menu)，
+        View tab = menuView.getChildAt(1);//第一项
+        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+        //加载我们的角标View，新创建的一个布局
+        View badge = LayoutInflater.from(this).inflate(R.layout.main_bottom_badge_layout, menuView, false);
+        //添加到Tab上
+        itemView.addView(badge);
+        badgeTv = badge.findViewById(R.id.badge_text);
     }
 
     /**
@@ -148,6 +193,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 mMainViewpager.setCurrentItem(SWITCH_HOME_PAGE, false);
                 break;
             case R.id.action_student:
+                badgeTv.setVisibility(View.GONE);
                 menuItem.setIcon(R.mipmap.student);
                 mMainViewpager.setCurrentItem(SWITCH_MESSAGE_PAGE, false);
                 break;

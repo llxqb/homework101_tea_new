@@ -80,7 +80,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     /**
      * 辅导结束 辅导id
      */
-    String feedbackId = null;
+    String mFeedbackId = null;
     /**
      * 聊天类型 1 客服
      */
@@ -143,12 +143,13 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                 mEndCounsellingLayoutRl.setVisibility(View.GONE);
             }
         }
-
     }
 
     @Override
     public void initData() {
 //        mRcExtension.setExtensionClickListener(new IExtensionClickListenerHelper());
+        //融云消息已读
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.RC_READ_MSG));
     }
 
     @OnClick({R.id.common_left_iv, R.id.end_counselling, R.id.common_right_iv})
@@ -159,8 +160,9 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                 break;
             case R.id.end_counselling:
                 if (counsellingEndState) { //去反馈
-                    if (mUserInfoByRidResponse != null && feedbackId != null) {
-                        SubmitFeedbackContentActivity.start(this, feedbackId, mUserInfoByRidResponse.getName(), 0);
+                    if (mUserInfoByRidResponse != null && mFeedbackId != null) {
+                        SubmitFeedbackContentActivity.start(this, mFeedbackId, mUserInfoByRidResponse.getName(), 0);
+                        mEndCounsellingLayoutRl.setVisibility(View.GONE);//隐藏辅导反馈入口
                     }
                 } else {
                     DialogFactory.showCommonDialog(ConversationActivity.this, "结束辅导", "你确定要结束辅导~", "继续辅导", "确定结束", Constant.COMMON_DIALOG_STYLE_1);
@@ -219,7 +221,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     @Override
     public void getFeedBackIdSuccess(FeedbackIdResponse feedbackIdResponse) {
-        feedbackId = String.valueOf(feedbackIdResponse.getId());
+        mFeedbackId = String.valueOf(feedbackIdResponse.getId());
     }
 
     /**

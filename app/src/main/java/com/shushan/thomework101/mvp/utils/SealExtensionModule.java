@@ -9,7 +9,6 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.plugin.ImagePlugin;
-import io.rong.imkit.widget.provider.FilePlugin;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -24,7 +23,7 @@ public class SealExtensionModule extends DefaultExtensionModule {
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModuleList = new ArrayList<>();
         IPluginModule image = new ImagePlugin();
-        IPluginModule file = new FilePlugin();
+//        IPluginModule file = new FilePlugin();
 //        IPluginModule location = new DefaultLocationPlugin();
         IPluginModule audio = new AudioPlugin();
         IPluginModule video = new VideoPlugin();
@@ -33,7 +32,7 @@ public class SealExtensionModule extends DefaultExtensionModule {
                 conversationType.equals(Conversation.ConversationType.DISCUSSION) ||
                 conversationType.equals(Conversation.ConversationType.PRIVATE)) {
             pluginModuleList.add(image);
-            pluginModuleList.add(file);
+//            pluginModuleList.add(file);
 //            pluginModuleList.add(location);
             pluginModuleList.add(audio);
             pluginModuleList.add(video);

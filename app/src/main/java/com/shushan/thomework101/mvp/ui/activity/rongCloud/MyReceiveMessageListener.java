@@ -42,6 +42,8 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
             intent.putExtra("extra", extra);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
         }
+        //有融云未读消息，学生显示小红点
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(ActivityConstant.RC_UNREAD_MSG));
         return false;
     }
 }

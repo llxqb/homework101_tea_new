@@ -156,5 +156,4 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.4'
     //自定义TabLayout
     implementation 'com.androidkun:XTabLayout:1.1.4'
-//    implementation project(':videocompressor')//视频压缩
 }

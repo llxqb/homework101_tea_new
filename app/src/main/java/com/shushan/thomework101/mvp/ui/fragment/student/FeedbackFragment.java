@@ -170,7 +170,6 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
 
     @Override
     public void getFeedbackInfoFail() {
-        dismissLoading();
         if (mSwipeLy.isRefreshing()) {
             mSwipeLy.setRefreshing(false);
         }

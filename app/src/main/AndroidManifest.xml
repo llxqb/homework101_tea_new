@@ -116,7 +116,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.guide.login.LoginActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.main.MainActivity"

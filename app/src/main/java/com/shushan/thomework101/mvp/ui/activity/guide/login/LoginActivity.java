@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.thomework101.BuildConfig;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerLoginComponent;
@@ -125,8 +124,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void getVerifyCodeSuccess(VerifyCodeResponse verifyCodeResponse) {
-        LogUtils.e("verifyCodeResponse:" + new Gson().toJson(verifyCodeResponse));
-        mVerificationCodeEt.setText(verifyCodeResponse.getCode() + "");
+//        mVerificationCodeEt.setText(verifyCodeResponse.getCode() + "");
     }
 
 

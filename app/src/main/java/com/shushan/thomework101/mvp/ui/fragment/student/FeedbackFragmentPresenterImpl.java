@@ -40,8 +40,8 @@ public class FeedbackFragmentPresenterImpl implements FeedbackFragmentControl.Fe
     public void onRequestFeedbackInfo(FeedbackRequest feedbackRequest) {
         mFeedbackFragmentView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMainModel.onRequestFeedbackInfo(feedbackRequest).compose(mFeedbackFragmentView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestFeedbackInfoSuccess, throwable -> mFeedbackFragmentView.showErrMessage(throwable),
-                        () -> mFeedbackFragmentView.getFeedbackInfoFail());
+                .subscribe(this::requestFeedbackInfoSuccess, throwable -> mFeedbackFragmentView.getFeedbackInfoFail(),
+                        () -> mFeedbackFragmentView.dismissLoading());
         mFeedbackFragmentView.addSubscription(disposable);
     }
 

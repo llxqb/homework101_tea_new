@@ -39,7 +39,7 @@ public class MineFragmentPresenterImpl implements MineFragmentControl.MineFragme
     public void onRequestHomeInfo(HomeRequest homeRequest) {
         mMineView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMainModel.onRequestHomeInfo(homeRequest).compose(mMineView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::getHomeInfoSuccess, throwable -> mMineView.showErrMessage(throwable),
+                .subscribe(this::getHomeInfoSuccess, throwable -> mMineView.getHomeInfoFail(),
                         () -> mMineView.dismissLoading());
         mMineView.addSubscription(disposable);
     }

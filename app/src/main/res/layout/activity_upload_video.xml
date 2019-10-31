@@ -13,81 +13,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/upload_video_title"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_25"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginEnd="@dimen/dp_25"
                 android:textColor="@color/first_text_color"
-                android:textSize="@dimen/sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/sp_14" />
 
             <View
                 android:id="@+id/line"
                 style="@style/line_height_05"
-                android:layout_marginTop="@dimen/dp_21"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upload_video_title" />
+                android:layout_marginTop="@dimen/dp_21" />
 
             <TextView
-                android:id="@+id/question_grade_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_25"
                 android:layout_marginTop="@dimen/dp_21"
+                android:text="试讲要求"
                 android:textColor="@color/color_30"
                 android:textSize="@dimen/sp_18"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line" />
+                android:textStyle="bold" />
 
+
+            <!--<TextView-->
+            <!--android:id="@+id/question_content_tv"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="@dimen/dp_25"-->
+            <!--android:layout_marginTop="@dimen/dp_13"-->
+            <!--android:layout_marginEnd="@dimen/dp_25"-->
+            <!--android:textColor="@color/first_text_color"-->
+            <!--android:textSize="@dimen/sp_13"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/question_grade_tv" />-->
 
             <TextView
-                android:id="@+id/question_content_tv"
-                android:layout_width="0dp"
+                android:id="@+id/question_desc_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_25"
                 android:layout_marginTop="@dimen/dp_13"
                 android:layout_marginEnd="@dimen/dp_25"
+                android:text="@string/upload_video_question_ask"
                 android:textColor="@color/first_text_color"
-                android:textSize="@dimen/sp_13"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/question_grade_tv" />
+                android:textSize="@dimen/sp_13" />
 
             <TextView
-                android:id="@+id/question_desc_tv"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_25"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_25"
-                android:textColor="@color/first_text_color"
-                android:textSize="@dimen/sp_13"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/question_content_tv" />
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="试讲题"
+                android:textColor="@color/color_30"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+
+            <com.shushan.thomework101.mvp.views.ResizableImageView
+                android:id="@+id/question_content_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_25"
+                android:layout_marginEnd="@dimen/dp_10" />
 
 
             <RelativeLayout
                 android:id="@+id/upload_video_layout"
                 android:layout_width="@dimen/dp_320"
                 android:layout_height="@dimen/dp_180"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_30"
                 android:background="@drawable/add_video_bg"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/question_desc_tv">
+                android:orientation="vertical">
 
                 <com.shushan.thomework101.mvp.views.NoFullScreenJzvdStd
                     android:id="@+id/jz_video"
@@ -143,19 +149,16 @@
                 android:id="@+id/sure_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_40"
                 android:layout_marginBottom="@dimen/dp_30"
                 android:background="@mipmap/button"
                 android:gravity="center"
                 android:text="完成"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upload_video_layout" />
+                android:textSize="@dimen/sp_16" />
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 

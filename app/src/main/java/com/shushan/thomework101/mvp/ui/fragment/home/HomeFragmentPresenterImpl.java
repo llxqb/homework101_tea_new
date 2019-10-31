@@ -42,7 +42,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
         mHomeView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mHomeFragmentModel.onRequestHomeInfo(homeRequest).compose(mHomeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::getHomeInfoSuccess, throwable -> mHomeView.showErrMessage(throwable),
-                        () -> mHomeView.dismissLoading());
+                        () -> mHomeView.getHomeInfoFail());
         mHomeView.addSubscription(disposable);
     }
 

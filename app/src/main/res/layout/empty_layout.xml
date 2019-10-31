@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
 
@@ -9,18 +10,14 @@
         android:id="@+id/empty_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_100" />
+        />
 
 
     <TextView
         android:id="@+id/empty_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_30"
-        android:gravity="center_horizontal"
         android:text="@string/empty_student"
         android:textColor="#9495A0"
         android:textSize="@dimen/sp_13" />

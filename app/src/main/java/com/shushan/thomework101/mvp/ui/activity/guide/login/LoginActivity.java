@@ -126,7 +126,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void getVerifyCodeSuccess(VerifyCodeResponse verifyCodeResponse) {
         LogUtils.e("verifyCodeResponse:" + new Gson().toJson(verifyCodeResponse));
-        //TODO 删除
         mVerificationCodeEt.setText(verifyCodeResponse.getCode() + "");
     }
 

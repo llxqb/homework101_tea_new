@@ -12,6 +12,7 @@
     <string name="main_bottom_student">学生</string>
     <string name="main_bottom_mime">我的</string>
     <string name="main_exit_app">再点一次退出应用</string>
+
     <!-- 空白文字提示-->
     <string name="empty_student">您还未通过作业101教师审核\n暂未给您分配学生</string>
     <string name="empty_coaching">您还未通过作业101教师审核\n暂无辅导列表</string>
@@ -22,5 +23,11 @@
     <string name="empty_student_change_out_record">暂无学生转出</string>
     <string name="empty_mine_feedback">暂无辅导反馈哟~</string>
     <string name="empty_money">暂无收益记录哟~</string>
+
+    <string name="upload_video_question_ask">1、教师试讲以下一题，按讲解流程要求录制3&#8211;5分钟的题目讲解视频。（2次机会）\n2、讲解流程要求：\n
+        1）、引导学生审题，分析题意（问题、条件、关键信息等。）\n
+        2）、帮助学生回顾相关知识点，建立解题思路，完成解题。\n
+        3）、解题方法、知识点总结。\n
+        注 ：教师普通话标准，语速适中，表达清晰自然，态度和蔼，语音环境安静无杂音，所讲解的思路和方法适合该学段的学生。</string>
 
 </resources>

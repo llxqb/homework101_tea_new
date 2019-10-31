@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shushan.thomework101.R;
+import com.shushan.thomework101.entity.constants.ServerConstant;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 
 import butterknife.BindView;
@@ -64,7 +65,8 @@ public class LoginProtocolActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             wetSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);//设置图文混排适用
         }
-        String url = "https://wk.zuoye101.com/agreement.html";
+        //https://tpi.zuoye101.com/agreement   隐私协议
+        String url = ServerConstant.LOGIN_PROTOCOL_URL;
         mWebView.loadUrl(url);
     }
 

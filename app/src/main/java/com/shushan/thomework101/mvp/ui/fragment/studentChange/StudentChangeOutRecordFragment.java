@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentChangeRecordFragmentComponent;
@@ -38,7 +39,7 @@ import butterknife.Unbinder;
  * 全部
  */
 
-public class StudentChangeOutRecordFragment extends BaseFragment implements StudentChangeRecordControl.StudentChangeRecordView {
+public class StudentChangeOutRecordFragment extends BaseFragment implements StudentChangeRecordControl.StudentChangeRecordView  , BaseQuickAdapter.RequestLoadMoreListener{
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     Unbinder unbinder;
@@ -70,6 +71,7 @@ public class StudentChangeOutRecordFragment extends BaseFragment implements Stud
         mStudentChangeRecordAdapter = new StudentChangeRecordAdapter(studentChangeRecordResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mStudentChangeRecordAdapter);
+        mStudentChangeRecordAdapter.setOnLoadMoreListener(this, mRecyclerView);
     }
 
     @Override
@@ -96,11 +98,40 @@ public class StudentChangeOutRecordFragment extends BaseFragment implements Stud
     }
 
     @Override
-    public void getStudentChangeSuccess(StudentChangeRecordResponse studentChangeRecordResponse) {
-        if (!studentChangeRecordResponse.getData().isEmpty()) {
-            mStudentChangeRecordAdapter.addData(studentChangeRecordResponse.getData());
+    public void onLoadMoreRequested() {
+        if (!studentChangeRecordResponseList.isEmpty()) {
+            if (page == 1 && studentChangeRecordResponseList.size() < pageSize) {
+                mStudentChangeRecordAdapter.loadMoreEnd(true);
+            } else {
+                if (studentChangeRecordResponseList.size() < pageSize) {
+                    mStudentChangeRecordAdapter.loadMoreEnd();
+                } else {
+                    //等于10条
+                    page++;
+                    mStudentChangeRecordAdapter.loadMoreComplete();
+                    onRequestStudentChange();
+                }
+            }
         } else {
-            mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+            mStudentChangeRecordAdapter.loadMoreEnd();
+        }
+    }
+
+    @Override
+    public void getStudentChangeSuccess(StudentChangeRecordResponse studentChangeRecordResponse) {
+        studentChangeRecordResponseList = studentChangeRecordResponse.getData();
+        //加载更多这样设置
+        if (!studentChangeRecordResponse.getData().isEmpty()) {
+            if (page == 1) {
+                mStudentChangeRecordAdapter.setNewData(studentChangeRecordResponse.getData());
+            } else {
+                mStudentChangeRecordAdapter.addData(studentChangeRecordResponse.getData());
+            }
+        } else {
+            if (page == 1) {
+                mStudentChangeRecordAdapter.setNewData(null);
+                mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 
@@ -110,5 +141,6 @@ public class StudentChangeOutRecordFragment extends BaseFragment implements Stud
                 .studentChangeRecordFragmentModule(new StudentChangeRecordFragmentModule(this))
                 .build().inject(this);
     }
+
 
 }

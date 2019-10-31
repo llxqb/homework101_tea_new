@@ -9,13 +9,17 @@ public class ServerConstant {
      */
     public static final String QQ_APP_ID = "1108003226";
     //融云生产环境客服id
-    public static final String RY_CUSTOMER_ID="service";
+    public static final String RY_CUSTOMER_ID = "service";
+    /**
+     * 隐私协议
+     */
+    public static final String LOGIN_PROTOCOL_URL = "https://tpi.zuoye101.com/agreement";
     /**
      * 规章制度
      */
-    public static final String REGULATIONS_URL="https://tpi.zuoye101.com/index/teacher/system";
+    public static final String REGULATIONS_URL = "https://tpi.zuoye101.com/index/teacher/system";
     /**
      * 关于我们
      */
-    public static final String ABOUT_US_URL="https://tpi.zuoye101.com/index/teacher/aboutus";
+    public static final String ABOUT_US_URL = "https://tpi.zuoye101.com/index/teacher/aboutus";
 }

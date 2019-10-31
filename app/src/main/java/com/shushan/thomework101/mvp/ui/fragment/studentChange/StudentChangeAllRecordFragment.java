@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.thomework101.HomeworkApplication;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.di.components.DaggerStudentChangeRecordFragmentComponent;
@@ -38,7 +39,7 @@ import butterknife.Unbinder;
  * 全部
  */
 
-public class StudentChangeAllRecordFragment extends BaseFragment implements StudentChangeRecordControl.StudentChangeRecordView {
+public class StudentChangeAllRecordFragment extends BaseFragment implements StudentChangeRecordControl.StudentChangeRecordView, BaseQuickAdapter.RequestLoadMoreListener  {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -71,6 +72,7 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
         mStudentChangeRecordAdapter = new StudentChangeRecordAdapter(studentChangeRecordResponseList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mStudentChangeRecordAdapter);
+        mStudentChangeRecordAdapter.setOnLoadMoreListener(this, mRecyclerView);
     }
 
     @Override
@@ -86,7 +88,9 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
         emptyTv.setText(getResources().getString(R.string.empty_student_change));
     }
 
-
+    /**
+     * 请求学生变动信息
+     */
     private void onRequestStudentChange() {
         StudentChangeRequest request = new StudentChangeRequest();
         request.token = mUser.token;
@@ -96,13 +100,43 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
     }
 
     @Override
-    public void getStudentChangeSuccess(StudentChangeRecordResponse studentChangeRecordResponse) {
-        if (!studentChangeRecordResponse.getData().isEmpty()) {
-            mStudentChangeRecordAdapter.addData(studentChangeRecordResponse.getData());
+    public void onLoadMoreRequested() {
+        if (!studentChangeRecordResponseList.isEmpty()) {
+            if (page == 1 && studentChangeRecordResponseList.size() < pageSize) {
+                mStudentChangeRecordAdapter.loadMoreEnd(true);
+            } else {
+                if (studentChangeRecordResponseList.size() < pageSize) {
+                    mStudentChangeRecordAdapter.loadMoreEnd();
+                } else {
+                    //等于10条
+                    page++;
+                    mStudentChangeRecordAdapter.loadMoreComplete();
+                    onRequestStudentChange();
+                }
+            }
         } else {
-            mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+            mStudentChangeRecordAdapter.loadMoreEnd();
         }
     }
+
+    @Override
+    public void getStudentChangeSuccess(StudentChangeRecordResponse studentChangeRecordResponse) {
+        studentChangeRecordResponseList = studentChangeRecordResponse.getData();
+        //加载更多这样设置
+        if (!studentChangeRecordResponse.getData().isEmpty()) {
+            if (page == 1) {
+                mStudentChangeRecordAdapter.setNewData(studentChangeRecordResponse.getData());
+            } else {
+                mStudentChangeRecordAdapter.addData(studentChangeRecordResponse.getData());
+            }
+        } else {
+            if (page == 1) {
+                mStudentChangeRecordAdapter.setNewData(null);
+                mStudentChangeRecordAdapter.setEmptyView(mEmptyView);
+            }
+        }
+    }
+
 
     private void initializeInjector() {
         DaggerStudentChangeRecordFragmentComponent.builder().appComponent(((HomeworkApplication) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
@@ -116,6 +150,7 @@ public class StudentChangeAllRecordFragment extends BaseFragment implements Stud
         super.onDestroyView();
         unbinder.unbind();
     }
+
 
 
 }

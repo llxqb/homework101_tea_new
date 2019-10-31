@@ -25,6 +25,7 @@ import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.PicUtils;
 import com.shushan.thomework101.mvp.utils.UserUtil;
 import com.shushan.thomework101.mvp.views.NoFullScreenJzvdStd;
+import com.shushan.thomework101.mvp.views.ResizableImageView;
 
 import java.io.File;
 
@@ -48,12 +49,10 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
     ImageView mCommonRightIv;
     @BindView(R.id.upload_video_title)
     TextView mUploadVideoTitle;
-    @BindView(R.id.question_grade_tv)
-    TextView mQuestionGradeTv;
-    @BindView(R.id.question_content_tv)
-    TextView mQuestionContentTv;
     @BindView(R.id.question_desc_tv)
     TextView mQuestionDescTv;
+    @BindView(R.id.question_content_iv)
+    ResizableImageView mQuestionContentIv;
     @BindView(R.id.upload_video_layout)
     RelativeLayout mUploadVideoLayout;
     @BindView(R.id.jz_video)
@@ -130,10 +129,9 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
 
     @Override
     public void getTopicInfoSuccess(TopicResponse topicResponse) {
-        String gradeValue = UserUtil.gradeIntToString(topicResponse.getGrade()) + "试讲题";
-        mQuestionGradeTv.setText(gradeValue);
-        mQuestionContentTv.setText(topicResponse.getQuestion());
-        mQuestionDescTv.setText(topicResponse.getExplain());
+//        String gradeValue = UserUtil.gradeIntToString(topicResponse.getGrade()) + "试讲题";
+//        mQuestionGradeTv.setText(gradeValue);
+        mImageLoaderHelper.displayImage(this,topicResponse.getQuestion(),mQuestionContentIv);
     }
 
     @Override

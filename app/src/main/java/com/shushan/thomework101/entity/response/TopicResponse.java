@@ -4,17 +4,22 @@ package com.shushan.thomework101.entity.response;
  * 试讲题目
  */
 public class TopicResponse {
+
     /**
-     * id : 1
-     * grade : 4
-     * question : 这是题目
-     * explain : 这是讲解
+     * id : 52
+     * subject : 2
+     * grade : 3
+     * question : http://newzuoye101.oss-cn-beijing.aliyuncs.com/question/15725111943005.png
+     * width : 1125
+     * height : 276
      */
 
     private int id;
+    private int subject;
     private int grade;
     private String question;
-    private String explain;
+    private int width;
+    private int height;
 
     public int getId() {
         return id;
@@ -22,6 +27,14 @@ public class TopicResponse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getSubject() {
+        return subject;
+    }
+
+    public void setSubject(int subject) {
+        this.subject = subject;
     }
 
     public int getGrade() {
@@ -40,11 +53,19 @@ public class TopicResponse {
         this.question = question;
     }
 
-    public String getExplain() {
-        return explain;
+    public int getWidth() {
+        return width;
     }
 
-    public void setExplain(String explain) {
-        this.explain = explain;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

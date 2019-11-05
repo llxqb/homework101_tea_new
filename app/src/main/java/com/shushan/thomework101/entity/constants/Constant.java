@@ -1,6 +1,8 @@
 package com.shushan.thomework101.entity.constants;
 
 
+import android.os.Environment;
+
 import com.shushan.thomework101.R;
 
 /**
@@ -88,4 +90,8 @@ public class Constant {
      * 融云客服渠道号
      */
     public static final String CUSTOMER_NUM = "10002";
+    /**
+     * 文件路径
+     */
+    public static final String FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/homework101_teacher/";
 }

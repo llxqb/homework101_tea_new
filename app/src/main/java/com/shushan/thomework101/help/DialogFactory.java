@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.shushan.thomework101.R;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.ui.dialog.CommonDialog;
+import com.shushan.thomework101.mvp.views.KbWithWordsCircleProgressBar;
 
 import java.util.Calendar;
 
@@ -155,6 +156,18 @@ public class DialogFactory {
         progressDialog.setMessage(msg);
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
+        return progressDialog;
+    }
+    public static ProgressDialog showProgressDialog2(Context context, String msg,String progress) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.progress_loading, (ViewGroup) ((BaseActivity) context).getWindow().getDecorView(), false);// 得到加载view
+        KbWithWordsCircleProgressBar circleProgress = v.findViewById(R.id.circle_progress);
+        TextView loadingTvText = v.findViewById(R.id.loading_tv);
+        loadingTvText.setText(msg);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.loading_dialog);// 创建自定义样式dialog
+        progressDialog.setCancelable(true);
+        progressDialog.setContentView(v);
         return progressDialog;
     }
 

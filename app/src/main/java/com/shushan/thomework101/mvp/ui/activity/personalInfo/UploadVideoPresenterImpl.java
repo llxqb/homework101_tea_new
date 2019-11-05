@@ -66,7 +66,7 @@ public class UploadVideoPresenterImpl implements UploadVideoControl.PresenterUpl
      */
     @Override
     public void uploadVideoRequest(MultipartBody.Part uploadVideo) {
-        mUploadVideoView.showLoading(mContext.getResources().getString(R.string.loading));
+        mUploadVideoView.showLoading("上传中...");
         Disposable disposable = mMineModel.uploadVideoRequest(uploadVideo).compose(mUploadVideoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestUploadVideoSuccess, throwable -> mUploadVideoView.showErrMessage(throwable),
                         () -> mUploadVideoView.dismissLoading());

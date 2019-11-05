@@ -16,10 +16,12 @@ import com.shushan.thomework101.di.components.DaggerUploadVideoComponent;
 import com.shushan.thomework101.di.modules.ActivityModule;
 import com.shushan.thomework101.di.modules.UploadVideoModule;
 import com.shushan.thomework101.entity.constants.ActivityConstant;
+import com.shushan.thomework101.entity.constants.Constant;
 import com.shushan.thomework101.entity.request.TokenRequest;
 import com.shushan.thomework101.entity.request.UploadPersonalInfoRequest;
 import com.shushan.thomework101.entity.response.TopicResponse;
 import com.shushan.thomework101.entity.user.User;
+import com.shushan.thomework101.mvp.silicompressorr.CompressVideoUtils;
 import com.shushan.thomework101.mvp.ui.activity.mine.CustomerServiceActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
 import com.shushan.thomework101.mvp.utils.PicUtils;
@@ -131,7 +133,7 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
     public void getTopicInfoSuccess(TopicResponse topicResponse) {
 //        String gradeValue = UserUtil.gradeIntToString(topicResponse.getGrade()) + "试讲题";
 //        mQuestionGradeTv.setText(gradeValue);
-        mImageLoaderHelper.displayImage(this,topicResponse.getQuestion(),mQuestionContentIv);
+        mImageLoaderHelper.displayImage(this, topicResponse.getQuestion(), mQuestionContentIv);
     }
 
     @Override
@@ -181,43 +183,56 @@ public class UploadVideoActivity extends BaseActivity implements UploadVideoCont
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String videoPath = cursor.getString(columnIndex);
             cursor.close();
-            //上传视频文件
-            File file = new File(videoPath);
-            RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-            MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
-            mPresenter.uploadVideoRequest(photo);
-//
-//            String destPath = "/storage/emulated/0/tutorshipRecord" + "/new_" + System.currentTimeMillis() + ".mp4";////压缩后新地址
-//            showLoading(getResources().getString(R.string.loading));
-//            VideoCompress.compressVideoLow(videoPath, destPath, new VideoCompress.CompressListener() {
-//                @Override
-//                public void onStart() {
-//                    //Start Compress
-//                }
-//
-//                @Override
-//                public void onSuccess() {
-//                    //Finish successfully
-//                    //上传视频文件
-////                    File file = new File(videoPath);
-////                    RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-////                    MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
-////                    mPresenter.uploadVideoRequest(photo);
-//                }
-//
-//                @Override
-//                public void onFail() {
-//                    //Failed
-//                }
-//
-//                @Override
-//                public void onProgress(float percent) {
-//                    //Progress
-//                }
-//            });
+
+//            //上传视频文件
+//            File file = new File(videoPath);
+//            RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+//            MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
+//            mPresenter.uploadVideoRequest(photo);
+            String filePath = Constant.FILE_PATH;
+            File file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+//            String destPath = filePath + "new_upload_video" + ".mp4";//压缩后新地址
+//            LogUtils.e("destPath:" + destPath);
+            // 大于20m自动压缩
+            CompressVideoUtils.getCompressVideoTask(this, 450, 20, 1000, 400, new CompressVideoUtils.OnCompressListener() {
+                @Override
+                public void onFinishCompress(String path, boolean isCompressed) {
+                    //上传视频文件
+                    File file = new File(path);
+                    RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+                    MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
+                    mPresenter.uploadVideoRequest(photo);
+                }
+            }).execute(videoPath  // 源文件文件夹
+                    , filePath);//目标文件夹
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    /*Dialog mProgressPressDialog;// 创建自定义样式dialog
+    KbWithWordsCircleProgressBar mCircleProgress;
+
+    private void showProgressLoading() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.progress_loading, (ViewGroup) (this).getWindow().getDecorView(), false);// 得到加载view
+        mCircleProgress = v.findViewById(R.id.circle_progress);
+        TextView loadingTvText = v.findViewById(R.id.loading_tv);
+        loadingTvText.setText("压缩中...");
+        mProgressPressDialog = new Dialog(this, R.style.loading_dialog);
+        mProgressPressDialog.setCancelable(true);
+        mProgressPressDialog.setContentView(v);
+        mProgressPressDialog.show();
+    }
+
+    public void dismissProgressLoading() {
+        if (mProgressPressDialog != null && mProgressPressDialog.isShowing()) {
+            mProgressPressDialog.dismiss();
+        }
+        mProgressPressDialog = null;
+    }*/
 
     private void initInjectData() {
         DaggerUploadVideoComponent.builder().appComponent(getAppComponent())

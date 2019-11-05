@@ -24,8 +24,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.mine.RegulationsActivity"></activity>
-        <activity android:name=".mvp.ui.activity.guide.FirstGuideActivity" />
+        <activity
+            android:name=".mvp.ui.activity.mine.RegulationsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.guide.FirstGuideActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.mine.AboutUsActivity"
             android:screenOrientation="portrait" />

@@ -203,8 +203,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         RxPermissions mRxPermissions = new RxPermissions(this);
         mRxPermissions.request(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CALL_PHONE
+                Manifest.permission.READ_EXTERNAL_STORAGE
         ).subscribe(permission -> {
             if (permission) {
                 reqLoginInfo();

@@ -12,14 +12,14 @@ public class ExpectedIncomeResponse {
      * list : [{"name":"学生111","pay_money":"1.00","money":"0.60","create_time":1571284119,"type":1,"status":1,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png"},{"name":"学生111","pay_money":"1.00","money":"0.10","create_time":1571284119,"type":1,"status":1,"cover":"http://newzuoye101.oss-cn-beijing.aliyuncs.com/student/20191018/5da98eff7d4fc.png"}]
      */
 
-    private double all;
+    private String all;
     private List<ListBean> list;
 
-    public double getAll() {
+    public String getAll() {
         return all;
     }
 
-    public void setAll(double all) {
+    public void setAll(String all) {
         this.all = all;
     }
 

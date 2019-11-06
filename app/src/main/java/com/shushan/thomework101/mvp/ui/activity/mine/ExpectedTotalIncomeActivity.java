@@ -61,8 +61,8 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
         initEmptyView();
         initHeadView();
         mExpectedIncomeAdapter = new ExpectedIncomeAdapter(expectedIncomeResponseList, mImageLoaderHelper);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mExpectedIncomeAdapter.setOnLoadMoreListener(ExpectedTotalIncomeActivity.this, mRecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mExpectedIncomeAdapter);
         mExpectedIncomeAdapter.addHeaderView(mHeaderView);
     }
@@ -103,9 +103,16 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
         expectedIncomeResponseList = expectedIncomeResponse.getList();
         mExpectedIncomeTv.setText(String.valueOf(expectedIncomeResponse.getAll()));
         if (!expectedIncomeResponse.getList().isEmpty()) {
-            mExpectedIncomeAdapter.addData(expectedIncomeResponse.getList());
+            if (page == 1) {
+                mExpectedIncomeAdapter.setNewData(expectedIncomeResponse.getList());
+            } else {
+                mExpectedIncomeAdapter.addData(expectedIncomeResponse.getList());
+            }
         } else {
-            mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+            if (page == 1) {
+                mExpectedIncomeAdapter.setNewData(null);
+                mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 

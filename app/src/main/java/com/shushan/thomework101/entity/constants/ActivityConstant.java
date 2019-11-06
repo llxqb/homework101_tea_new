@@ -5,7 +5,7 @@ package com.shushan.thomework101.entity.constants;
  */
 public class ActivityConstant {
     /**
-     * 上传审核信息进行更新（首页）
+     * 上传审核信息进行更新
      */
     public static final String UPDATE_USER_CHECK_INFO = "update_user_check_info";
     /**

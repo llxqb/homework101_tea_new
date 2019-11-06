@@ -127,9 +127,16 @@ public class RevenueIncomeActivity extends BaseActivity implements ExpectedIncom
     public void getRevenueIncomeSuccess(RevenueIncomeResponse revenueIncomeResponse) {
         expectedIncomeResponseList = revenueIncomeResponse.getData();
         if (!revenueIncomeResponse.getData().isEmpty()) {
-            mRevenueIncomeAdapter.addData(revenueIncomeResponse.getData());
+            if (page == 1) {
+                mRevenueIncomeAdapter.setNewData(revenueIncomeResponse.getData());
+            } else {
+                mRevenueIncomeAdapter.addData(revenueIncomeResponse.getData());
+            }
         } else {
-            mRevenueIncomeAdapter.setEmptyView(mEmptyView);
+            if (page == 1) {
+                mRevenueIncomeAdapter.setNewData(null);
+                mRevenueIncomeAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 

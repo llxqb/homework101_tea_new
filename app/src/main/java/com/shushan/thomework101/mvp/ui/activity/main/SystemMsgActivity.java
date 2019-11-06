@@ -115,9 +115,16 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     public void getSystemMsgSuccess(SystemMsgResponse systemMsgResponse) {
         systemMsgResponseList = systemMsgResponse.getData();
         if (!systemMsgResponse.getData().isEmpty()) {
-            mSystemMsgAdapter.addData(systemMsgResponse.getData());
+            if (page == 1) {
+                mSystemMsgAdapter.setNewData(systemMsgResponse.getData());
+            } else {
+                mSystemMsgAdapter.addData(systemMsgResponse.getData());
+            }
         } else {
-            mSystemMsgAdapter.setEmptyView(mEmptyView);
+            if (page == 1) {
+                mSystemMsgAdapter.setNewData(null);
+                mSystemMsgAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 

@@ -120,9 +120,16 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
     public void getExpectedIncomeSuccess(ExpectedIncomeResponse expectedIncomeResponse) {
         expectedIncomeResponseList = expectedIncomeResponse.getList();
         if (!expectedIncomeResponse.getList().isEmpty()) {
-            mExpectedIncomeAdapter.addData(expectedIncomeResponse.getList());
+            if (page == 1) {
+                mExpectedIncomeAdapter.setNewData(expectedIncomeResponse.getList());
+            } else {
+                mExpectedIncomeAdapter.addData(expectedIncomeResponse.getList());
+            }
         } else {
-            mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+            if (page == 1) {
+                mExpectedIncomeAdapter.setNewData(null);
+                mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+            }
         }
     }
 

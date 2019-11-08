@@ -110,8 +110,9 @@ public class ExpectedTotalIncomeActivity extends BaseActivity implements Expecte
             }
         } else {
             if (page == 1) {
-                mExpectedIncomeAdapter.setNewData(null);
-                mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+//                mExpectedIncomeAdapter.setNewData(null);
+//                mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+                mExpectedIncomeAdapter.addFooterView(mEmptyView);
             }
         }
     }

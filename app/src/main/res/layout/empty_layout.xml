@@ -9,15 +9,14 @@
     <ImageView
         android:id="@+id/empty_iv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/empty_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center"
         android:text="@string/empty_student"
         android:textColor="#9495A0"
         android:textSize="@dimen/sp_13" />

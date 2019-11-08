@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_26"
             android:layout_marginTop="@dimen/dp_7"
-            android:text="1.学生付费后的60%为辅导费用。\n2.学生是您成单后的一个10%的提成费用。\n3.其他老师成单后，转给您辅导的剩余的60%的辅导"
+            android:text="1.学生付费后的部分为辅导费用。\n2.学生是您成单后的一个10%的提成费用。\n3.其他老师成单后，转给您辅导的剩余的部分的辅导费用"
             android:textColor="@color/color_80"
             android:textSize="@dimen/sp_14" />
 

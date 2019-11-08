@@ -75,8 +75,13 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
 
     @Override
     public void onReceivePro(Context context, Intent intent) {
-        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_FEEDBACK_LIST)) {
-            onRefresh();
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(ActivityConstant.UPDATE_FEEDBACK_LIST)) {
+                onRefresh();
+            } else if (intent.getAction().equals(ActivityConstant.UM_PUSH_CHECK_PASS)) {
+                mUser = mBuProcessor.getUser();
+                emptyTv.setText("暂无反馈信息");
+            }
         }
         super.onReceivePro(context, intent);
     }
@@ -85,6 +90,7 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.UPDATE_FEEDBACK_LIST);
+        mFilter.addAction(ActivityConstant.UM_PUSH_CHECK_PASS);
     }
 
     @Override
@@ -195,10 +201,12 @@ public class FeedbackFragment extends BaseFragment implements FeedbackFragmentCo
         }
     }
 
+    TextView emptyTv;
+
     private void initEmptyView() {
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
         ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
-        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         emptyIv.setImageResource(R.mipmap.empty_feedback);
         if (!mUser.checkPass) {
             emptyTv.setText(getResources().getString(R.string.empty_feedback));

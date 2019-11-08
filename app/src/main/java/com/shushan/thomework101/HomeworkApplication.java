@@ -12,6 +12,7 @@ import com.shushan.thomework101.entity.constants.ServerConstant;
 import com.shushan.thomework101.help.UmengMessageHandlerHelper;
 import com.shushan.thomework101.mvp.ui.activity.rongCloud.MyReceiveMessageListener;
 import com.shushan.thomework101.mvp.utils.ExtensionModulesUtil;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -114,6 +115,10 @@ public class HomeworkApplication extends Application {
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
         mPushAgent.setMessageHandler(new UmengMessageHandlerHelper());
 
+        // 选用AUTO页面采集模式
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        // 支持在子进程中统计自定义事件
+//        UMConfigure.setProcessEvent(true);
     }
 
 }

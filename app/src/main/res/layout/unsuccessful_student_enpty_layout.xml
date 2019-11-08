@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_12"
-        android:text="您还未通过作业101教师审核
-暂未给您分配学生"
+        android:text="您还未通过作业101教师审核\n暂未给您分配学生"
+        android:gravity="center"
         android:textColor="#9495A0"
         android:textSize="@dimen/sp_13"
 

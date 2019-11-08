@@ -29,6 +29,7 @@ import com.shushan.thomework101.mvp.ui.activity.student.StudentDetailActivity;
 import com.shushan.thomework101.mvp.ui.adapter.MineStudentAdapter;
 import com.shushan.thomework101.mvp.ui.base.BaseFragment;
 import com.shushan.thomework101.mvp.ui.dialog.StudentTypeMorePopupWindow;
+import com.shushan.thomework101.mvp.utils.LogUtils;
 import com.shushan.thomework101.mvp.utils.StudentUtil;
 
 import java.util.ArrayList;
@@ -93,8 +94,14 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
 
     @Override
     public void onReceivePro(Context context, Intent intent) {
-        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.CHANGE_STUDENT_LIST)) {
-            onRequestMineStudentInfo();
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(ActivityConstant.CHANGE_STUDENT_LIST)) {
+                onRequestMineStudentInfo();
+            } else if (intent.getAction().equals(ActivityConstant.UM_PUSH_CHECK_PASS)) {
+//                onRequestMineStudentInfo();
+                mUser = mBuProcessor.getUser();
+                emptyTv.setText("暂无学生信息");
+            }
         }
         super.onReceivePro(context, intent);
     }
@@ -103,6 +110,7 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.CHANGE_STUDENT_LIST);
+        mFilter.addAction(ActivityConstant.UM_PUSH_CHECK_PASS);
     }
 
     @Override
@@ -127,10 +135,12 @@ public class MineStudentFragment extends BaseFragment implements MineStudentFrag
         });
     }
 
+    TextView emptyTv;
+
     private void initEmptyView() {
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_layout, (ViewGroup) mMineStudentRecyclerView.getParent(), false);
         ImageView emptyIv = mEmptyView.findViewById(R.id.empty_iv);
-        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
+        emptyTv = mEmptyView.findViewById(R.id.empty_tv);
         emptyIv.setImageResource(R.mipmap.empty_student);
         if (!mUser.checkPass) {
             emptyTv.setText(getResources().getString(R.string.empty_student));

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -135,6 +136,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private View mEmptyView;
     User mUser;
     HomeResponse.UserBean userBean;
+    /**
+     * 审核友盟推送消息
+     */
+    private boolean isUMPushMessage = false;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
 
@@ -155,6 +160,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             if (intent.getAction().equals(ActivityConstant.UPDATE_USER_CHECK_INFO)) {
                 onRequestHomeInfo();
             } else if (intent.getAction().equals(ActivityConstant.UM_PUSH_MESSAGE)) {
+                isUMPushMessage = true;
                 //更新未读消息
                 onRequestUnReadInfo();
                 onRequestHomeInfo();
@@ -204,12 +210,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         onRequestUnReadInfo();
     }
 
+    TextView emptyTv;
+
     private void initEmptyView() {
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.unsuccessful_student_enpty_layout, (ViewGroup) mUnsuccessfulStudentRecyclerView.getParent(), false);
-        TextView emptyTv = mEmptyView.findViewById(R.id.empty_tv);
-        if (mUser.checkPass) {
-            emptyTv.setText("暂无学生信息");
-        }
+        emptyTv = mEmptyView.findViewById(R.id.empty_tv);
     }
 
     @OnClick({R.id.system_msg_iv, R.id.customer_service_iv, R.id.verify_state_tv, R.id.go_complete_tv, R.id.pre_job_training_state_tv, R.id.complete_material_tv, R.id.set_coaching_time_tv, R.id.registration_complete_tv})
@@ -320,6 +325,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         //更新User
         mUser = LoginUtils.updateLoginUser(userBean, mUser, mBuProcessor);
 //        Log.e("ddd", "mUser" + new Gson().toJson(mUser));
+        if (isUMPushMessage && mUser.checkPass) {
+            isUMPushMessage = false;
+            LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UM_PUSH_CHECK_PASS));
+        }
         setCheckProcess();
         setIncomeData(homeResponse.getIncome());
         setMineStudentData(homeResponse.getStudent());
@@ -329,6 +338,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         } else {
             mHomeUnsuccessfulStudentAdapter.setNewData(null);
             mHomeUnsuccessfulStudentAdapter.setEmptyView(mEmptyView);//如果没有审核通过和没有分配学生显示emptyView
+            if (mUser.checkPass) {
+                emptyTv.setText("暂无学生信息");
+            } else {
+                emptyTv.setText("您还未通过作业101教师审核\n暂未给您分配学生");
+            }
         }
     }
 

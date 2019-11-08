@@ -82,7 +82,6 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
     @Override
     public void initData() {
         onRequestExpectedIncome();
-        mExpectedIncomeAdapter.setEmptyView(mEmptyView);
     }
 
     private void initEmptyView() {
@@ -127,8 +126,9 @@ public class ExpectedCommissionIncomeActivity extends BaseActivity implements Ex
             }
         } else {
             if (page == 1) {
-                mExpectedIncomeAdapter.setNewData(null);
-                mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+//                mExpectedIncomeAdapter.setNewData(null);
+//                mExpectedIncomeAdapter.setEmptyView(mEmptyView);
+                mExpectedIncomeAdapter.addFooterView(mEmptyView);
             }
         }
     }

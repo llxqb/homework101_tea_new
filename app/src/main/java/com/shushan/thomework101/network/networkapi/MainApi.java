@@ -48,7 +48,7 @@ public interface MainApi {
     Observable<String> submitFeedbackInfo(@Body String request);
 
     /**
-     * 请求辅导反馈
+     * 查看是否有未读消息
      */
     @POST("teacher/message/check_message")
     Observable<String> onRequestUnReadInfo(@Body String request);

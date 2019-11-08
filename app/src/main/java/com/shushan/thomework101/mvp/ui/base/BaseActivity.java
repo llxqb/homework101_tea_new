@@ -25,6 +25,7 @@ import com.shushan.thomework101.mvp.utils.SharePreferenceUtil;
 import com.shushan.thomework101.mvp.utils.StatusBarUtil;
 import com.shushan.thomework101.mvp.utils.SystemUtils;
 import com.shushan.thomework101.mvp.utils.ToastUtils;
+import com.umeng.message.PushAgent;
 
 import java.net.ConnectException;
 
@@ -63,6 +64,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addFilter();
+        //Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
+        PushAgent.getInstance(this).onAppStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, mFilter);
         initContentView();
         ButterKnife.bind(this);

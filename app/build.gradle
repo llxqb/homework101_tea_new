@@ -76,10 +76,10 @@ android {
     productFlavors {
         shushan {}
         _360 {}
-        huawei {}
-        oppo {}
-        vivo {}
-        xiaomi {}
+//        huawei {}
+//        oppo {}
+//        vivo {}
+//        xiaomi {}
     }
     productFlavors.all { flavor ->
         flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

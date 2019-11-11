@@ -3,14 +3,15 @@ package com.shushan.thomework101.entity.response;
 public class StudentDetailInfoResponse {
 
     /**
-     * remark : 备注
-     * version : 2
-     * name : zy2790
+     * remark :
+     * version :
+     * name : zy7469
      * cover :
      * subject : 0
-     * status : 月辅导
-     * end_time : 1572310930
-     * id : 1
+     * id : 278
+     * grade : 初二
+     * status : 未付费
+     * end_time : 0
      */
 
     private String remark;
@@ -18,9 +19,10 @@ public class StudentDetailInfoResponse {
     private String name;
     private String cover;
     private int subject;
+    private int id;
+    private String grade;
     private String status;
     private int end_time;
-    private int id;
 
     public String getRemark() {
         return remark;
@@ -62,6 +64,22 @@ public class StudentDetailInfoResponse {
         this.subject = subject;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -76,13 +94,5 @@ public class StudentDetailInfoResponse {
 
     public void setEnd_time(int end_time) {
         this.end_time = end_time;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

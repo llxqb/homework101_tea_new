@@ -42,6 +42,8 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
     CircleImageView mStudentAvatarIv;
     @BindView(R.id.student_name_tv)
     TextView mStudentNameTv;
+    @BindView(R.id.grade)
+    TextView mGrade;
     @BindView(R.id.counselling_type_tv)
     TextView mCounsellingTypeTv;
     @BindView(R.id.end_date_tv)
@@ -119,6 +121,10 @@ public class StudentDetailActivity extends BaseActivity implements StudentDetail
     public void getStudentInfoSuccess(StudentDetailInfoResponse studentDetailInfoResponse) {
         mImageLoaderHelper.displayImage(this, studentDetailInfoResponse.getCover(), mStudentAvatarIv, Constant.LOADING_AVATOR);
         mStudentNameTv.setText(studentDetailInfoResponse.getName());
+        if (!TextUtils.isEmpty(studentDetailInfoResponse.getGrade())) {
+            mGrade.setVisibility(View.VISIBLE);
+            mGrade.setText(studentDetailInfoResponse.getGrade());
+        }
         mCounsellingTypeTv.setText(studentDetailInfoResponse.getStatus());
         mEndDateTv.setText(DateUtil.getStrTime(studentDetailInfoResponse.getEnd_time(), DateUtil.TIME_YYMMDD));
         id = String.valueOf(studentDetailInfoResponse.getId());

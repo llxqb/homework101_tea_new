@@ -32,7 +32,7 @@ public class LoginProtocolActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mCommonTitleTv.setText("隐私协议");
+        mCommonTitleTv.setText("用户协议和隐私政策");
         mProgressbar.setMax(100);
         initWebView();
     }

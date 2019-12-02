@@ -14,6 +14,7 @@ import com.shushan.thomework101.entity.request.VersionUpdateRequest;
 import com.shushan.thomework101.entity.response.VersionUpdateResponse;
 import com.shushan.thomework101.entity.user.User;
 import com.shushan.thomework101.help.DialogFactory;
+import com.shushan.thomework101.mvp.ui.activity.guide.LoginProtocolActivity;
 import com.shushan.thomework101.mvp.ui.activity.logout.LogoutActivity;
 import com.shushan.thomework101.mvp.ui.activity.main.MainActivity;
 import com.shushan.thomework101.mvp.ui.base.BaseActivity;
@@ -87,7 +88,7 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
         }
     }
 
-    @OnClick({R.id.common_left_iv, R.id.message_notification_iv, R.id.update_tv, R.id.clear_cache_tv, R.id.about_us_tv, R.id.logout_tv, R.id.exit_tv})
+    @OnClick({R.id.common_left_iv, R.id.message_notification_iv, R.id.update_tv, R.id.clear_cache_tv, R.id.about_us_tv, R.id.protocol_tv,R.id.logout_tv, R.id.exit_tv})
     public void onViewClicked(View view) {
         mMessageNotification = mSharePreferenceUtil.getBooleanData("message_notification", true);
         switch (view.getId()) {
@@ -118,6 +119,9 @@ public class SettingActivity extends BaseActivity implements CommonDialog.Common
                 break;
             case R.id.about_us_tv:
                 startActivitys(AboutUsActivity.class);
+                break;
+            case R.id.protocol_tv:
+                startActivitys(LoginProtocolActivity.class);
                 break;
             case R.id.logout_tv://注销登录
                 startActivitys(LogoutActivity.class);
